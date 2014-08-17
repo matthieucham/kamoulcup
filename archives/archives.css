@@ -1,0 +1,357 @@
+@charset "utf-8";
+
+
+body {
+margin:0;
+padding:0;
+background:url(images/Fond-herbe.jpg);
+font-family: Trebuchet MS,Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;}
+
+img {border:none; }
+
+#frisetop{
+width:100%;
+height:10px;
+background:black;}
+
+#frisebottom{
+width:100%;
+padding-top: 5px;
+background:black;}
+
+#header{
+width:1115px;
+height:231px;
+margin:0 auto 0 auto;
+background:url(images/head_archives.png);}
+
+#containeur {
+width:1115px;
+margin:0 auto 0 auto;
+background:url(images/fond-containeur.png);}
+
+#colgauche {
+width:940px;
+margin:0 5px 0 135px;
+padding-top:10px;}
+
+#footer {
+background:url(images/footer.png);
+width:1115px;
+height:59px;
+margin:0 auto 0 auto;}
+
+p {
+margin:0;
+padding:0;
+color:black;}
+
+hr {
+  	clear: both;
+  	margin:0 8px 0 8px;
+	visibility: hidden;}
+	
+/*MENU*/
+ul#menu {
+list-style-type: none;
+margin:0 0 0 560px;
+padding:0;}
+
+ul#menu li {
+float: right;
+padding-left:20px;}
+
+ul#menufooter {
+list-style-type: none;
+margin:0 0 0 700px;
+padding:10px 30px 0 0;}
+
+ul#menufooter li {
+float: right;
+padding-right:10px;}
+
+
+/*
+MODIFS PAR CHARLIE
+*/
+#credits{
+	float:right;
+	margin-right: 50px;
+	font-size: 10px;
+	color: #f9bee5;
+}
+
+.sectionPage {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border-bottom: 2px dotted #f9bee5;
+}
+
+.titre_page {
+	font-size: 1.8em;
+	font-weight: bold;
+	color:#99758d;
+	margin-bottom: 15px;
+}
+
+.sous_titre {
+	font-size: 1.4em;
+	color:#99758d;
+	margin-bottom: 8px;
+}
+
+a, a:link, a:visited, a:active
+{
+	/*font-weight: bold;*/
+	color: #493844;
+	text-decoration: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+
+.error {
+	background-color: #f94cbe;
+	font-size: 14px;
+	font-weight: bold;
+	display: block;
+	color: #000000;
+	vertical-align:middle;
+	background-image: url('erreur.gif');
+	background-repeat:	no-repeat;
+	padding-left: 30px;
+}
+
+.hr_feinte 
+{
+	width:100%;
+	height: 10px;
+	padding:0px;	
+	margin:0px;
+	font-size: 1px;
+	line-height: 10px;
+	border: 0px;
+	overflow:hidden;
+	clear:both;
+}
+
+.hr_feinte3
+{
+	width:100%;
+	height: 3px;
+	padding:0px;	
+	margin:0px;
+	font-size: 1px;
+	line-height: 3px;
+	border: 0px;
+	overflow:hidden;
+	
+}
+
+
+/************************************************************/
+.needAttention
+{
+	background: url(images/giro.gif) no-repeat;
+	padding-left: 20px;
+	font-weight: bold;
+}
+
+.tableau_saisie {
+	border: 1px solid #ccc1cd;
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+
+.tableau_saisie th{
+	text-align: right;
+	padding: 3px;
+	background-color: #ccc1cd;
+}
+
+.tableau_liste,.tableau_liste_centre {
+	width:99%;
+	border-collapse: collapse;
+	font-size: 12px;
+	border-bottom: 1px solid #f94cbe;
+	margin-bottom: 10px;
+}
+
+.tableau_liste th {
+	text-align: left;
+	color: #f94cbe;
+	border-bottom: 2px solid #f94cbe;
+}
+
+.tableau_liste td,th {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.tableau_liste_centre td{
+	text-align: center;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.tableau_liste_centre th{
+	text-align: center;
+	color: #f94cbe;
+	border-bottom: 2px solid #f94cbe;
+}
+
+.ligne0 {
+	background-color: #f9bee5;
+}
+
+.ligne1 {
+	background-color: transparent;
+}
+
+.tableau_horizon {
+	font-size: 12px;
+	margin-bottom: 10px;
+	border-collapse:collapse;
+}
+
+.tableau_horizon th {
+	font-weight: normal;
+	text-align: left;
+	border-bottom: 1px dotted #f9bee5;
+	padding-left: 3px;
+	padding-right: 3px;
+	vertical-align: middle;
+}
+
+.tableau_horizon td {
+	border-bottom: 1px dotted #f9bee5;
+	padding-left: 3px;
+	padding-right: 3px;
+	vertical-align: middle;
+}
+
+.ligne_bilan {
+	background-color: #f9bee5;
+	font-weight: bold;
+}
+.ligne_bilan th{
+}
+
+.colgauche_container {
+	width: 100%;
+	margin: 5px auto;
+}
+
+.colgauche_gauche {
+	float:left;
+	width: 130px;
+	text-align: center;
+	margin: 0;
+	padding: 5px;
+}
+
+.colgauche_droite{
+	margin-left:150px;
+	width:460px;
+}
+
+
+#myPlayerCadre {
+	width: 120px;
+	margin:0;
+	padding-top:3px;
+	text-align: left;
+	overflow:hidden;
+}
+
+.cadreVente {
+	border: 1px solid #f94cbe;
+	background-color: #f9bee5;
+	text-align: center;
+	padding: 5px;
+	width: 50%;
+	margin-left: auto ;
+	margin-right: auto ;
+	margin-top: 5px;
+}
+
+
+#matchSummary{
+	text-align: center;
+	font-size: 1.8em;
+}
+
+#perfDomicile {
+	float:left;
+	width:305px;
+	margin:0;
+	border-right: solid 1px #f9bee5;
+}
+
+#perfExterieur {
+	float:right;
+	width:305px;
+	margin:0;
+}
+
+.podium {
+  text-align: center;
+}
+
+.podium .first {
+	font-size: 1.8em;
+	font-weight:bold;
+}
+
+.podium .others {
+	font-size: 1.2em;
+	font-weight:bold;
+}
+
+.mainURL {
+	font-size: 1.2em;
+	font-weight:bold;
+}
+
+.top {
+  margin:auto;
+  width:300px;
+  border: 1px solid #f94cbe;
+  background-color: #f9bee5;
+  padding: 5px;
+  margin-left: auto ;
+  margin-right: auto ;
+  margin-top: 5px;
+}
+.left {
+  display:inline-block;
+   width:250px;
+  border: 1px solid #f94cbe;
+  background-color: #f9bee5;
+  padding: 5px;
+  margin-left: auto ;
+  margin-right: auto ;
+  margin-top: 5px;
+}
+.right {
+  display:inline-block;
+   width:250px;
+  border: 1px solid #f94cbe;
+  background-color: #f9bee5;
+  padding: 5px;
+  margin-left: auto ;
+  margin-right: auto ;
+  margin-top: 5px;
+}
+
+.palmares_podium_container {
+	width:620px;
+}
+
+.palmares_right_container {
+	float:right;
+	width:320px;
+}
