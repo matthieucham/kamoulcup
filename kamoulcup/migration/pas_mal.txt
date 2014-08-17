@@ -1,0 +1,51 @@
+$NOT_defvierge = Array('G' => 4,'D' => 3, 'M' => 1, 'A' => 0);
+	$NOT_defunpenalty = Array('G' => 2,'D' => 1.5, 'M' => 0.5, 'A' => 0);
+	$NOT_defunbut = Array('G' => 1,'D' => 0.75, 'M' => 0, 'A' => 0);
+	//$NOT_defunbut = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	
+	$NOT_troisbuts = Array('G' => 0,'D' => 0, 'M' => 0.5, 'A' => 2);
+	//$NOT_troisbuts = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_troisbutsunpenalty = Array('G' => 0,'D' => 0, 'M' => 0.25, 'A' => 1);
+	
+	$NOT_but = 4.5;
+	$NOT_penalty = 2.25;
+	$NOT_passedec = 3;
+	$NOT_penaltyobtenu = 1.5;
+	
+	
+	OU PLUTOT
+	
+	$NOT_defvierge = Array('G' => 1.7,'D' => 1.5, 'M' => 0.5, 'A' => 0);
+	$NOT_defunpenalty = Array('G' => 1,'D' => 0.75, 'M' => 0.25, 'A' => 0);
+	$NOT_defunbut = Array('G' => 0,'D' => 0.25, 'M' => 0, 'A' => 0);
+	$NOT_troisbuts = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0.75);
+	$NOT_troisbutsunpenalty = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0.375);
+	$NOT_but = 2;
+	$NOT_penalty = 1;
+	$NOT_passedec = 1.5;
+	$NOT_penaltyobtenu = 0.75;
+	
+	C'EST MIEUX :
+	
+	$NOT_defvierge = Array('G' => 3.4,'D' => 3, 'M' => 1, 'A' => 0);
+	$NOT_defunpenalty = Array('G' => 1.5,'D' => 0.75, 'M' => 0.5, 'A' => 0);
+	$NOT_defunbut = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_troisbuts = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_troisbutsunpenalty = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_but = 3;
+	$NOT_penalty = 1.5;
+	$NOT_passedec = 2;
+	$NOT_penaltyobtenu = 1;
+	
+	
+	ZERO
+	
+	$NOT_defvierge = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_defunpenalty = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_defunbut = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_troisbuts = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_troisbutsunpenalty = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_but = 0;
+	$NOT_penalty = 0;
+	$NOT_passedec = 0;
+	$NOT_penaltyobtenu = 0;

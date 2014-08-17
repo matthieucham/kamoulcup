@@ -1,0 +1,27 @@
+﻿<data>
+<event start="Sep 09 2013 08:00:00 GMT" title="J0">
+        Draft
+</event>
+<event start="Sep 09 2013 12:00:00 GMT" title="J1">
+        
+</event>
+<event start="Sep 23 2013 08:00:00 GMT" title="PC1">
+        
+</event>
+<event start="Oct 7 2013 08:00:00 GMT" title="PC2">
+        
+</event>
+<event start="Oct 18 2013 20:00:00 GMT" title="PC3">
+        
+</event>
+<event start="Sep 09 2013 12:00:00 GMT" end="Sep 23 2013 08:00:00 GMT" isDuration="true" title="Merkato bonifié">
+   
+</event>
+<event start="Sep 23 2013 08:00:00 GMT" end="Oct 18 2013 20:00:00 GMT" isDuration="true" title="Merkato apertura">
+   
+</event>
+<event start="Oct 23 2013 20:00:00 GMT" title="PC4">
+        
+</event>
+
+</data>

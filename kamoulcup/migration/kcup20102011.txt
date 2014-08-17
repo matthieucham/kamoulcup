@@ -1,0 +1,37 @@
+ALTER TABLE `prestation` ADD `note_d` FLOAT NULL AFTER `note_sp` ,
+ADD `note_e` FLOAT NULL AFTER `note_d` ;
+ALTER TABLE `prestation` ADD `troisbuts` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `defense_unpenalty` ,
+ADD `troisbuts_unpenalty` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `troisbuts` ;
+ALTER TABLE `prestation` ADD `defense_unbut` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `defense_unpenalty` ;
+ALTER TABLE `prestation` ADD `minutes` INT NULL ,ADD `double_bonus` TINYINT( 1 ) NOT NULL DEFAULT '0';
+ALTER TABLE `rencontre` ADD `elimination` TINYINT( 1 ) NOT NULL DEFAULT '0';
+CREATE TABLE IF NOT EXISTS `bonus_joueur` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `joueur_id` int(11) NOT NULL,
+  `type` enum('AS','ASP') NOT NULL,
+  `valeur` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+
+CREATE TABLE IF NOT EXISTS `buteurs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rencontre_id` int(11) NOT NULL,
+  `dom_ext` enum('DOM','EXT') NOT NULL,
+  `buteur_id` int(11) NOT NULL,
+  `passeur_id` int(11) NOT NULL,
+  `penalty` tinyint(1) NOT NULL DEFAULT '0',
+  `prolongation` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=160 ;
+
+ALTER TABLE `bonus_joueur` CHANGE `type` `type` ENUM( 'AS', 'ASP', 'UNFP_ET', 'UNFP_BY', 'UNFP_BP', 'UNFP_BK' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
+
+ALTER TABLE `periode` ADD `reventes_autorisees` TINYINT( 1 ) NOT NULL DEFAULT '1';
+
+ALTER TABLE `prestation` CHANGE `defense_vierge` `defense_vierge` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `defense_unpenalty` `defense_unpenalty` TINYINT( 1 ) NOT NULL DEFAULT '0';
+
+ALTER TABLE `periode` ADD `coeff_bonus_achat` FLOAT NOT NULL DEFAULT '0';
+
+ALTER TABLE `vente` ADD `coeff_bonus_achat` FLOAT NOT NULL DEFAULT '0';
+
+ALTER TABLE `transfert` ADD `coeff_bonus_achat` FLOAT NOT NULL DEFAULT '1';
