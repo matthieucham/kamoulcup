@@ -1,0 +1,80 @@
+/* ----------------------------- */
+/*          Général              */
+/* ----------------------------- */
+
+html{
+	margin:0;	
+	padding:0;
+	background:url(images/fond-body.jpg);	
+	}
+
+body{
+	background:url(images/rays.png) no-repeat scroll center top transparent;
+	}
+
+.spacer {
+     clear: both; 
+	 color: #b3cca0;     
+  background-color: #b3cca0;     
+  border: 0; }
+
+a, a:link, a:visited, a:active
+{
+	color: #E3C356;
+	text-decoration: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+  
+  
+/*          Head              */	
+
+header {
+	padding:1px;	
+	}
+
+#logo {
+ margin:25px auto 0 ;
+ width:372px;
+}
+
+#edito p{
+width:600px;
+margin:40px auto;
+color:#dcead8;
+ text-align: justify;
+font-size:17px;
+font-family: 'Courgette', cursive;}
+
+#menu {
+width:600px;
+margin:10px auto;
+font-size:17px;
+font-family: 'Fugaz One', cursive;
+color:#b3cca0;}
+
+.nav {
+float:left;
+width:180px;
+margin:0 10px 25px 10px;
+background:#4e7527;
+background-color: rgba(0, 0, 0, 0.3);
+border-radius: 10px;
+-moz-border-radius:10px;
+-webkit-border-radius:10px;
+text-align: center;
+}
+ 
+/* Footer */	
+footer {
+width:600px;
+margin:30px auto;
+font-size:17px;
+font-family: 'Courgette', cursive;
+color:#b3cca0;
+text-align:center;
+}
+
