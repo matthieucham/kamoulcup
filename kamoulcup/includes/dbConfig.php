@@ -5,8 +5,8 @@
     public $config = array(
     'db_server'    => 'localhost',
     'db_name'      => 'kamoulcup',
-    'db_username'  => 'TODO',
-    'db_password'  => 'TODO'
+    'db_username'  => 'kamoulcup',
+    'db_password'  => 'kakamou'
     );
   } 
  ?>

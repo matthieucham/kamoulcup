@@ -60,6 +60,7 @@
 		echo "<li><a href='index.php?page=asEkyp'>Prendre le contrôle temporaire d'une ékyp</a></li>";
 		echo "<li><a href='process/generateFeeds.php'>Genérer tous les feeds de résolution</a></li>";
 		echo "<li><a href='mobilecom/getResolutionsFeed.php'>GET Feeds</a></li>";
+		echo "<li><a href='km/admin/index.php'>KAMOUL MANAGER ADMIN</a></li>";
 		echo "</ul>";
 		echo "</div>";
 		echo "</div>";
