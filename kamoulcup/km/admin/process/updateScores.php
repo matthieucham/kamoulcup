@@ -6,14 +6,9 @@
 	include('../../../process/validateForm.php');
 
 	$journeeId = correctSlash($_POST['journee']);
-	
-	if ($journeeId == 0) {
-		// Tous les matchs
-		$selectQ = "select joueur_id,match_id,prestation.score,but_marque,passe_dec,penalty_marque,penalty_obtenu,defense_vierge,defense_unpenalty,defense_unbut,troisbuts,troisbuts_unpenalty,minutes,double_bonus,leader,arrets,encaisses,jo.poste from prestation, joueur jo where jo.id=joueur_id";
-	} else {
-		// 	1) Récupérer les performances de la journée choisie
-		$selectQ = "select joueur_id,match_id,prestation.score,but_marque,passe_dec,penalty_marque,penalty_obtenu,defense_vierge,defense_unpenalty,defense_unbut,troisbuts,troisbuts_unpenalty,minutes,double_bonus,leader,arrets,encaisses,jo.poste from prestation, joueur jo where jo.id=joueur_id and match_id in (select id from rencontre where journee_id={$journeeId})";
-	}
+	// 0) Donner une perf à chacun avec une valeur initiale de 0
+	// 	1) Récupérer les performances de la journée choisie
+	$selectQ = "select joueur_id,match_id,prestation.score,but_marque,passe_dec,penalty_marque,penalty_obtenu,defense_vierge,defense_unpenalty,defense_unbut,troisbuts,troisbuts_unpenalty,minutes,double_bonus,leader,arrets,encaisses,jo.poste from prestation, joueur jo where jo.id=joueur_id and match_id in (select id from rencontre where journee_id={$journeeId})";
 	$prestations = $db->getArray($selectQ);
 	
 	if($prestations != NULL) {
