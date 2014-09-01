@@ -8,6 +8,18 @@ checkaccess(5);
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>Kamoul Manager Admin</title>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<script>
+  $(function() {
+	  $( "#mercatoD_datepicker" ).datepicker();
+    $( "#mercatoD_datepicker" ).datepicker("option","dateFormat","yy-mm-dd");
+    $( "#mercatoF_datepicker" ).datepicker();
+    $( "#mercatoF_datepicker" ).datepicker("option","dateFormat","yy-mm-dd");
+  });
+  </script>
 </head>
 <body>
 <h1>Kamoul Manager : Administration</h1>
@@ -63,5 +75,23 @@ l'année d'avant</h2>
 	<option value="score">Saison</option>
 </select> <input type="submit" value="init" /></p>
 </form>
+
+<h1>Gestion des transferts</h1>
+<ul>
+<?php
+$mercatos = $db->getArray("select mer_id,mer_date_ouverture,mer_date_fermeture from km_mercato where mer_processed=0 order by mer_date_ouverture asc");
+if ($mercatos != NULL) {
+	foreach ($mercatos as $value) {
+		echo '<li>'.$value[0].' du '.$value[1].' au '.$value[2].'</li>';
+	}
+}
+?>
+</ul>
+<form method="post" action="process/createMercato.php">
+<p>Ouvrir un mercato du <input type="text" id="mercatoD_datepicker" name="mercatoFrom"> au <input type="text" id="mercatoF_datepicker" name="mercatoTo"></p>
+<p>Heure <input name="mercatoTime" size="4" maxlength="2" />:00</p> 
+<p><input type="submit" value="créer" /></p>
+</form>
+
 </body>
 </html>
