@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mar 19 Août 2014 à 23:27
+-- Généré le : Sam 06 Septembre 2014 à 21:03
 -- Version du serveur: 5.1.41
 -- Version de PHP: 5.3.1
 
@@ -20,12 +20,14 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `km_const_salaire_classe` (
-  `scl_id` int(11) NOT NULL AUTO_INCREMENT,
+  `scl_id` int(11) NOT NULL,
   `scl_salaire` decimal(3,1) NOT NULL,
-  `scl_seuil_inf` decimal(10,0) NOT NULL,
-  `scl_seuil_sup` int(11) NOT NULL,
+  `scl_seuil_inf` decimal(3,2) NOT NULL,
+  `scl_seuil_sup` decimal(3,2) NOT NULL,
+  `scl_next_up` int(11) NOT NULL,
+  `scl_next_down` int(11) NOT NULL,
   PRIMARY KEY (`scl_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -65,11 +67,28 @@ CREATE TABLE IF NOT EXISTS `km_engagement` (
   `eng_joueur_id` int(11) NOT NULL,
   `eng_salaire` decimal(3,1) NOT NULL,
   `eng_date_arrivee` datetime NOT NULL,
-  `eng_date_depart` datetime NOT NULL,
+  `eng_date_depart` datetime DEFAULT NULL,
   `eng_montant` decimal(3,1) DEFAULT NULL,
   PRIMARY KEY (`eng_id`),
   UNIQUE KEY `eng_ekyp_id` (`eng_ekyp_id`,`eng_joueur_id`,`eng_date_arrivee`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=249 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=280 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `km_finances`
+--
+
+CREATE TABLE IF NOT EXISTS `km_finances` (
+  `fin_id` int(11) NOT NULL AUTO_INCREMENT,
+  `fin_ekyp_id` int(11) NOT NULL,
+  `fin_date` date NOT NULL,
+  `fin_transaction` decimal(4,1) NOT NULL,
+  `fin_solde` decimal(4,1) NOT NULL,
+  `fin_event` mediumtext NOT NULL,
+  PRIMARY KEY (`fin_id`),
+  KEY `fin_ekyp_id` (`fin_ekyp_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
 -- --------------------------------------------------------
 
@@ -79,8 +98,9 @@ CREATE TABLE IF NOT EXISTS `km_engagement` (
 
 CREATE TABLE IF NOT EXISTS `km_join_joueur_salaire` (
   `jjs_joueur_id` int(11) NOT NULL,
-  `jjs_salaire_classe_id` int(11) NOT NULL,
-  PRIMARY KEY (`jjs_joueur_id`,`jjs_salaire_classe_id`)
+  `jjs_salaire_classe_id` int(11) NOT NULL DEFAULT '1',
+  `jjs_journee_id` int(11) NOT NULL,
+  PRIMARY KEY (`jjs_joueur_id`,`jjs_journee_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -118,8 +138,9 @@ CREATE TABLE IF NOT EXISTS `km_mercato` (
   `mer_id` int(11) NOT NULL AUTO_INCREMENT,
   `mer_date_ouverture` datetime NOT NULL,
   `mer_date_fermeture` datetime NOT NULL,
+  `mer_processed` tinyint(1) NOT NULL,
   PRIMARY KEY (`mer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
 -- --------------------------------------------------------
 
@@ -131,7 +152,9 @@ CREATE TABLE IF NOT EXISTS `km_offre` (
   `off_joueur_id` int(11) NOT NULL,
   `off_mercato_id` int(11) NOT NULL,
   `off_montant` decimal(3,1) NOT NULL,
-  PRIMARY KEY (`off_joueur_id`,`off_mercato_id`)
+  `off_ekyp_id` int(11) NOT NULL,
+  `off_winner` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`off_joueur_id`,`off_mercato_id`,`off_ekyp_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -146,3 +169,6 @@ CREATE TABLE IF NOT EXISTS `km_selection_ekyp_match` (
   `substitute` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`sem_match_id`,`sem_engagement_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `ekyp` ADD `km` TINYINT( 1 ) NOT NULL DEFAULT '0'

@@ -82,15 +82,13 @@ l'année d'avant</h2>
 $mercatos = $db->getArray("select mer_id,mer_date_ouverture,mer_date_fermeture from km_mercato where mer_processed=0 order by mer_date_ouverture asc");
 if ($mercatos != NULL) {
 	foreach ($mercatos as $value) {
-		echo '<li>'.$value[0].' du '.$value[1].' au '.$value[2].'</li>';
+		echo '<form method="post" action="process/resolveMercato.php"><input type="hidden" name="mercatoId" value="'.$value[0].'"/><li>'.$value[0].' du '.$value[1].' au '.$value[2].'<input type="submit" value="résoudre" />'.'</form></li>';
 	}
 }
 ?>
 </ul>
 <form method="post" action="process/createMercato.php">
-<p>Ouvrir un mercato du <input type="text" id="mercatoD_datepicker" name="mercatoFrom"> au <input type="text" id="mercatoF_datepicker" name="mercatoTo"></p>
-<p>Heure <input name="mercatoTime" size="4" maxlength="2" />:00</p> 
-<p><input type="submit" value="créer" /></p>
+<p>Ouvrir un mercato du <input type="text" id="mercatoD_datepicker" name="mercatoFrom"> au <input type="text" id="mercatoF_datepicker" name="mercatoTo"> Heure <input name="mercatoTime" size="4" maxlength="2" />:00 <input type="submit" value="créer" /></p>
 </form>
 
 </body>
