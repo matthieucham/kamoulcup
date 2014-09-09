@@ -171,4 +171,24 @@ CREATE TABLE IF NOT EXISTS `km_selection_ekyp_match` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
-ALTER TABLE `ekyp` ADD `km` TINYINT( 1 ) NOT NULL DEFAULT '0'
+ALTER TABLE `ekyp` ADD `km` TINYINT( 1 ) NOT NULL DEFAULT '0';
+
+CREATE TABLE IF NOT EXISTS `km_championnat` (
+  `chp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `chp_nom` text NOT NULL,
+  `chp_first_journee_id` int(11) NOT NULL,
+  `chp_nb_journees` int(11) NOT NULL,
+  PRIMARY KEY (`chp_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `km_join_ekyp_championnat`
+--
+
+CREATE TABLE IF NOT EXISTS `km_join_ekyp_championnat` (
+  `jec_ekyp_id` int(11) NOT NULL,
+  `jec_championnat_id` int(11) NOT NULL,
+  PRIMARY KEY (`jec_ekyp_id`,`jec_championnat_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
