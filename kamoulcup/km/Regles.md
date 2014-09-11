@@ -1,9 +1,13 @@
-# Principe du jeu
-Vous venez de prendre les rênes d'une nouvelle **franchise** et vous allez participer à une compétition échevelée, pour la gloire d'être reconnu comme le meilleur manager de la place.
+# But du jeu
+Désigné manager d'une **franchise**, votre but est de constituer une sélection de joueurs de football évoluant en Ligue 1 dont **les performances réelles après chaque match vont vous rapporter des points**. Pour cela, vous disposez d'un budget et d'une masse salariale à ne pas dépasser. Des périodes de **mercato** vous permettent de recruter et de vendre des joueurs. Mais attention: vos concurrents aussi vont chercher à s'attacher les services des meilleurs joueurs, et il vous faudra remporter les enchères pour avoir leur signature !
+A la fin de la compétition, la franchise qui a accumulé le plus de points remporte le titre !
 
-Avant tout, vous allez faire signer un contrat avec votre franchise à 7 joueurs de foot de L1. Grace à cet engagement, les performances de ces joueurs avec leur club de L1 rapporteront directement des points à votre franchise. Et à la fin, c'est la franchise qui a accumulé le plus de point qui gagne ! Simple non ?
+# Modalités
 
-# Plus précisément...
+## Votre franchise
+Au démarrage, votre franchise dispose d'un budget de **100 Ka** (Ka pour *Kamouls* qui est la monnaie du jeu) pour recruter 7 joueurs : 1 gardien, 2 défenseurs, 2 milieux de terrain et 2 attaquants. Chaque joueur à un salaire que votre franchise doit assumer : Au total, la somme des salaires de vos 7 joueurs ne doit pas dépasser **60 Ka**
 
-## Recrutement des joueurs
-Vous devez effectuer 
+## Votre score
+Les joueurs de votre franchise disputent des matchs en Ligue 1 (du moins, si vous les choisissez bien : il vaut mieux engager des joueurs assurés de jouer régulièrement que Wattoo-Wattoo)
+
+Le score de votre franchise est la somme des points apportés par vos joueurs
