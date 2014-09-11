@@ -2,13 +2,13 @@
 	checkAccess(1);
 	checkEkyp();
 	$userPouleId = intval($_SESSION['pouleId']);
-	$listVentesQuery = $db->getArray("select jo.prenom, jo.nom as nomJoueur, jo.poste, ve.id as venteId, ve.type, ve.montant, ek.nom as nomEkyp, jo.club_id, jo.id as joueurId from joueur as jo, vente as ve, ekyp as ek where ve.resolue=0 and ve.departage_attente=0 and ve.date_soumission<now() and ve.date_finencheres>now() and ve.joueur_id=jo.id and ve.auteur_id=ek.id and (ve.type='PA' or ve.type='MV') and ve.poule_id={$userPouleId} order by ve.date_soumission asc");
+	$listVentesQuery = $db->getArray("select jo.prenom, jo.nom as nomJoueur, jo.poste, ve.id as venteId, ve.type, ve.montant,date_format(ve.date_finencheres,'%d/%m %H:%i:%s') as dateFin, ek.nom as nomEkyp, jo.club_id, jo.id as joueurId from joueur as jo, vente as ve, ekyp as ek where ve.resolue=0 and ve.departage_attente=0 and ve.date_soumission<now() and ve.date_finencheres>now() and ve.joueur_id=jo.id and ve.auteur_id=ek.id and (ve.type='PA' or ve.type='MV') and ve.poule_id={$userPouleId} order by ve.date_soumission asc");
 ?>
 	<div class="sectionPage">
 		<div class="titre_page">Enchères en cours</div>
 		<form action="index.php" method="POST">
 		<table class="tableau_liste_centre">
-			<tr><th>Type</th><th>Joueur</th><th>Poste</th><th>Club</th><th>Prix</th><th>Soumetteur</th><th>Enchere<br/>proposée</th><th>Nouveau<br/>montant</th><th>Annuler</th></tr>
+			<tr><th>Type</th><th>Joueur</th><th>Poste</th><th>Club</th><th>Prix</th><th>Fin</th><th>Enchere<br/>proposée</th><th>Nouveau<br/>montant</th><th>Annuler</th></tr>
 			<?php
 			if ($listVentesQuery != NULL) {
 				$i=0;
@@ -40,7 +40,7 @@
 					echo "<input type =\"hidden\" name=\"joueurs[{$i}]\" value=\"{$vente['prenom']} {$vente['nomJoueur']}\" />";
 					echo "<a href='index.php?page=detailJoueur&joueurid={$vente['joueurId']}'>{$vente['prenom']} {$vente['nomJoueur']}</a></td>";
 					$poste = traduire($vente['poste']);
-					echo "<td>{$poste}</td><td>{$club}</td><td>{$vente['montant']} Ka</td><td>{$vente['nomEkyp']}</td><td>";
+					echo "<td>{$poste}</td><td>{$club}</td><td>{$vente['montant']} Ka</td><td>{$vente['dateFin']}</td><td>";
 					if (isset ($getEnchereQuery[0])) {
 						$montant = $getEnchereQuery[0]['montant'];
 						echo $montant.' Ka';

@@ -149,8 +149,10 @@ if ($getJoueurQuery[0]['poste'] != 'A') {
 	echo "<tr><th>{$pictoBonusDef} Matchs sans buts encaissés</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbDefVierge']}</td></tr>";
 	echo "<tr><th>{$pictoDemiBonus} Matchs avec un seul but encaissé sur pénalty</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbDefPeno']}</td></tr>";
 }
-echo "<tr><th>{$pictoBonusOff} Matchs 3 buts marqués (dans le jeu) ou plus</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbTroisButs']}</td></tr>";
-echo "<tr><th>{$pictoDemiBonusOff} Matchs avec exactement 3 buts marqués dont un pénalty</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbTroisButsPeno']}</td></tr>";
+if ($getJoueurQuery[0]['poste'] == 'A' ||  $getJoueurQuery[0]['poste'] == 'M') {
+	echo "<tr><th>{$pictoBonusOff} Matchs 3 buts marqués (dans le jeu) ou plus</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbTroisButs']}</td></tr>";
+	echo "<tr><th>{$pictoDemiBonusOff} Matchs avec exactement 3 buts marqués dont un pénalty</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbTroisButsPeno']}</td></tr>";
+}
 echo "<tr><th>{$pictoBonusEx} Total des bonus exceptionnels</th><td width='50px' align='right'>{$extraBonusQuery[0]['total']}</td></tr>";
 if ($isJoueurLibre) {
 	$scoreFl='?';
@@ -242,15 +244,16 @@ if (! $isJoueurLibre){
 					$bonus .= $pictoDemiBonus;
 				}
 			}
-			$bonusOff = $perf['troisbuts'];
-			if ($bonusOff > 0) {
-				$bonus .= $pictoBonusOff;
+			if ($getJoueurQuery[0]['poste'] == 'A' || $getJoueurQuery[0]['poste'] == 'M') {
+				$bonusOff = $perf['troisbuts'];
+				if ($bonusOff > 0) {
+					$bonus .= $pictoBonusOff;
+				}
+				$bonusOffPeno = $perf['troisbuts_unpenalty'];
+				if ($bonusOffPeno > 0) {
+					$bonus .= $pictoDemiBonusOff;
+				}
 			}
-			$bonusOffPeno = $perf['troisbuts_unpenalty'];
-			if ($bonusOffPeno > 0) {
-				$bonus .= $pictoDemiBonusOff;
-			}
-
 			echo "<tr class='ligne{$classNum}'><td>{$perf['dateMatch']}</td><td><a href='index.php?page=detailClub&clubid={$perf['clubDomId']}'>{$perf['clubDom']}</a> - <a href='index.php?page=detailClub&clubid={$perf['clubExtId']}'>{$perf['clubExt']}</a></td><td><a href='index.php?page=detailMatch&rencontreid={$perf['rencontreId']}'>{$perf['buts_club_dom']}-{$perf['buts_club_ext']}{$star}</a></td><td>{$perf['minutes']} '</td><td>{$noteMoy}{$leader}</td><td>{$bonus}</td></tr>";
 			$cptLigne++;
 		}
