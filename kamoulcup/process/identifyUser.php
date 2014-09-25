@@ -13,7 +13,7 @@ if (!get_magic_quotes_gpc()) {
 	$mdp = addslashes($_POST['password']);
 }
 
-$getUserQuery = "select ut.droit,ut.ekyp_id,ek.poule_id from utilisateur as ut, ekyp as ek where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') and ((ek.id = ut.ekyp_id) or(ut.ekyp_id is NULL))limit 1";
+$getUserQuery = "select ut.droit,ut.ekyp_id,ek.poule_id,ek.km from utilisateur as ut, ekyp as ek where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') and ((ek.id = ut.ekyp_id) or(ut.ekyp_id is NULL))limit 1";
 $storedUser = $db->getArray($getUserQuery);
 if ($storedUser == NULL) {
 	// Utilisateur inconnu
@@ -26,11 +26,14 @@ else {
 		// Enregistrer le nom d'utilisateur et ses droits dans la session
 		$username=$utilisateur;
 		$userrights=$storedUser[0]['droit'];
+		
 		$_SESSION['username'] = $username;
 		$_SESSION['userrights'] = $userrights;
 		// Enregistrement de l'ekyp
 		if (isset($storedUser[0]['ekyp_id'])) {
+			$km = $storedUser[0]['km'];
 			$_SESSION['myEkypId'] = $storedUser[0]['ekyp_id'];
+			$_SESSION['km'] = $km;
 		}
 		if (isset($storedUser[0]['poule_id'])) {
 			$_SESSION['pouleId'] = $storedUser[0]['poule_id'];

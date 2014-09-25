@@ -1,0 +1,706 @@
+/******************************************************
+	
+	Glassero Par Patrick Roux : http://www.kicoe.net
+	One Page Responsive HTML Template
+	
+	Sections of stylesheet:
+		$INDEX0 - FONTS AND RESET
+		$INDEX1 - GENERAL
+		$INDEX2 - HEADER COMMON
+		$INDEX3 - MENU COMMON
+		$INDEX4 - HEADER STANDARD
+		$INDEX5 - HEADER STANDARD REDUIT
+		$INDEX6 - HEADER MOBILE
+		$INDEX7 - MAIN CONTENT
+		$INDEX8 - MERKATO
+		$INDEX9 - TEAM
+		$INDEX10 - HOME
+		
+******************************************************/	
+
+/******************************************************
+
+	$INDEX0 - FONTS AND RESET
+	
+******************************************************/	
+
+
+@import url(http://fonts.googleapis.com/css?family=Neucha);
+
+body, html { 
+	font-size: 100%; 	
+	padding: 0; 
+	margin: 0;
+	height:100%;
+	}
+
+/* Reset */
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+/******************************************************
+
+	$INDEX1 - GENERAL
+	
+******************************************************/	
+
+
+
+body {
+    font-family: Calibri, Arial, sans-serif;
+	font-weight: 300;
+
+    -moz-transition: background-color 1s ease-in;
+    -webkit-transition: background-color 1s ease-in;
+    -o-transition: background-color 1s ease-in;
+    -ms-transition: background-color 1s ease-in;
+    transition: background-color 1s ease-in;
+}
+
+
+::-webkit-input-placeholder {
+    color:#888;
+}
+:-moz-placeholder {
+    color:#888;
+}
+::-moz-placeholder {
+    color:#888;
+}
+:-ms-input-placeholder {
+    color:#888;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {}
+
+#container {
+	height:100%;
+	position: relative;
+}
+
+h1{
+	font-family: 'Neucha', Calibri, Arial, sans-serif;
+	font-weight: 300;
+    font-size: 5em;
+	text-align: center;
+	margin: 0px 0px;
+}
+
+h2{
+	font-family: 'Neucha', Calibri, Arial, sans-serif;
+	font-weight: 300;
+    font-size: 2em;
+	text-align: center;
+	margin: 0px 0px;
+}
+
+h3{
+	font-family: 'Neucha', Calibri, Arial, sans-serif;
+	font-weight: 300;
+    font-size: 1.8em;
+	text-align: left;
+	margin: 0px 0px;
+	border-bottom: 3px solid;
+}
+
+hr{
+	border-top: 1px solid;
+	border-bottom: 0px;
+	margin: 5px auto 5px auto;
+	width: 98%;	
+}
+
+.display{
+	display: block;
+}
+
+.hide{
+	display: none;
+}
+
+.no-border{
+	border: 0px;
+}
+
+p{
+	font-weight: 300;
+	font-size: 1.3em;
+	display: inline-block;
+	margin:0;
+}
+
+select {
+    padding:3px;
+    margin: 2px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f8f8f8;
+    color:#888;
+    border:1px solid;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+	font-size: 1.1em;
+}
+
+button{
+	cursor:pointer; /*forces the cursor to change to a hand when the button is hovered*/
+	padding:3px 10px; /*add some padding to the inside of the button*/
+	/*give the button curved corners, alter the size as required*/
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	/*give the button a drop shadow*/
+	-webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+	font-size:0.9em;
+	margin:5px;
+}
+/***NOW STYLE THE BUTTON'S HOVER AND FOCUS STATES***/
+button:hover, button:focus{
+/*reduce the drop shadow size to give a pushed button effect*/
+	-webkit-box-shadow: 0 0 1px rgba(0,0,0, 0.7);
+	-moz-box-shadow: 0 0 1px rgba(0,0,0, 0.7);
+	box-shadow: 0 0 1px rgba(0,0,0, 0.7);
+}
+
+/******************************************************
+
+	$INDEX2 - HEADER ET FOOTER COMMON
+	
+******************************************************/	
+section {
+	padding-bottom:50%
+}
+
+
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    overflow: hidden;
+    -webkit-transition: height 0.3s;
+    -moz-transition: height 0.3s;
+    transition: height 0.3s;
+}
+
+header h1{
+	font-family: 'Neucha', Calibri, Arial, sans-serif;
+	font-weight: 300;
+    margin: 0;
+}
+
+header h1, header nav a {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;	
+}
+
+footer {
+	position:relative;
+	width: 100%;
+}
+
+/******************************************************
+
+	$INDEX3 - MENU COMMON
+	
+******************************************************/	
+
+
+nav a{}
+
+nav a.current, nav a:hover{}
+
+
+/******************************************************
+
+	$INDEX4 - HEADER ET FOOTER STANDARD
+	
+******************************************************/	
+
+
+
+
+.headerstandard {
+    height: 230px;
+}
+
+
+		.headerstandard .headerstandard-inner {
+			width: 90%;
+			max-width: 69em;
+			margin: 0 auto;
+			padding: 0 1.875em;
+		}
+
+
+		 /* We just have one-lined elements, so we'll center the elements with the line-height set to the height of the header */
+		.headerstandard h1,
+		.headerstandard nav.menustandard a {
+			line-height: 230px;
+		}
+
+		 .headerstandard h1 {
+			letter-spacing: 4px;
+			font-size: 4em;
+			float: left;
+		}
+
+		 .headerstandard nav.menustandard{
+			display: inline-block;
+			position: relative;
+			float: right;
+		}
+
+		.headerstandard nav.menustandard a {
+			margin: 0 0 0 8px;
+			font-size: 1.3em;
+			font-weight: 300;
+			padding: 8px 10px;
+			
+			border-radius: 5px;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+		}
+		
+		
+
+
+	
+	
+
+/******************************************************
+
+	$INDEX5 - HEADER STANDARD REDUIT
+	
+******************************************************/	
+
+
+
+
+.headerstandard.headerstandard-shrink {
+    height: 90px;
+}
+ 
+.headerstandard.headerstandard-shrink h1,
+.headerstandard.headerstandard-shrink nav.menustandard a {
+    line-height: 90px;
+}
+ 
+.headerstandard.headerstandard-shrink h1 {
+    font-size: 3em;
+}
+
+/******************************************************
+
+	$INDEX6 - HEADER MOBILE
+	
+******************************************************/	
+
+/******************************************************
+
+	$INDEX7 - MAIN CONTENT
+	
+******************************************************/	
+#main{
+	-webkit-transition: background 2s ease;
+	-moz-transition: background 2s ease;
+	transition: background 2s ease;
+}
+
+#main{
+	width:960px;
+	height:100%;
+	margin:85px auto -5px auto;
+}
+
+#main-content{
+    min-height:100%; /* real browsers */
+	width:100%;
+	padding-bottom: 50%;
+}
+
+html, body,
+#container,
+#main,
+#main section {}
+
+#main section{
+	padding:5px 3px;
+}
+
+
+/******************************************************
+
+	$INDEX8 - MERKATO
+	
+******************************************************/	
+#marketInfo {
+	display:inline-block;
+	width:100%;
+	text-align:center;
+}
+
+/******************************************************
+$INDEX 8-1 : Budget Info box
+******************************************************/
+#budgetInfo {
+	float:right;
+	margin:15px;
+	padding: 10px;
+	min-width:250px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+}
+
+.contract_position {
+	text-align: center;
+}
+.pos_marker{
+	width:16px;
+	height:16px;
+	margin-left:4px;
+	margin-right:4px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	vertical-align:middle;
+}
+.budgetInfo_line{
+	width:100%;
+	display:table;
+}
+
+.budgetItem{
+	text-align:center;
+	display:table-cell;
+}
+.budgetItem p {
+	font-size:1em;
+	display:block;
+}
+.budgetValue{
+	font-size:1.3em;
+	font-weight:bold;
+	display:inline-block;
+}
+/******************************************************
+$INDEX 8-2 : Players list
+******************************************************/
+#clubPlayersList{
+	margin:10px;
+	padding:10px;
+	width:450px;
+	text-align:center;
+	float:left;
+}
+
+.playersList{
+	width:100%;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+}
+
+#market ul { 
+	list-style-type: none; 
+	margin:0;
+	padding: 0; 
+}
+
+.playerPosition{
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	text-align:center;
+	margin:5px;
+	font-size:0.8em;
+	font-weight:bold;
+	padding:0px 5px;
+}
+
+.playerSalary {
+	float:right;
+}
+
+.playerPrize {
+	font-size:1.1em;
+	font-weight:bold;
+	text-align: right;
+	margin: 0px 5px;
+	padding: 0px 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.playerFree {
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	cursor:pointer;
+	margin: 10px; 
+	padding: 5px;
+	text-align:left;
+}
+
+.playerNotForSale {
+	cursor:default;
+	margin: 10px; 
+	padding: 5px;
+	text-align:left;
+}
+
+.playerBlocked {
+	font-style:italic;
+	opacity:0.5;
+}
+
+#playersCart{
+	float:right;
+	margin:10px;
+	padding:10px;
+	width:462px;
+	text-align:center;
+}
+#cartContent{
+	width:100%;
+	min-height:100px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	cursor:pointer;
+}
+.dropTarget{
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;	
+}
+.removeCartBtn{
+	font-size:0.9em;
+	font-weight:bold;
+	text-align:center;
+	padding:0px 5px;
+	margin:2px;
+	float:right;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+#cartValue{
+	text-align:right;
+}
+#cartValue p { 
+	margin-top: 0.2em;
+	margin-bottom:0.2em;
+} 
+/******************************************************
+
+	$INDEX9 - TEAM
+	
+******************************************************/
+#team p{
+	font-weight: 300;
+	font-size: 1.0em;
+	display:block;
+}
+
+#team ul { 
+	list-style-type: none; 
+	margin:0;
+	padding: 0; 
+}
+
+#team_players li.team_player_container { 
+	margin:10px;
+	display:table;
+}
+
+#team .team_player_tab {
+	padding:5px;
+	height:100%;
+	min-width:160px;
+	display:table-cell;
+}
+
+#team .team_player_tab  h4{
+	font-size:150%;
+	margin:0;
+}
+
+#team .realPlayerInfo {
+}
+#team .gamePlayerInfo {
+}
+#team .teamPlayerInfo {
+	width:100%;
+	text-align:right;
+	display:table-cell;
+}
+#team .teamPlayerInfo .teamPlayerInfo_data {
+	display:table-cell;
+	width:100%;
+	padding:10px;
+}
+#team .teamPlayerInfo .teamPlayerInfo_action{
+	white-space:nowrap;
+	display:table-cell;
+}
+#team .teamPlayerInfo .teamPlayerInfo_action div.transferList_actions{
+	display:none;
+	padding:10px;
+	text-align:center;
+}
+
+#team .team_player_tab .vignette {
+	cursor:default;
+	vertical-align:middle;
+	text-align:center;
+	margin:4px;
+	padding:2px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	width:96px;
+	display:inline-block;
+}
+
+#team .team_player_tab .vignette .main {
+  display: block;
+  vertical-align: middle;
+  line-height: normal;
+  font-size:1.1em;
+  font-weight:bold;
+  white-space:nowrap;
+}
+#team .team_player_tab .vignette i {
+  display: block;
+  vertical-align: middle;
+  line-height: normal;
+}
+#team .team_player_tab .vignette .annex {
+  display: block;
+  vertical-align: middle;
+  line-height: normal;
+  font-style:italic;
+  font-size:80%;
+}
+.playerStats {
+	cursor:default;
+	vertical-align:middle;
+	text-align:center;
+	margin:4px;
+	padding:2px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	display:inline-block;
+}
+.playerStats ul {
+	display:table;
+	border-spacing:12px;
+}
+.playerStats ul li {
+	display:table-cell;
+	font-size:1em;
+}
+.playerStats li .main {
+	white-space:nowrap;
+	display: block;
+	vertical-align: middle;
+	line-height: normal;
+	font-weight:bold;
+	white-space:nowrap;
+}
+.playerStats li .emphasize{
+	font-size:130%;
+}
+.playerStats li .annex {
+	display: block;
+  vertical-align: middle;
+  line-height: normal;
+  font-style:italic;
+  font-size:80%;
+}
+
+#team #team_money{
+	padding:10px;
+}
+#team  #team_money td{
+	padding:3px;
+}
+#team  #team_money table td.col_money{
+	text-align:right;
+}
+#team #team_overview{
+	display:table;
+	font-size:1.3em;
+	width:100%;
+	border-collapse: separate;
+    border-spacing: 1em;
+}
+#team_overview .overviewItem {
+	text-align:center;
+	cursor:default;
+	padding:0.5em;
+	width:25%;
+	display:table-cell;
+}
+.contract_positions_container {
+	display:table;
+	border-collapse:collapse;
+	width:100%;
+}
+.contract_position{
+	display:table-cell;
+}
+/******************************************************
+
+	$INDEX10 - HOME
+	
+******************************************************/
+#home #realData {
+	display:table;
+	width:100%
+}
+
+#home #kmWrapper {
+	width:580px;
+	display:table-cell;
+}
+
+#home #lastResults {
+	display:table-cell;
+}

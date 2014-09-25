@@ -1,0 +1,296 @@
+/******************************************************
+	
+	Glassero Par Patrick Roux : http://www.kicoe.net
+	One Page Responsive HTML Template
+	
+	Theme : Retro
+	
+	Sections of stylesheet:
+		$INDEX0 - COULEURS UTILISEES
+		$INDEX1 - GENERAL
+		$INDEX3 - MENU COMMON
+		$INDEX5 - HEADER STANDARD REDUIT
+		$INDEX6 - HEADER MOBILE
+		$INDEX7 - MAIN CONTENT
+		$INDEX8 - MARKET
+		
+******************************************************/	
+
+/******************************************************
+
+	$INDEX0 - COULEURS UTILISEES
+	
+******************************************************/	
+
+/*
+	#ECECED
+	#fab7e6 -> fab7e6
+	#5A2E2E
+    #3E4147
+	#2A2C31
+*/
+
+/******************************************************
+
+	$INDEX1 - GENERAL
+	
+******************************************************/	
+
+body {
+    color: #3E4147;
+}
+
+
+header{
+	color: #ECECED;
+	/*background: #3E4147;*/
+	background: url("images/Fond-herbe.jpg") repeat scroll 0 0 #3E4147;
+	-webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	-moz-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+}
+
+footer{
+	background: #2A2C31;
+	color: #fab7e6;
+}
+
+::selection{
+	color: #ECECED;
+	background: #3E4147;
+}
+::-moz-selection{
+	color: #ECECED;
+	background: #3E4147;
+}
+::-webkit-selection{
+	color: #ECECED;
+	background: #3E4147;
+}
+
+a{
+	color: #000;
+}
+
+a:hover {
+	color: #000;
+	text-decoration: underline;
+}
+
+h1, h2, h3{
+	color: #3E4147;
+	border-color: #3E4147;
+}
+
+hr{
+	border-color: #3E4147;
+}
+
+button {
+	background:#3E4147; /*the colour of the button*/
+	border:1px solid #3E4147; /*required or the default border for the browser will appear*/
+	/*style the text*/
+	color:#ECECED;
+}
+
+button:hover, button:focus{
+	background-color :#2A2C31; /*make the background a little darker*/
+	color:#fab7e6;
+}
+
+
+/******************************************************
+
+	$INDEX3 - MENU COMMON
+	
+******************************************************/	
+
+
+
+
+nav a{
+	color: #ECECED;
+}
+
+nav a.current, nav a:hover{
+	background: #ECECED;
+	color: #3E4147;
+	text-decoration: none;
+}
+
+/******************************************************
+
+	$INDEX4 - HEADER STANDARD
+	
+******************************************************/	
+header h1 {
+	color: #ECECED;
+}
+
+/******************************************************
+
+	$INDEX5 - HEADER STANDARD REDUIT
+	
+******************************************************/	
+
+ 
+/*.headerstandard.headerstandard-shrink h1 {
+	background: transparent url('images/icone.png') center left no-repeat;
+	text-indent: 60px;
+}*/
+
+/******************************************************
+
+	$INDEX6 - HEADER MOBILE
+	
+******************************************************/	
+
+
+header.headermobile button {
+	background: transparent url('images/nav-icon.png') center center no-repeat;
+}
+
+/******************************************************
+
+	$INDEX7 - MAIN CONTENT
+	
+******************************************************/	
+body {
+    background: url("images/squairy_light_pink.png") repeat scroll 0 0 #ECECED;
+}
+
+#main-content {
+	background: none repeat scroll 0 0 #ECECED;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: -10px 0 50px 20px #ECECED;
+	-webkit-box-shadow: -10px 0 50px 20px #ECECED;
+	-moz-box-shadow:-10px 0 50px 20px #ECECED;
+}
+/******************************************************
+
+	$INDEX8 - MERKATO
+	
+******************************************************/
+#budgetInfo{
+	border: 1px solid #fab7e6;
+	background-color: #fab7e6;
+}
+
+.playersList {
+	border: 1px solid #3E4147;
+}
+
+.pos_marker_filled {
+	border: 1px solid #3E4147;
+	background: #3E4147;
+}
+
+.pos_marker_empty{
+	border: 2px solid #3E4147;
+	background: #ECECED;
+}
+.playerPosition {
+	border: 2px solid #3E4147;
+	background: #ECECED;
+	color: #3E4147;
+}
+.playerPrize {
+	color: #3E4147;
+	border: 1px solid #fab7e6;
+	background: #fab7e6 url('images/banknote.png') center left no-repeat;
+	padding-left: 26px;
+}
+.playerFree {
+	background: #3E4147;
+	color:#ECECED;
+}
+#cartContent{
+	border: 1px solid #3E4147;
+}
+.dropTarget{
+	color:#3E4147;
+	background-color:#fab7e6;
+}
+.removeCartBtn{
+	color:#3E4147;
+	background-color:#ECECED;
+}
+/******************************************************
+
+	$INDEX8 - TEAM
+	
+******************************************************/
+#team_players li.team_player_container { 
+	border:1px solid #BDBDBE; /*#3E4147;*/
+	/*background-color: #BDBDBE;*/
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+}
+#team .team_player_tab {
+}
+#team .realPlayerInfo {
+}
+#team .gamePlayerInfo {
+}
+#team .teamPlayerInfo {
+}
+#team  .teamPlayerInfo .teamPlayerInfo_action  .transferList_actions{
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	background-color:rgba(223,186,105,0.5);
+}
+#team .team_player_tab .vignette {
+	background-color:#3E4147;
+	color:#ECECED;
+	-webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	-moz-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+}
+
+#team .team_player_tab .teamPlayerInfo_action .vignette {
+	background-color:#fab7e6;
+	color:#3E4147;
+}
+
+#team .team_player_tab .playerStats {
+	-webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	-moz-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+}
+
+#team  #team_money {
+		background-color:#3E4147;
+		padding:0;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+}
+
+#team  #team_money table{
+	border-bottom:1px solid #3E4147;
+	border-collapse: separate;
+    border-spacing: 0;
+	font-size:1.3em;
+}
+
+#team  #team_money thead{
+	color:#ECECED;
+}
+
+#team  #team_money tbody tr:nth-child(even){
+	background-color:#fab7e6;
+}
+#team  #team_money tbody tr:nth-child(odd){
+	background-color:#ECECED;
+}
+#team #team_overview  .overviewItem{
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	border:1px solid #fab7e6;
+	background-color:#fab7e6;
+}

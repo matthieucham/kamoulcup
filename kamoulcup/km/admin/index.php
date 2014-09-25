@@ -19,10 +19,20 @@ checkaccess(5);
     $( "#mercatoF_datepicker" ).datepicker();
     $( "#mercatoF_datepicker" ).datepicker("option","dateFormat","yy-mm-dd");
   });
+  $(function() {
+	  $( "#tabs" ).tabs();
+	  });
   </script>
 </head>
 <body>
 <h1>Kamoul Manager : Administration</h1>
+<div id="tabs">
+<ul>
+	<li><a href="#tabs-1">Effectifs et scores</a></li>
+	<li><a href="#tabs-2">Transferts et finances</a></li>
+	<li><a href="#tabs-3">Championnats</a></li>
+</ul>
+<div id="tabs-1">
 <h2>Step 1: Sélections des franchises</h2>
 <p>Evolution possible : chaque franchise remplit sa feuille de match</p>
 <form method="post" action="process/updateSelections.php">
@@ -42,7 +52,6 @@ if ( $listJourneesQuery != NULL) {
 <form method="post" action="process/updateScores.php">
 <p>Scores de la journée <select size=1 name="journee">
 <?php
-$listJourneesQuery = $db->getArray("select id,numero from journee order by numero asc");
 if ( $listJourneesQuery != NULL) {
 	foreach($listJourneesQuery as $journee) {
 		echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
@@ -56,7 +65,6 @@ if ( $listJourneesQuery != NULL) {
 <form method="post" action="process/updateSalaires.php">
 <p>Salaires après la journée <select size=1 name="journee">
 <?php
-$listJourneesQuery = $db->getArray("select id,numero from journee order by numero asc");
 if ( $listJourneesQuery != NULL) {
 	foreach($listJourneesQuery as $journee) {
 		echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
@@ -75,8 +83,9 @@ l'année d'avant</h2>
 	<option value="score">Saison</option>
 </select> <input type="submit" value="init" /></p>
 </form>
-
-<h1>Gestion des transferts</h1>
+</div>
+<div id="tabs-2">
+<h2>Gestion des transferts</h2>
 <ul>
 <?php
 $mercatos = $db->getArray("select mer_id,mer_date_ouverture,mer_date_fermeture from km_mercato where mer_processed=0 order by mer_date_ouverture asc");
@@ -88,8 +97,98 @@ if ($mercatos != NULL) {
 ?>
 </ul>
 <form method="post" action="process/createMercato.php">
-<p>Ouvrir un mercato du <input type="text" id="mercatoD_datepicker" name="mercatoFrom"> au <input type="text" id="mercatoF_datepicker" name="mercatoTo"> Heure <input name="mercatoTime" size="4" maxlength="2" />:00 <input type="submit" value="créer" /></p>
+<p>Ouvrir un mercato du <input type="text" id="mercatoD_datepicker"
+	name="mercatoFrom"> au <input type="text" id="mercatoF_datepicker"
+	name="mercatoTo"> Heure <input name="mercatoTime" size="4"
+	maxlength="2" />:00 <input type="submit" value="créer" /></p>
 </form>
-
+</div>
+<div id="tabs-3">
+<h2>Inscription des franchises</h2>
+<form method="POST" action="process/registerEkyps.php">
+<p>Franchises : <select multiple name='inscrits[]' size='20'>
+<?php
+$franchisesQ = "select id,nom,km from ekyp order by nom asc";
+$franchises = $db->getArray($franchisesQ);
+if (franchises != NULL) {
+	foreach ($franchises as $value) {
+		$frId = $value['id'];
+		$frNom = $value['nom'];
+		echo "<option value='{$frId}'";
+		if (intval($value['km'])==1) {
+			echo " selected";
+		}
+		echo ">{$frNom}</option>";
+	}
+}
+?>
+</select><input type="submit" value="inscrire" /></p>
+</form>
+<h2>Lancer un championnat</h2>
+<form method="POST" action="process/createChampionnat.php">
+<p>Franchises : <select multiple name='ekyps[]' size='20'>
+<?php
+$franchisesQ = "select id,nom,km from ekyp where km=1 order by nom asc";
+$franchises = $db->getArray($franchisesQ);
+if ($franchises != NULL) {
+	foreach ($franchises as $value) {
+		$frId = $value['id'];
+		$frNom = $value['nom'];
+		echo "<option value='{$frId}'";
+		if (intval($value['km'])==1) {
+			echo " selected";
+		}
+		echo ">{$frNom}</option>";
+	}
+}
+?>
+</select> Nom:<input name="nom" /> Démarre après la J <select size=1
+	name="jStart">
+	<?php
+	if ( $listJourneesQuery != NULL) {
+		echo "<option value=\"0\">0</option>";
+		foreach($listJourneesQuery as $journee) {
+			echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
+		}
+	}
+	?>
+</select> Nombre de journées=<input name="nbJ" size="2" maxlength="2" />
+<input type="submit" value="creer" /></p>
+</form>
+<h2>Rattacher des franchises à un championnat existant</h2>
+<form action="process/attachChampionnat.php" method="post">
+<p>Rattacher les franchises <select multiple name='ekyps[]' size='20'>
+<?php
+if (franchises != NULL) {
+foreach ($franchises as $value) {
+		$frId = $value['id'];
+		$frNom = $value['nom'];
+		echo "<option value='{$frId}'";
+		if (intval($value['km'])==1) {
+			echo " selected";
+		}
+		echo ">{$frNom}</option>";
+	}
+}
+?>
+</select> 
+au championnat <select name='championnat'>
+<?php
+$champQ = "select chp_id,chp_nom,chp_nb_journees from km_championnat order by chp_first_journee_id desc";
+$champ = $db->getArray($champQ);
+if ($champ != NULL) {
+	foreach ($champ as $value) {
+		$chId = $value['chp_id'];
+		$chNom = $value['chp_nom'];
+		$nbJ = $value['chp_nb_journees'];
+		echo "<option value='{$chId}'";
+		echo ">{$chNom} [{$nbJ}]</option>";
+	}
+}
+?>
+</select> <input type="submit" value="associer"/></p>
+</form>
+</div>
+</div>
 </body>
 </html>
