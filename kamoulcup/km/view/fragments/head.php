@@ -7,4 +7,5 @@
 	<link rel="stylesheet" href="res/font-awesome-4.2.0/css/font-awesome.min.css">
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
+	
 </head>

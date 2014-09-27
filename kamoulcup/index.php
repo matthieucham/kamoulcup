@@ -78,7 +78,7 @@ if (isset($_SESSION['userrights'])) {
 	echo "<a href='index.php?page=identification'><img src='images/connexion.png' /></a>";
 }
 ?> <?php
-// C'est ici qu'on insï¿½re le contenu variable (fausse frame).
+// C'est ici qu'on insère le contenu variable (fausse frame).
 if(isset($_GET['ErrorMsg'])){
 	echo "<br/><div class='error'>";
 	echo $_GET['ErrorMsg'];

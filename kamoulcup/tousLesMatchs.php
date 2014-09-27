@@ -1,7 +1,7 @@
 <?php
-include('process/validateForm.php');
-include('process/formatStyle.php');
-include('process/utils.php');
+include_once('process/validateForm.php');
+include_once('process/formatStyle.php');
+include_once('process/utils.php');
 ?>
 <div class="sous_titre">Tous les résultats</div>
 <?php

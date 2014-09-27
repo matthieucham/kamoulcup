@@ -13,7 +13,8 @@
 		$INDEX6 - HEADER MOBILE
 		$INDEX7 - MAIN CONTENT
 		$INDEX8 - MARKET
-		
+		$INDEX9 - TEAM
+		$INDEX10 - HOME
 ******************************************************/	
 
 /******************************************************
@@ -219,7 +220,7 @@ body {
 }
 /******************************************************
 
-	$INDEX8 - TEAM
+	$INDEX9 - TEAM
 	
 ******************************************************/
 #team_players li.team_player_container { 
@@ -293,4 +294,20 @@ body {
 	border-radius: 12px;
 	border:1px solid #fab7e6;
 	background-color:#fab7e6;
+}
+/******************************************************
+
+	$INDEX10 - TEAM
+	
+******************************************************/
+#home #lastResults {
+	border:1px solid #fab7e6;
+	background-color:#fab7e6;
+}
+#cd-timeline:before {
+    background: none repeat scroll 0 0 #fab7e6;
+}
+.cd-timeline-img {
+	background: none repeat scroll 0 0 #3E4147;
+	color:white;
 }

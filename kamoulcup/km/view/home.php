@@ -1,10 +1,18 @@
-<section id="home">
-<div id="realData">
-
-	<div id="kmWrapper">
-	<?php
+<?php
 	include("../../includes/db.php");
 	include("../../vocabulaire.php");
+?>
+<section id="home">
+<div id="realData">
+	<div id="breadcrumb"></div>
+	<h2>Ligue 1</h2>
+	<div id="lastResults">
+	<?php
+		 include("fragments/lastResults.php");
+	?>
+	</div>
+	<div id="kmWrapper">
+	<?php
 	// pour tester l'integration, lister les clubs comme point d'entree
 	$clubsQ = "select id,nom from club order by nom asc";
 	$clubs = $db->getArray($clubsQ);
@@ -24,11 +32,7 @@
 	}
 	?>
 	</div>
-	<div id="lastResults">
-	<?php
-		 include("fragments/lastResults.php");
-	?>
-	</div>
 </div>
 
 </section>
+<script src="js/custom/km-home.js"></script>

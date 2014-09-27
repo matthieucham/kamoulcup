@@ -150,7 +150,7 @@ p{
 
 select {
     padding:3px;
-    margin: 2px;
+    margin: 5px;
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
     border-radius:5px;
@@ -189,6 +189,15 @@ button:hover, button:focus{
 	-webkit-box-shadow: 0 0 1px rgba(0,0,0, 0.7);
 	-moz-box-shadow: 0 0 1px rgba(0,0,0, 0.7);
 	box-shadow: 0 0 1px rgba(0,0,0, 0.7);
+}
+
+.sectionInfo {
+	text-align:center;
+}
+
+.sectionInfo p {
+	/*font-size:1em;*/
+	display:block;
 }
 
 /******************************************************
@@ -692,15 +701,168 @@ $INDEX 8-2 : Players list
 	
 ******************************************************/
 #home #realData {
-	display:table;
-	width:100%
+	display:block;
+	width:100%;
 }
 
 #home #kmWrapper {
-	width:580px;
-	display:table-cell;
+	width:680px;
+	/*display:table-cell;*/
 }
 
 #home #lastResults {
-	display:table-cell;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	padding-left:3px;
+	padding-right:3px;
+	float:right;
 }
+
+#home #lastResults tr {
+		line-height:0;
+}
+#home #lastResults p,td {
+		font-size:0.9em;
+}
+#home #kmWrapper #perfDomicile {
+	display:block;
+	width:50%;
+	float:left;
+}
+#home #kmWrapper #perfExterieur {
+	display:block;
+	width:50%;
+	float:right;
+}
+
+#player #timeline {
+	text-align:left;
+	width:300px;
+}
+#cd-timeline {
+    margin-bottom: 2em;
+    margin-top: 2em;
+    padding: 2em 0;
+    position: relative;
+}
+#cd-timeline:before {
+    content: "";
+    height: 100%;
+    left: 18px;
+    position: absolute;
+    top: 0;
+    width: 4px;
+    left: 50%;
+    margin-left: -2px;
+}
+/*@media only screen and (min-width: 1170px) {
+	#cd-timeline {
+    	margin-bottom: 3em;
+    	margin-top: 3em;
+	}
+	#cd-timeline:before {
+    	left: 50%;
+    	margin-left: -2px;
+	}
+}*/
+.cd-timeline-block {
+    margin: 1em 0;
+    position: relative;
+}
+.cd-timeline-block:first-child {
+    margin-top: 0;
+}
+.cd-timeline-block:last-child {
+    margin-bottom: 0;
+}
+.cd-timeline-img {
+    border-radius: 50%;
+    -webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	-moz-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+    height: 24px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    width: 24px;
+    margin-left: -12px;
+    margin-top: 20px;
+    vertical-align:middle;
+    text-align:center;
+}
+.cd-timeline-content {
+    background: none repeat scroll 0 0 white;
+    border-radius: 0.25em;
+    -webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	-moz-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+    margin-left: 60px;
+    padding: 1em;
+    position: relative;
+}
+.cd-timeline-content p, .cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {
+    font-size: 0.8125rem;
+}
+.cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {
+    display: inline-block;
+}
+.cd-timeline-content .cd-date {
+    float: left;
+    padding: 0.8em 0;
+}
+.cd-timeline-content:before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent white transparent transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 7px;
+    content: "";
+    height: 0;
+    position: absolute;
+    right: 100%;
+    top: 16px;
+    width: 0;
+}
+	.cd-timeline-content h2 {
+    	font-size: 1.25rem;
+	}
+	.cd-timeline-content p {
+    	font-size: 1rem;
+	}
+	.cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {
+    	font-size: 0.875rem;
+	}
+	.cd-timeline-content {
+    	margin-left: 0;
+	    width: 45%;
+	}
+	.cd-timeline-content:before {
+    	border-color: transparent transparent transparent white;
+    	left: 100%;
+    	top: 24px;
+	}
+	.cd-timeline-content .cd-date {
+    	font-size: 1rem;
+    	left: 122%;
+    	position: absolute;
+    	top: 6px;
+    	width: 100%;
+	}
+	.cd-timeline-block:nth-child(2n) .cd-timeline-content {
+    	float: right;
+	}
+	.cd-timeline-block:nth-child(2n) .cd-timeline-content:before {
+    	border-color: transparent white transparent transparent;
+    	left: auto;
+    	right: 100%;
+    	top: 24px;
+	}
+	.cd-timeline-block:nth-child(2n) .cd-timeline-content .cd-date {
+    	left: auto;
+    	right: 122%;
+    	text-align: right;
+	}

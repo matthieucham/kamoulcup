@@ -1,6 +1,6 @@
 <?php
-	include('process/validateForm.php');
-	include('process/formatStyle.php');
+	include_once('process/validateForm.php');
+	include_once('process/formatStyle.php');
 
 	if (! isset($_GET['rencontreid'])) {
 		echo '<p class=\"error\">Pas de rencontreId !</p>';

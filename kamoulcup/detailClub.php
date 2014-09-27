@@ -1,7 +1,7 @@
 <?php
-	include('process/validateForm.php');
-	include('process/formatStyle.php');
-	include('process/utils.php');
+	include_once('process/validateForm.php');
+	include_once('process/formatStyle.php');
+	include_once('process/utils.php');
 	
 	
 	if (! isset($_GET['clubid'])) {

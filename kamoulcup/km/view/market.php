@@ -1,6 +1,6 @@
 <section id="market">
 <h1>Merkato</h1>
-<div id="marketInfo" class="infobox">
+<div id="marketInfo" class="sectionInfo">
 	<p>Marché ouvert du 17/11 au 19/11</p>
 </div>
 <div id="budgetInfo">
