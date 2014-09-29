@@ -11,7 +11,6 @@
 	<div class='sectionInfo'>
 	<h2><?php echo $getJoueurQuery[0]['prenom'].' '.$getJoueurQuery[0]['nom'] ?></h2>
 		<p><span class="playerPosition" title="Défenseur">D</span> Lyon</p>
-		<p>Sous contrat avec <a href="./index.php?kmpage=home&page=franchise">El Brutal Principe</a></p>
 	</div>
 	<div id="timeline">
 	<div id="cd-timeline" class="cd-container">
@@ -38,8 +37,34 @@
     	</div> <!-- cd-timeline-block -->
 	</div>
 	</div>
+	<div id="playerInfo">
+		<ul class="fa-ul">
+			<li><i class="fa-li fa fa-home"></i>Sous contrat avec El Brutal Principe</li>
+			<li><i class="fa-li fa fa-suitcase"></i>Sans contrat</li>
+			<li><i class="fa-li fa fa-pencil-square-o"></i>Salaire contractuel : 12 Ka</li>
+			<li><i class="fa-li fa fa-futbol-o"></i>Salaire virtuel : 8 Ka (-4) <span class='uppings' title='En hausse'><i class="fa fa-arrow-up"></i></span> <span class='downings' title='En baisse'><i class="fa fa-arrow-down"></i></span></li>
+			<li class='highlight'><i class="fa-li fa fa-money"></i>En vente pour 5.5 Ka</li>
+		</ul>
+	</div>
+	<div id="playerPerf">
+	<h2>Historique des performances</h2>
+	<table width="100%">
+	<thead>
+	<tr>
+		<th>Journée</th><th>Rencontre</th><th>Franchise</th><th>Score</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>1</td><td>Reims 0 - 0 Nice</td><td>Libre</td><td>9.75</td>
+	</tr>
+	<tr>
+		<td>2</td><td>Nice 1 - 2 Montpellier</td><td>Nation of Breizh</td><td>5.12</td>
+	</tr>
+	<tr>
+		<td>3</td><td>Nice 3 - 1 Monaco</td><td>Nation of Breizh</td><td>11.4</td>
+	</tr>
+	</tbody>
+	</table>
+	</div>
 </section>
-<!-- 
-<script src="js/timeliner.min.js"></script>
-<script src="js/custom/km-player.js"></script>
--->

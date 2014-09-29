@@ -311,3 +311,53 @@ body {
 	background: none repeat scroll 0 0 #3E4147;
 	color:white;
 }
+.downings{
+	color:#c03b44;
+}
+.uppings{
+	color:#75ce66;
+}
+
+.highlight {
+	font-weight:bold;
+	-webkit-animation: pulse 4s 5 ease-in-out;
+	animation: pulse 4s 5 ease-in-out;
+}
+
+@keyframes pulse {
+0% { color: rgba(62,65,71,0.2); }
+50% { color: rgba(62,65,71,0.9); }
+100% { color:rgba(62,65,71,0.2); }
+}
+
+@-webkit-keyframes pulse {
+0% { color: rgba(62,65,71,0.2); }
+50% { color: rgba(62,65,71,0.9); }
+100% { color:rgba(62,65,71,0.2); }
+}
+#playerPerf table {
+	background-color:#3E4147;
+	border-collapse:collapse;
+}
+#playerPerf table th {
+	color:#ECECED;
+}
+
+#playerPerf table tbody tr:nth-child(even){
+	background-color:#fab7e6;
+}
+#playerPerf table tbody tr:nth-child(odd){
+	background-color:#ECECED;
+}
+#kmWrapper .colgauche_droite {
+	border-collapse:collapse;
+}
+#kmWrapper div.sectionPage:nth-child(even){
+	border-left:4px solid #fab7e6;;
+}
+#kmWrapper div.sectionPage:nth-child(odd){
+	border-right:4px solid #fab7e6;
+}
+#news {
+	border-bottom: 4px solid #fab7e6;
+} 

@@ -151,7 +151,7 @@
 	<tr>
 		<td>08/09/2014</td><td>Revente du joueur Maxime Gonalons</td><td class="col_money">+14.1 Ka</td><td></td><td class="col_money">98.3 Ka</td>
 	</tr>
-	<tbody>
+	</tbody>
 </table>
 </div>
 

@@ -5,23 +5,22 @@
 <section id="home">
 <div id="realData">
 	<div id="breadcrumb"></div>
-	<h2>Ligue 1</h2>
+	<h1>Les gros dossiers</h1>
 	<div id="lastResults">
 	<?php
 		 include("fragments/lastResults.php");
 	?>
 	</div>
+	<div id="news">
+		<h2><i class="fa fa-inbox"></i> Dernières infos</h2>
+		<ul class="fa-ul">
+  			<li><i class="fa-li fa fa-info-circle"></i> Bilan du dernier merkato</li>
+  			<li><i class="fa-li fa fa-info-circle"></i> Merkato en cours ! Jusqu'au 15/10 20:00</li>
+  			<li><i class="fa-li fa fa-info-circle"></i> Mes derniers résultats</li>
+  		</ul>
+	</div>
 	<div id="kmWrapper">
-	<?php
-	// pour tester l'integration, lister les clubs comme point d'entree
-	$clubsQ = "select id,nom from club order by nom asc";
-	$clubs = $db->getArray($clubsQ);
-	echo "<p>";
-	foreach ($clubs as $club) {
-		echo "<a href='index.php?page=detailClub&clubid={$club['id']}'>{$club['nom']} </a>";
-	}
-	echo "</p>";
-	
+	<?php	
 	if (isset($_GET['page'])) {
 		$contenuPage = $_GET['page'];
 		// On essaye par defaut d'inclure les pages du dossier surcharge, 
