@@ -1,3 +1,74 @@
+#Règles du jeu
+
+## En deux mots
+**Kamoulcup Manager** est un jeu tellement bien trouvé que je suis capable de vous l'expliquer en 5 phrases courtes. On parie ?
+
+- Vous êtes à la tête d'une Franchise
+- Vous recrutez des joueurs de Ligue 1 aux enchères contre les autres franchises
+- A chaque journée de championnat, vos joueurs vous rapportent des points selons leurs performances réelles
+- Vous pouvez acheter et vendre vos joueurs en cours de championnat pour vous adapter aux circonstances
+- A la fin, celui qui a amassé le plus de points a gagné !
+
+Et voilà, vous savez presque déjà tout ! Le reste n'est que mise au point des modalités. Il n'est pas nécessaire de tout lire d'un coup, reportez-y vous régulièrement au besoin.
+
+
+## Modalités
+
+### Le Kamoul
+
+### Création d'une Franchise
+
+### Inscription au championnat
+
+### La matière première : les joueurs de L1
+
+### Préparation du championnat
+
+#### Initialisation des budgets
+
+#### Recrutement de l'effectif : le merkato principal
+
+#### Règles de recrutement des joueurs
+
+#### Résolution des enchères
+
+### Déroulement du championnat
+
+#### Calendrier d'une semaine-type
+
+#### Evaluation des joueurs
+
+##### Critères communs d'évaluation
+
+##### Critères spécifiques aux gardiens de but
+
+##### Critères spécifiques aux défenseurs
+
+##### Critères spécifiques aux milieux de terrain
+
+##### Critères spécifiques aux attaquants
+
+#### Mise à jour salariale
+
+#### Licencier un joueur
+
+#### Placer un joueur sur la liste des transferts
+
+#### Le merkato hebdomadaire
+
+#### La mise à jour économique
+
+### Les finances
+
+
+TODO (le futur):
+- les remplaçants
+- sélectionner l'équipe type.
+- 
+
+
+------------------------------------------ Ancienne version
+
 # But du jeu
 Désigné manager d'une **franchise**, votre but est de constituer une sélection de joueurs de football évoluant en Ligue 1 dont **les performances réelles après chaque match vont vous rapporter des points**. Pour cela, vous disposez d'un budget et d'une masse salariale à ne pas dépasser. Des périodes de **mercato** vous permettent de recruter et de vendre des joueurs. Mais attention: vos concurrents aussi vont chercher à s'attacher les services des meilleurs joueurs, et il vous faudra remporter les enchères pour avoir leur signature !
 A la fin de la compétition, la franchise qui a accumulé le plus de points remporte le titre !
