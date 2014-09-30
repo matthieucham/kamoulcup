@@ -15,6 +15,11 @@ Et voilà, vous savez presque déjà tout ! Le reste n'est que mise au point des
 ## Modalités
 
 ### Le Kamoul
+Les transactions dans le jeu s'effectuent en *Kamouls*, abbrévié *Ka*. Ainsi, le prix de recrutement d'un joueur est exprimé en Ka, tout comme son niveau de salaire. La plus petite fraction de cette monnaie est le dixième de Kamoul : tous les tarifs sont exprimés avec au plus un chiffre derrière la virgule.
+Exemples :
+- Les salaires des joueurs sont compris entre 4 Ka et 20 Ka
+- 12.3 Ka ça fait pas un peu cher pour JJ Gosso ?
+- Arrêtez avec vos blagues à 2 Kamouls.
 
 ### Création d'une Franchise
 
