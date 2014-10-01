@@ -22,10 +22,20 @@ Exemples :
 - Arrêtez avec vos blagues à 2 Kamouls.
 
 ### Création d'une Franchise
+En vous inscrivant à Kamoulcup Manager, une *Franchise*, c'est à dire une sorte de club, est créée et vous est attribuée. Vous pouvez choisir son nom, c'est déjà bien. Pour le jeu, vous et votre franchise ne formez désormais plus qu'un.
 
-### Inscription au championnat
+### Le championnat
+Le championnat se déroule sur un nombre fixe de journées de Ligue 1, par exemple 10. Au départ toutes les franchises sont à égalité :
+- aucun joueur dans l'effectif
+- budget transfert de 100 Ka
 
 ### La matière première : les joueurs de L1
+L'aspect primordial du jeu concerne le recrutement de *joueurs de Ligue 1 (L1)* par votre franchise. Chaque joueur de L1 à un poste ou position unique et *qui ne peut absolument pas changer pendant toute la durée d'une saison de L1*, et ce même si son entraîneur prend l'habitude de le faire jouer à un poste réel différent. Les postes possibles sont
+- Gardien de but (G)
+- Défenseur (D)
+- Milieu (M)
+- Attaquant (A)
+Les postes sont attribués en se basant sur ce que déclarent *les sites officiels des clubs de L1* dans leur page de présentation d'effectif. A défaut d'une telle page, on se base sur le consensus de la presse sportive.
 
 ### Préparation du championnat
 
