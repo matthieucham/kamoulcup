@@ -15,9 +15,9 @@
 			include($kmpage.'.php');
 		?>
 		</div>
-		<footer>
+<!--<footer>
 	<div class="footerstandard">Footer.</div>
-</footer>
+</footer>-->
 		
 	</div>
 </div>

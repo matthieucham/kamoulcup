@@ -1,6 +1,6 @@
 <div class="sous_titre">Derniers résultats</div>
 	<?php
-		$listMatchsQuery = "select re.id as matchId, clDom.id as clDomId, clDom.nom as clDomNom, clDom.id_lequipe as clDomEq, clExt.id as clExtId, clExt.nom as clExtNom, clExt.id_lequipe as clExtEq, date_format(jo.date,'%d/%m') as dateJournee, re.buts_club_dom, re.buts_club_ext, jo.numero from rencontre as re, club as clDom, club as clExt, journee as jo where re.club_dom_id = clDom.id and re.club_ext_id = clExt.id and re.journee_id = jo.id and jo.numero=(select max(numero) from journee)";
+		$listMatchsQuery = "select re.id as matchId, clDom.id as clDomId, clDom.nom as clDomNom, clDom.id_lequipe as clDomEq, clExt.id as clExtId, clExt.nom as clExtNom, clExt.id_lequipe as clExtEq, date_format(jo.date,'%d/%m') as dateJournee, re.buts_club_dom, re.buts_club_ext, jo.numero from rencontre as re, club as clDom, club as clExt, journee as jo where re.club_dom_id = clDom.id and re.club_ext_id = clExt.id and re.journee_id = jo.id and jo.numero=(select max(numero) from journee where date <= now())";
 		$resultatsJournee = $db->getArray($listMatchsQuery);
 		if ($resultatsJournee != NULL) {
 			//echo "<div class='centre'>";

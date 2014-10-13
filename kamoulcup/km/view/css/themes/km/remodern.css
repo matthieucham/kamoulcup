@@ -45,7 +45,7 @@ body {
 header{
 	color: #ECECED;
 	/*background: #3E4147;*/
-	background: url("images/Fond-herbe.jpg") repeat scroll 0 0 #3E4147;
+	background: url("images/fond-body.jpg") repeat scroll 0 0 #3E4147;
 	-webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
 	-moz-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
 	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
@@ -360,4 +360,23 @@ body {
 }
 #news {
 	border-bottom: 4px solid #fab7e6;
-} 
+}
+/******************************************************
+
+	$INDEX12 - FIXTURES
+	
+******************************************************/
+#fixtures table {
+	background-color:#3E4147;
+	border-collapse:collapse;
+}
+#fixtures table th {
+	color:#ECECED;
+}
+
+#fixtures table tbody tr:nth-child(even){
+	background-color:#fab7e6;
+}
+#fixtures table tbody tr:nth-child(odd){
+	background-color:#ECECED;
+}
