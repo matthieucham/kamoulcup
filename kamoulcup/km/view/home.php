@@ -1,6 +1,5 @@
 <?php
-	include("../../includes/db.php");
-	include("../../vocabulaire.php");
+	include_once("../../vocabulaire.php");
 ?>
 <section id="home">
 <div id="realData">

@@ -1,3 +1,9 @@
+<?php
+	include_once("../../includes/db.php");
+	include_once("../../process/checkAccess.php");
+	
+	checkAccess();
+?>
 <!DOCTYPE html>
 <html>
 <?php include("fragments/head.php")?>

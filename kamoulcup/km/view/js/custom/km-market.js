@@ -78,17 +78,17 @@ function updateDisponibility() {
 		var currPlayerIdo = $(value).data('json').ido;
 		$('#clubPlayersList #freePlayer'+currPlayerIdo).addClass('playerBlocked').draggable('disable');
 	});
-	for (var poste in currentSpots) {
-		// Blocage de tous les joueurs qui ont un poste déjà occupé
-		if (currentSpots[poste] <= 0) {
-			$.each($('#clubPlayersList .playerFree').not('.ui-draggable-dragging'),function(index,value) {
-				if (poste == $(value).data('json').position) {
-					console.log('BLOCK '+poste);
-					$(value).addClass('playerBlocked').draggable('disable');
-				}
-			});
-		}
-	}
+//	for (var poste in currentSpots) {
+//		// Blocage de tous les joueurs qui ont un poste déjà occupé
+//		if (currentSpots[poste] <= 0) {
+//			$.each($('#clubPlayersList .playerFree').not('.ui-draggable-dragging'),function(index,value) {
+//				if (poste == $(value).data('json').position) {
+//					console.log('BLOCK '+poste);
+//					$(value).addClass('playerBlocked').draggable('disable');
+//				}
+//			});
+//		}
+//	}
 }
 
 $( document ).ready(function() {
@@ -102,31 +102,31 @@ $( document ).ready(function() {
 		loadClub(0);
 	});
 	
-	$.getJSON("../api/franchises.php", function( resp ) {
-		$serverSal = resp.salaryBudget;
-		$serverTrans = resp.transferBudget;
-		$('#budgetInfo h2').text(resp.name);
-		$trs = (resp.transferBudget).toFixed(1)+' Ka';
-		$sal = (resp.salaryBudget).toFixed(1)+' Ka';
-		$('#budgetInfo span.budgetValue:first').text($trs);
-		$('#budgetInfo span.budgetValue:last').text($sal);
-		$effectif = resp.effectif;
-		$effectifPlaceholder = $('#budgetInfo div.contract_positions_container');
-		for ($i=0;$i<$effectif.length; $i++) {
-			$position = jQuery("<div>", {
-				class:"contract_position",
-				text:$effectif[$i].position
-				});
-			if ($effectif[$i].affectedPlayer == null) {
-				$('<div class="pos_marker pos_marker_empty" />').appendTo($position);
-			} else {
-				$('<div class="pos_marker pos_marker_filled">').attr("title",$effectif[$i].affectedPlayer).appendTo($position);
-			}
-			$position.appendTo($effectifPlaceholder);
-		}
-		initSpots(resp.effectif);
-		updateBudget();
-	});
+//	$.getJSON("../api/franchises.php", function( resp ) {
+//		$serverSal = resp.salaryBudget;
+//		$serverTrans = resp.transferBudget;
+//		//$('#budgetInfo h2').text(resp.name);
+//		$trs = (resp.transferBudget).toFixed(1)+' Ka';
+//		$sal = (resp.salaryBudget).toFixed(1)+' Ka';
+//		//$('#budgetInfo span.budgetValue:first').text($trs);
+//		//$('#budgetInfo span.budgetValue:last').text($sal);
+//		$effectif = resp.effectif;
+//		$effectifPlaceholder = $('#budgetInfo div.contract_positions_container');
+//		for ($i=0;$i<$effectif.length; $i++) {
+//			$position = jQuery("<div>", {
+//				class:"contract_position",
+//				text:$effectif[$i].position
+//				});
+//			if ($effectif[$i].affectedPlayer == null) {
+//				$('<div class="pos_marker pos_marker_empty" />').appendTo($position);
+//			} else {
+//				$('<div class="pos_marker pos_marker_filled">').attr("title",$effectif[$i].affectedPlayer).appendTo($position);
+//			}
+//			$position.appendTo($effectifPlaceholder);
+//		}
+//		initSpots(resp.effectif);
+//		updateBudget();
+//	});
 	
 	
 	$clubSelect.on('change', function() {
