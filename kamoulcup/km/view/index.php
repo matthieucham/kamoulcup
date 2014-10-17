@@ -1,8 +1,12 @@
 <?php
 	include_once("../../includes/db.php");
-	include_once("../../process/checkAccess.php");
 	
-	checkAccess();
+    session_start();
+	if (!isset($_SESSION['km']) || !($_SESSION['km']==1)) {
+		// Pas accès au jeu
+        header("Location: ../index.php");
+        die();
+	}
 ?>
 <!DOCTYPE html>
 <html>

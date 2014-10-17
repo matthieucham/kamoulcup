@@ -6,6 +6,9 @@ class Player {
 	public $salary;
 	public $prize;
 	public $position;
+    
+    // Offre courante de la franchise qui reclame le joueur.
+    public $offer;
 	
 	
 	function __construct($i,$n,$s,$p,$pos) {

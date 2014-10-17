@@ -1,4 +1,5 @@
 // Variables globales utiles de la page.
+var $masseSalarialeMax;
 var $serverSal;
 var $serverTrans;
 var $currentSal;
@@ -11,24 +12,23 @@ function initCart() {
 	$currentCart = $('#cartContent .playerFree');
 }
 	
-	function updateBudget() {
-		console.log("updateBudget !");
-		if ($currentCart == null)
-		{
-			initCart();
-		}
-		$currentSal = $serverSal;
-		$currentTrans = $serverTrans;
-		$.each($currentCart, function (index,value) {
-			$currentSal -= $(value).data('json').salary.toFixed(1);
-			var prize =$(value).find('.spinnerInput').spinner('value');
-			console.log(prize);
-			$currentTrans -= prize.toFixed(1);
-		});
-		$('#cartValue span:first').text($currentSal.toFixed(1));
-		$('#cartValue span:last').text($currentTrans.toFixed(1));
-		$('#sendCartBtn').trigger('budgetChanged');
+function updateBudget() {
+	console.log("updateBudget !");
+	if ($currentCart == null)
+	{
+		initCart();
 	}
+	$currentSal = $serverSal;
+	$currentTrans = $serverTrans;
+	$.each($currentCart, function (index,value) {
+		$currentSal += $(value).data('json').salary;
+		var prize =$(value).find('.spinnerInput').spinner('value');
+		$currentTrans -= prize;
+	});
+	$('#cartValue span:first').text($currentSal.toFixed(1));
+	$('#cartValue span:last').text($currentTrans.toFixed(1));
+	$('#sendCartBtn').trigger('budgetChanged');
+}
 
 function updateDynamicBudget(event,ui) {
 	updateBudget();
@@ -43,10 +43,9 @@ function updateMarket(){
 	console.log('updateMarket');
 	$.each($('#clubPlayersList .playerFree').not('.ui-draggable-dragging'),function(index,value) {
 		$(value).removeClass('playerBlocked');
-		if (($(value).data('json').salary > $currentSal) || ($(value).data('json').prize > $currentTrans)){
+		if (($(value).data('json').prize > $currentTrans)){
 			$(value).draggable('disable');
 		} else {
-			console.log('Enable on '+$(value).data('json').name);
 			$(value).draggable('enable');
 		}
 	});
@@ -91,6 +90,49 @@ function updateDisponibility() {
 //	}
 }
 
+
+function addToCart(jsonData) {
+    var $addedLi = $('<div>').text(jsonData.name).data('json',jsonData).addClass('playerFree');
+				jQuery("<span/>",{
+					class: "playerPosition",
+					text:jsonData.position
+				}).appendTo($addedLi);
+				jQuery("<span/>",{
+					class: "playerSalary",
+					text:jsonData.salary+' Ka',
+					title:"Salaire courant"
+				}).appendTo($addedLi);
+				$addedLi.append(
+					'<input type="hidden" name="selectedPlayerId[]" value=">'+jsonData.ido+'"/>'+
+					'<input class="spinnerInput" name="amountForIdo'+jsonData.ido+'" value="'+Math.max(0.1,jsonData.prize,jsonData.offer).toFixed(1)+'" size="3" maxlength="4" id="amountForIdo'+jsonData.ido+'"/>'
+				);	$addedLi.prepend($('<a>').addClass('removeCartBtn').text('X').data('ido',jsonData.ido).attr('href','#').click(function() {
+							$('#playerCart'+$(this).data('ido')).remove();
+							initCart();
+							updateBudget();
+							updateMarket();
+							//updateDisponibility();
+						}));
+				
+				$li = $('<li>').attr('id','playerCart'+jsonData.ido).append($addedLi);
+				
+				$( '#cartContent ul' ).append($li);
+				
+				$('#amountForIdo'+jsonData.ido).spinner({
+					step:0.1,
+					numberFormat:'n',
+					min:Math.max(jsonData.prize,0.1),
+					max:$serverTrans,
+					stop: updateDynamicBudget,
+					change:updateMarketAndBudget,
+					create: function(event,ui) {
+							initCart();
+							updateMarketAndBudget();
+						}
+					});
+}
+
+
+
 $( document ).ready(function() {
 	var $clubSelect = $('#clubSelect');
 	var $jsonData;
@@ -101,34 +143,19 @@ $( document ).ready(function() {
 		$jsonData = resp;
 		loadClub(0);
 	});
-	
-//	$.getJSON("../api/franchises.php", function( resp ) {
-//		$serverSal = resp.salaryBudget;
-//		$serverTrans = resp.transferBudget;
-//		//$('#budgetInfo h2').text(resp.name);
-//		$trs = (resp.transferBudget).toFixed(1)+' Ka';
-//		$sal = (resp.salaryBudget).toFixed(1)+' Ka';
-//		//$('#budgetInfo span.budgetValue:first').text($trs);
-//		//$('#budgetInfo span.budgetValue:last').text($sal);
-//		$effectif = resp.effectif;
-//		$effectifPlaceholder = $('#budgetInfo div.contract_positions_container');
-//		for ($i=0;$i<$effectif.length; $i++) {
-//			$position = jQuery("<div>", {
-//				class:"contract_position",
-//				text:$effectif[$i].position
-//				});
-//			if ($effectif[$i].affectedPlayer == null) {
-//				$('<div class="pos_marker pos_marker_empty" />').appendTo($position);
-//			} else {
-//				$('<div class="pos_marker pos_marker_filled">').attr("title",$effectif[$i].affectedPlayer).appendTo($position);
-//			}
-//			$position.appendTo($effectifPlaceholder);
-//		}
-//		initSpots(resp.effectif);
-//		updateBudget();
-//	});
-	
-	
+    
+    $serverSal=parseFloat($('#initSalaryValue').val());
+    $serverTrans=parseFloat($('#initBudgetValue').val());
+    $masseSalarialeMax=parseFloat($('#maxSalary').val());
+    
+    $.getJSON("../api/offres.php", function( resp ) {
+        // Itérer sur toutes les offres enregistrées pour initialiser le panier.
+        for ($i=0;$i<resp.length; $i++) {
+            addToCart(resp[$i]);
+        }
+    });
+    
+    
 	$clubSelect.on('change', function() {
 		loadClub(this.value);
 		updateMarket();
@@ -176,6 +203,7 @@ $( document ).ready(function() {
 		$(".playerFree").draggable({ scroll:true, revert: 'invalid', helper: "clone" });
 		$( ".playerPosition" ).disableSelection();
 	};
+    
 	
 	$( "#cartContent" ).droppable({
 			hoverClass: "dropTarget",
@@ -183,57 +211,20 @@ $( document ).ready(function() {
 			drop: function( event, ui ) {
 				$( this ).find( ".placeholder" ).remove();
 				
-				var $addedLi = $('<div>').text(ui.draggable.data('json').name).data('json',ui.draggable.data('json')).addClass('playerFree');
-				jQuery("<span/>",{
-					class: "playerPosition",
-					text:ui.draggable.data('json').position,
-					title:"Attaquant"
-				}).appendTo($addedLi);
-				jQuery("<span/>",{
-					class: "playerSalary",
-					text:ui.draggable.data('json').salary+' Ka',
-					title:"Salaire courant"
-				}).appendTo($addedLi);
-				$addedLi.append(
-					'<input type="hidden" name="selectedPlayerId[]" value=">'+ui.draggable.data('json').ido+'"/>'+
-					'<input class="spinnerInput" name="amountForIdo'+ui.draggable.data('json').ido+'" value="'+ui.draggable.data('json').prize+'" size="3" maxlength="4" id="amountForIdo'+ui.draggable.data('json').ido+'"/>'
-				);
-				
-				$addedLi.prepend($('<a>').addClass('removeCartBtn').text('X').data('ido',ui.draggable.data('json').ido).attr('href','#').click(function() {
-							$('#playerCart'+$(this).data('ido')).remove();
-							initCart();
-							updateBudget();
-							updateMarket();
-							//updateDisponibility();
-						}));
-				
-				$li = $('<li>').attr('id','playerCart'+ui.draggable.data('json').ido).append($addedLi);
-				
-				$( this ).find("ul").append($li);
-					
-				$('#amountForIdo'+ui.draggable.data('json').ido).spinner({
-					step:0.1,
-					numberFormat:'n',
-					min:ui.draggable.data('json').prize,
-					max:$serverTrans,
-					stop: updateDynamicBudget,
-					change:updateMarketAndBudget,
-					create: function(event,ui) {
-							initCart();
-							updateMarketAndBudget();
-						}
-					});
-				/*initCart();
-				updateBudget();
-				updateMarket();*/
-				//updateDisponibility();
+                addToCart(ui.draggable.data('json'));
 			}
 		});
-		$("sendCartBtn").bind('budgetChanged',function() {
+	$("#sendCartBtn").bind('budgetChanged',function() {
+            console.log('trs='+$currentTrans);
+            console.log('ms='+$currentSal);
 			if ($currentTrans < 0) {
 				$(this).attr('disabled', 'disabled');
-			} else {
+			} else if ($masseSalarialeMax-$currentSal < 0) {
+                $(this).attr('disabled', 'disabled');
+            } else {
 				$(this).removeAttr('disabled');
 			}
 		});
+    
+    updateBudget();
 });

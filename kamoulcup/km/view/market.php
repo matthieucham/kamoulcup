@@ -6,6 +6,8 @@
         die();
     }
 
+    $maxSalary=50;
+
     $merkatoQ="select mer_id from km_mercato where mer_date_ouverture<now() and mer_date_fermeture>now() and mer_processed=0 limit 1";
     $merkato=$db->getArray($merkatoQ);
     if ($merkato != NULL) {
@@ -16,12 +18,6 @@
     }
     $ekypQ="select nom,fin_solde from ekyp inner join km_finances on fin_ekyp_id=id where id={$franchiseId} order by fin_id desc limit 1";
     $sousContratQ="select id,prenom,nom,poste,eng_salaire from joueur inner join km_engagement on id=eng_joueur_id where eng_ekyp_id={$franchiseId} and eng_date_depart is null";
-    
-    $lastJQ = "select id from journee order by date desc limit 1";
-    $lastJ = $db->getArray($lastJQ);
-    $lastJourneeId = $lastJ[0][0];
-
-    $offresCourantesQ="select id,nom,prenom,poste,off_montant,scl_salaire from joueur inner join km_offre on off_joueur_id=id and off_ekyp_id={$franchiseId} and off_mercato_id={$merkatoId} inner join km_join_joueur_salaire on jjs_joueur_id=id and jjs_journee_id={$lastJourneeId} inner join km_const_salaire_classe on jjs_salaire_classe_id=scl_id";
 
     $ekyp=$db->getArray($ekypQ);
     $sousContrat = $db->getArray($sousContratQ);
@@ -31,7 +27,6 @@
     		$salaires += intval($contrat['eng_salaire']);
     	}
     }
-    $offresCourantes = $db->getArray($offresCourantesQ);
 ?>
 <section id="market">
 <h1>Merkato</h1>
@@ -45,14 +40,14 @@
 		<div class='budgetItem'>
 			<div class='contract_positions_container'>
 			<?php
-				$positions = array();
-				$positions['G']=NULL;
-				$positions['D1']=NULL;
-				$positions['D2']=NULL;
-				$positions['M1']=NULL;
-				$positions['M2']=NULL;
-				$positions['A1']=NULL;
-				$positions['A2']=NULL;
+				$position = array();
+				$position['G']=NULL;
+				$position['D1']=NULL;
+				$position['D2']=NULL;
+				$position['M1']=NULL;
+				$position['M2']=NULL;
+				$position['A1']=NULL;
+				$position['A2']=NULL;
 				if ($salaires > 0) { // manière rapide de savoir s'il y a des joueurs dans cette équipe
 					foreach ($sousContrat as $contrat) {
 						if ($contrat['poste']=='G') {
@@ -103,6 +98,12 @@
 			<p>Masse salariale</p>
 			<p><span class='budgetValue'><?php echo number_format($salaires,1);?>&nbsp;Ka</span></p>
 		</div>
+        <?php
+            // For jquery vars init:
+            echo "<input type='hidden' id='initBudgetValue' value='{$ekyp[0]['fin_solde']}' />";
+            echo "<input type='hidden' id='initSalaryValue' value='{$salaires}' />";
+            echo "<input type='hidden' id='maxSalary' value='{$maxSalary}' />";
+        ?>
 	</div>
 </div>
 <div id='clubPlayersList'>
@@ -120,33 +121,11 @@
 	<form id='cartForm' method="POST" action="#">
 		<div id='cartContent' class='playersList'>
 			<ul>
-				<?php 
-				if ($offresCourantes == NULL) {
-					echo "<li class='placeholder'>Faites glisser vos choix ici</li>";
-				} else {
-					foreach ($offresCourantes as $offre) {
-						echo "<li id='playerCart{$offre['id']}'>";
-						echo "<div class='playerFree'>";
-						echo "<a class='removeCartBtn' href='#'>X</a>";
-						echo $offre['prenom'].' '.$offre['nom'];
-						echo "<span class='playerPosition'>{$offre['poste']}</span>";
-						$sal = number_format($offre['scl_salaire'],1);
-						echo "<span class='playerSalary' title='Salaire courant'>{$sal} Ka</span>";
-						echo "<input type='hidden' value='{$offre['id']}' name='selectedPlayerId[]'>";
-						$montant = number_format($offre['off_montant'],1);
-						echo "<input class='spinnerInput' name='amountForIdo[]' value='{$montant}' size='3' maxlength='4' id='amountForIdo{$offre['id']}'/>";
-						echo "</div></li>";
-					}
-				}
-				//TODO : initialiser tout le jquery de la page :
-				// - budget
-				// - salaires
-				// - spinners et X du panier
-				?>
+                <li class='placeholder'>Faites glisser vos choix ici</li>
 			</ul>
 		</div>
 		<div id='cartValue'>
-			<p>Masse salariale disponible : <span></span> Ka</p>
+			<p>Masse salariale : <span></span> Ka [Maximum : <?php echo $maxSalary; ?> Ka</p>
 			<p>Budget transfert restant : <span></span> Ka</p>
 		</div>
 		<button id="sendCartBtn">Envoyer</button>
@@ -159,7 +138,7 @@
 	function echoPosition($positionArray,$targetPos,$targetSpot) {
 		echo "<div class='contract_position'>{$targetPos}<div class='pos_marker";
 		if ($positionArray[$targetSpot] == NULL) {
-		 	echo " pos_marker_empy'";
+		 	echo " pos_marker_empty'";
 		} else {
 			echo " pos_marker_filled' title='{$positionArray[$targetSpot]}'";
 		}
