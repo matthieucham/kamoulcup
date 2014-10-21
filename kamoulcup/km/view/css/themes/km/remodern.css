@@ -94,7 +94,7 @@ button {
 	color:#ECECED;
 }
 
-button:hover, button:focus{
+button:hover:enabled, button:focus:enabled{
 	background-color :#2A2C31; /*make the background a little darker*/
 	color:#fab7e6;
 }

@@ -1,5 +1,6 @@
 <?php
 	include_once("../../includes/db.php");
+    include_once("../model/KMConstants.php");
 	
     session_start();
 	if (!isset($_SESSION['km']) || !($_SESSION['km']==1)) {

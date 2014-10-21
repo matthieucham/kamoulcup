@@ -5,8 +5,11 @@ var $serverTrans;
 var $currentSal;
 var $currentTrans;
 var $currentCart;
+var $currentSpots={'G':0,'D':0,'M':0,'A':0};
+var $currentNbPlayers;
 // Places dispos dans l'effectif.
-var $nbSpots={'G':0,'D':0,'M':0,'A':0};
+var $nbSpotsMin={'G':0,'D':0,'M':0,'A':0};
+var $nbMaxJoueurs;
 
 function initCart() {
 	$currentCart = $('#cartContent .playerFree');
@@ -40,7 +43,6 @@ function updateMarketAndBudget(event,ui) {
 }
 
 function updateMarket(){
-	console.log('updateMarket');
 	$.each($('#clubPlayersList .playerFree').not('.ui-draggable-dragging'),function(index,value) {
 		$(value).removeClass('playerBlocked');
 		if (($(value).data('json').prize > $currentTrans)){
@@ -52,72 +54,54 @@ function updateMarket(){
 	updateDisponibility();
 }
 
-// Input : tableau des effectifs actuels de la franchise.
-function initSpots(initialStaff) {
-	console.log("initSpots");
-	for (i=0;i<initialStaff.length;i++) {
-		if (initialStaff[i].affectedPlayer == null) {
-			// Ce spot est libre
-			$nbSpots[initialStaff[i].position] = $nbSpots[initialStaff[i].position]+1
-		}
-	}
-	updateMarket();
-}
-
 function updateDisponibility() {
-	console.log("updateDisponibility");
 	// Disponibilité des joueurs pour le drag-drop:
-	// - S'il reste une place pour leur poste
+	// - S'il reste une place
 	// - S'il ne sont pas déjà dans le panier
 	// 1) MAJ des nbSpots par poste en fonction de ce qu'il y a dans le panier.
-	var currentSpots = {'G':$nbSpots['G'],'D':$nbSpots['D'],'M':$nbSpots['M'],'A':$nbSpots['A']};
+	$currentSpots = {'G':$nbSpotsMin['G'],'D':$nbSpotsMin['D'],'M':$nbSpotsMin['M'],'A':$nbSpotsMin['A']};
+    $currentNbPlayers = 0;
 	$.each($('#cartContent .playerFree').not('.ui-draggable-dragging'),function(index,value) {
 		var currPlayerPosition = $(value).data('json').position;
-		(currentSpots[currPlayerPosition])--;
+		($currentSpots[currPlayerPosition])--;
+        $currentNbPlayers++;
 		var currPlayerIdo = $(value).data('json').ido;
 		$('#clubPlayersList #freePlayer'+currPlayerIdo).addClass('playerBlocked').draggable('disable');
 	});
-//	for (var poste in currentSpots) {
-//		// Blocage de tous les joueurs qui ont un poste déjà occupé
-//		if (currentSpots[poste] <= 0) {
-//			$.each($('#clubPlayersList .playerFree').not('.ui-draggable-dragging'),function(index,value) {
-//				if (poste == $(value).data('json').position) {
-//					console.log('BLOCK '+poste);
-//					$(value).addClass('playerBlocked').draggable('disable');
-//				}
-//			});
-//		}
-//	}
+    if ($currentNbPlayers >= $nbMaxJoueurs) {
+        // Blocage de tous les joueurs
+        $.each($('#clubPlayersList .playerFree').not('.ui-draggable-dragging'),function(index,value) {
+			$(value).addClass('playerBlocked').draggable('disable');
+        });
+    }
+    $('#sendCartBtn').trigger('budgetChanged');
 }
-
 
 function addToCart(jsonData) {
     var $addedLi = $('<div>').text(jsonData.name).data('json',jsonData).addClass('playerFree');
-				jQuery("<span/>",{
+    jQuery("<span/>",{
 					class: "playerPosition",
 					text:jsonData.position
 				}).appendTo($addedLi);
-				jQuery("<span/>",{
+    jQuery("<span/>",{
 					class: "playerSalary",
 					text:jsonData.salary+' Ka',
 					title:"Salaire courant"
 				}).appendTo($addedLi);
-				$addedLi.append(
-					'<input type="hidden" name="selectedPlayerId[]" value=">'+jsonData.ido+'"/>'+
-					'<input class="spinnerInput" name="amountForIdo'+jsonData.ido+'" value="'+Math.max(0.1,jsonData.prize,jsonData.offer).toFixed(1)+'" size="3" maxlength="4" id="amountForIdo'+jsonData.ido+'"/>'
-				);	$addedLi.prepend($('<a>').addClass('removeCartBtn').text('X').data('ido',jsonData.ido).attr('href','#').click(function() {
+    $addedLi.append(
+					'<input class="spinnerInput" name="amountForPlayer['+jsonData.ido+']" value="'+Math.max(0.1,jsonData.prize,jsonData.offer).toFixed(1)+'" size="3" maxlength="4" id="amountForIdo'+jsonData.ido+'"/>'
+				);
+    $addedLi.prepend($('<a>').addClass('removeCartBtn').text('X').data('ido',jsonData.ido).attr('href','#').click(function() {
 							$('#playerCart'+$(this).data('ido')).remove();
 							initCart();
 							updateBudget();
 							updateMarket();
 							//updateDisponibility();
 						}));
+    $li = $('<li>').attr('id','playerCart'+jsonData.ido).append($addedLi);
+    $( '#cartContent ul' ).append($li);
 				
-				$li = $('<li>').attr('id','playerCart'+jsonData.ido).append($addedLi);
-				
-				$( '#cartContent ul' ).append($li);
-				
-				$('#amountForIdo'+jsonData.ido).spinner({
+    $('#amountForIdo'+jsonData.ido).spinner({
 					step:0.1,
 					numberFormat:'n',
 					min:Math.max(jsonData.prize,0.1),
@@ -128,7 +112,9 @@ function addToCart(jsonData) {
 							initCart();
 							updateMarketAndBudget();
 						}
-					});
+    });
+    
+    
 }
 
 
@@ -147,6 +133,13 @@ $( document ).ready(function() {
     $serverSal=parseFloat($('#initSalaryValue').val());
     $serverTrans=parseFloat($('#initBudgetValue').val());
     $masseSalarialeMax=parseFloat($('#maxSalary').val());
+    $nG = parseInt($('#nbMinG').val());
+    $nD = parseInt($('#nbMinD').val());
+    $nM = parseInt($('#nbMinM').val());
+    $nA = parseInt($('#nbMinA').val());
+    $nbSpotsMin={'G':$nG,'D':$nD,'M':$nM,'A':$nA};
+    $nbMaxJoueurs = parseInt($('#maxPlayers').val());
+
     
     $.getJSON("../api/offres.php", function( resp ) {
         // Itérer sur toutes les offres enregistrées pour initialiser le panier.
@@ -215,16 +208,31 @@ $( document ).ready(function() {
 			}
 		});
 	$("#sendCartBtn").bind('budgetChanged',function() {
-            console.log('trs='+$currentTrans);
-            console.log('ms='+$currentSal);
+            // 1) Check budget
 			if ($currentTrans < 0) {
 				$(this).attr('disabled', 'disabled');
 			} else if ($masseSalarialeMax-$currentSal < 0) {
                 $(this).attr('disabled', 'disabled');
             } else {
-				$(this).removeAttr('disabled');
+                // Check players in cart
+                if ($currentNbPlayers >= $nbMaxJoueurs) {
+                    $(this).attr('disabled', 'disabled');
+                } else {
+                    $disable = false;
+                    $disable = ($currentSpots['G'] > 0 || $currentSpots['D'] > 0 || $currentSpots['M'] > 0 || $currentSpots['A'] > 0)
+                    if ($disable) {
+                        $(this).attr('disabled', 'disabled');
+                    } else {
+                        $(this).removeAttr('disabled');
+                    }
+                }
 			}
 		});
     
+    $("form#cartForm").submit(function(event) {
+        console.log($("form#cartForm").serialize());
+    });
+    
     updateBudget();
+    updateMarket();
 });

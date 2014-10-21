@@ -186,11 +186,18 @@ button{
 	margin:5px;
 }
 /***NOW STYLE THE BUTTON'S HOVER AND FOCUS STATES***/
-button:hover, button:focus{
+button:hover:enabled, button:focus:enabled{
 /*reduce the drop shadow size to give a pushed button effect*/
 	-webkit-box-shadow: 0 0 1px rgba(0,0,0, 0.7);
 	-moz-box-shadow: 0 0 1px rgba(0,0,0, 0.7);
 	box-shadow: 0 0 1px rgba(0,0,0, 0.7);
+}
+button:disabled{
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+    font-style:italic;
+	opacity:0.5;
 }
 
 .sectionInfo {

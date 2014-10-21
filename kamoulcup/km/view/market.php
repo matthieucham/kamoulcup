@@ -6,7 +6,13 @@
         die();
     }
 
-    $maxSalary=50;
+// Init constants.
+    $maxSalary=$KM_maxSalary;
+    $maxPlayers=$KM_maxPlayers;
+    $nbG=0;
+    $nbD=0;
+    $nbM=0;
+    $nbA=0;
 
     $merkatoQ="select mer_id from km_mercato where mer_date_ouverture<now() and mer_date_fermeture>now() and mer_processed=0 limit 1";
     $merkato=$db->getArray($merkatoQ);
@@ -54,6 +60,7 @@
 							if ($position['G']==NULL) {
 								$position['G']=$contrat['prenom'].' '.$contrat['nom'];
 							}
+                            $nbG++;
 						}
 						if ($contrat['poste']=='D') {
 							if ($position['D1']==NULL) {
@@ -61,6 +68,7 @@
 							} else if ($position['D2']==NULL) {
 								$position['D2']=$contrat['prenom'].' '.$contrat['nom'];
 							}
+                            $nbD++;
 						}
 						if ($contrat['poste']=='M') {
 							if ($position['M1']==NULL) {
@@ -68,6 +76,7 @@
 							} else if ($position['M2']==NULL) {
 								$position['M2']=$contrat['prenom'].' '.$contrat['nom'];
 							}
+                            $nbM++;
 						}
 						if ($contrat['poste']=='A') {
 							if ($position['A1']==NULL) {
@@ -75,6 +84,7 @@
 							} else if ($position['A2']==NULL) {
 								$position['A2']=$contrat['prenom'].' '.$contrat['nom'];
 							}
+                            $nbA++;
 						}
 					}
 				}
@@ -103,6 +113,16 @@
             echo "<input type='hidden' id='initBudgetValue' value='{$ekyp[0]['fin_solde']}' />";
             echo "<input type='hidden' id='initSalaryValue' value='{$salaires}' />";
             echo "<input type='hidden' id='maxSalary' value='{$maxSalary}' />";
+            $pl = $maxPlayers-($nbG+$nbD+$nbM+$nbA);
+            echo "<input type='hidden' id='maxPlayers' value='{$pl}' />";
+            $g = $KM_minG-$nbG;
+            $d= $KM_minD-$nbD;
+            $m=$KM_minM-$nbM;
+            $a=$KM_minA-$nbA;
+            echo "<input type='hidden' id='nbMinG' value='{$g}' />";
+            echo "<input type='hidden' id='nbMinD' value='{$d}' />";
+            echo "<input type='hidden' id='nbMinM' value='{$m}' />";
+            echo "<input type='hidden' id='nbMinA' value='{$a}' />";
         ?>
 	</div>
 </div>
@@ -118,7 +138,7 @@
 </div>
 <div id='playersCart'>
 	<h2>Mon panier</h2>
-	<form id='cartForm' method="POST" action="#">
+	<form id='cartForm'>
 		<div id='cartContent' class='playersList'>
 			<ul>
                 <li class='placeholder'>Faites glisser vos choix ici</li>
