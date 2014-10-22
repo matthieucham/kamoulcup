@@ -24,7 +24,7 @@
 	}
 	
 	// 4) calculer les points marqués par chaque ekyp à chaque journée
-	$ekypQ = "SELECT eng_ekyp_id,{$journeeId},sum(jpe_score) as ekScore FROM km_joueur_perf inner join km_engagement on eng_joueur_id=jpe_joueur_id inner join km_selection_ekyp_match on sem_engagement_id=eng_id where jpe_match_id in (select id from rencontre where journee_id={$journeeId}) and jpe_match_id=sem_match_id group by eng_ekyp_id";
+	$ekypQ = "SELECT eng_ekyp_id,{$journeeId},sum(jpe_score) as ekScore FROM km_joueur_perf inner join km_engagement on eng_joueur_id=jpe_joueur_id inner join km_selection_ekyp_journee on sej_engagement_id=eng_id where jpe_match_id in (select id from rencontre where journee_id={$journeeId}) and sej_journee_id={$journeeId} and sej_substitute=0 group by eng_ekyp_id";
 	$updateEkypScoreQ = "insert into km_ekyp_score(eks_ekyp_id,eks_journee_id,eks_score) {$ekypQ} on duplicate key update eks_score=values(eks_score)";
 	$db->query($updateEkypScoreQ);
 	

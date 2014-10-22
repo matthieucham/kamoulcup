@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Sam 06 Septembre 2014 à 21:03
+-- Généré le : Mer 22 Octobre 2014 à 23:13
 -- Version du serveur: 5.1.41
 -- Version de PHP: 5.3.1
 
@@ -12,6 +12,20 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Base de données: `kamoulcup`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `km_championnat`
+--
+
+CREATE TABLE IF NOT EXISTS `km_championnat` (
+  `chp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `chp_nom` text NOT NULL,
+  `chp_first_journee_id` int(11) NOT NULL,
+  `chp_nb_journees` int(11) NOT NULL,
+  PRIMARY KEY (`chp_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -88,7 +102,19 @@ CREATE TABLE IF NOT EXISTS `km_finances` (
   `fin_event` mediumtext NOT NULL,
   PRIMARY KEY (`fin_id`),
   KEY `fin_ekyp_id` (`fin_ekyp_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `km_join_ekyp_championnat`
+--
+
+CREATE TABLE IF NOT EXISTS `km_join_ekyp_championnat` (
+  `jec_ekyp_id` int(11) NOT NULL,
+  `jec_championnat_id` int(11) NOT NULL,
+  PRIMARY KEY (`jec_ekyp_id`,`jec_championnat_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -140,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `km_mercato` (
   `mer_date_fermeture` datetime NOT NULL,
   `mer_processed` tinyint(1) NOT NULL,
   PRIMARY KEY (`mer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -160,35 +186,12 @@ CREATE TABLE IF NOT EXISTS `km_offre` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `km_selection_ekyp_match`
+-- Structure de la table `km_selection_ekyp_journee`
 --
 
-CREATE TABLE IF NOT EXISTS `km_selection_ekyp_match` (
-  `sem_match_id` int(11) NOT NULL,
-  `sem_engagement_id` int(11) NOT NULL,
-  `substitute` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`sem_match_id`,`sem_engagement_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-ALTER TABLE `ekyp` ADD `km` TINYINT( 1 ) NOT NULL DEFAULT '0';
-
-CREATE TABLE IF NOT EXISTS `km_championnat` (
-  `chp_id` int(11) NOT NULL AUTO_INCREMENT,
-  `chp_nom` text NOT NULL,
-  `chp_first_journee_id` int(11) NOT NULL,
-  `chp_nb_journees` int(11) NOT NULL,
-  PRIMARY KEY (`chp_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `km_join_ekyp_championnat`
---
-
-CREATE TABLE IF NOT EXISTS `km_join_ekyp_championnat` (
-  `jec_ekyp_id` int(11) NOT NULL,
-  `jec_championnat_id` int(11) NOT NULL,
-  PRIMARY KEY (`jec_ekyp_id`,`jec_championnat_id`)
+CREATE TABLE IF NOT EXISTS `km_selection_ekyp_journee` (
+  `sej_engagement_id` int(11) NOT NULL,
+  `sej_journee_id` int(11) NOT NULL,
+  `sej_substitute` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`sej_engagement_id`,`sej_journee_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
