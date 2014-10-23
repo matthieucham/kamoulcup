@@ -1,13 +1,9 @@
 <?php
 	include_once("../../includes/db.php");
+    include_once("../ctrl/accessManager.php");
     include_once("../model/KMConstants.php");
 	
-    session_start();
-	if (!isset($_SESSION['km']) || !($_SESSION['km']==1)) {
-		// Pas accès au jeu
-        header("Location: ../index.php");
-        die();
-	}
+    checkPlayerAccess();
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,9 +22,9 @@
 			include($kmpage.'.php');
 		?>
 		</div>
-<!--<footer>
+<footer>
 	<div class="footerstandard">Footer.</div>
-</footer>-->
+</footer>
 		
 	</div>
 </div>

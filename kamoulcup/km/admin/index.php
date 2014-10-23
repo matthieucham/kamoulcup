@@ -1,7 +1,7 @@
 <?php
 include("../../includes/db.php");
-include("../../process/checkAccess.php");
-checkaccess(5);
+include("../ctrl/accessManager.php");
+checkAdminAccess();
 ?>
 
 <html>

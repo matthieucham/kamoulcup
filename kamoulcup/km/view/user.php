@@ -1,2 +1,2 @@
 <h1>Utilisateur</h1>
-<p>Tes settings ici</p>
+<p><a href="../ctrl/disconnect.php">Déconnexion</a></p>

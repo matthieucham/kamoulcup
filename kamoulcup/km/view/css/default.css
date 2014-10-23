@@ -379,6 +379,31 @@ html, body,
 }
 
 
+.popup .cover {
+    position:fixed;
+    top:0;
+    left:0;
+    background:rgba(0,0,0,0.6);
+    z-index:5;
+    width:100%;
+    height:100%
+}
+.popup .frame {
+    position:fixed;
+    z-index: 10;
+    width:300px;
+    height: 200px;
+    top:50%;
+    left:50%;
+    margin-top: -100px;
+    margin-left: -150px;
+    line-height: 200px;
+}
+.popup .frame p{
+    display: block;
+    text-align: center;
+}
+
 /******************************************************
 
 	$INDEX8 - MERKATO
@@ -389,12 +414,14 @@ html, body,
 	width:100%;
 	text-align:center;
 }
-
+#market .rightColumn{
+    float:right;
+    display: block;
+}
 /******************************************************
 $INDEX 8-1 : Budget Info box
 ******************************************************/
 #budgetInfo {
-	float:right;
 	margin:15px;
 	padding: 10px;
 	min-width:250px;
@@ -442,7 +469,6 @@ $INDEX 8-2 : Players list
 	padding:10px;
 	width:450px;
 	text-align:center;
-	float:left;
 }
 
 .playersList{
@@ -507,14 +533,7 @@ $INDEX 8-2 : Players list
 }
 
 #playersCart{
-    position:fixed;
-    /*
-	float:right;
 	margin:10px;
-    */
-    bottom: 10px;
-    right: 10px;
-    
 	padding:10px;
 	width:462px;
 	text-align:center;
@@ -542,6 +561,11 @@ $INDEX 8-2 : Players list
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	border-radius: 6px;
+}
+.freePlayerInput{
+	float:right;
+    margin-right:5px;
+    font-size:0.7em;
 }
 #cartValue{
 	text-align:right;
@@ -709,6 +733,7 @@ $INDEX 8-2 : Players list
 }
 .contract_position{
 	display:table-cell;
+    cursor: default;
 }
 /******************************************************
 

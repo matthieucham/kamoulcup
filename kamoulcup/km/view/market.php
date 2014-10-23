@@ -39,6 +39,7 @@
 <div id="marketInfo" class="sectionInfo">
 	<p>Marché ouvert du 17/11 au 19/11</p>
 </div>
+<div class='rightColumn'>
 <div id="budgetInfo">
 	<h2><?php echo $ekyp[0]['nom'];?></h2>
 	<div class='budgetInfo_line'>
@@ -126,6 +127,26 @@
         ?>
 	</div>
 </div>
+<div id='playersCart'>
+	<h2>Mon panier</h2>
+	<form id='cartForm'>
+		<div id='cartContent' class='playersList'>
+			<ul>
+                <li class='placeholder'>Faites glisser vos choix ici</li>
+			</ul>
+		</div>
+		<div id='cartValue'>
+			<p>Masse salariale : <span></span> Ka [Maximum : <?php echo $maxSalary; ?> Ka]</p>
+			<p>Budget transfert restant : <span></span> Ka</p>
+		</div>
+		<button id="sendCartBtn">Envoyer</button>
+        <div id='sendResult'>
+            <div class='uppings hide'><p><i class="fa fa-thumbs-up fa-2x"></i> Offres enregistrées</p></div>
+            <div class='downings hide'><p><i class="fa fa-warning fa-2x"></i> </p></div>
+        </div>
+	</form>
+</div>
+</div>
 <div id='clubPlayersList'>
 		<p><label for='clubSelect'>Club</label>
 		<select id='clubSelect'></select></p>
@@ -136,32 +157,25 @@
 		</ul>
 	</div>
 </div>
-<div id='playersCart'>
-	<h2>Mon panier</h2>
-	<form id='cartForm'>
-		<div id='cartContent' class='playersList'>
-			<ul>
-                <li class='placeholder'>Faites glisser vos choix ici</li>
-			</ul>
-		</div>
-		<div id='cartValue'>
-			<p>Masse salariale : <span></span> Ka [Maximum : <?php echo $maxSalary; ?> Ka</p>
-			<p>Budget transfert restant : <span></span> Ka</p>
-		</div>
-		<button id="sendCartBtn">Envoyer</button>
-	</form>
+
+
+<div id="registerPopup" class="popup hide">
+<div class="cover"></div>
+<div class="frame">
+    <p><i class="fa fa-spinner fa-spin"></i> Enregistrement...</p>
+</div>
 </div>
 </section>
 <script src="js/custom/km-market.js"></script>
 
 <?php 
 	function echoPosition($positionArray,$targetPos,$targetSpot) {
-		echo "<div class='contract_position'>{$targetPos}<div class='pos_marker";
+		echo "<div class='contract_position'>{$targetPos}<br/>";
 		if ($positionArray[$targetSpot] == NULL) {
-		 	echo " pos_marker_empty'";
+		 	echo "<i class='fa fa-circle-o fa-2x'></i>";
 		} else {
-			echo " pos_marker_filled' title='{$positionArray[$targetSpot]}'";
+			echo "<i class='fa fa-circle fa-2x' title='{$positionArray[$targetSpot]}'></i>";
 		}
-		echo "></div></div>";
+		echo "</div>";
 	}
 ?>

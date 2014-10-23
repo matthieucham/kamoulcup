@@ -3,6 +3,8 @@ $currentPage = 'home';
 if (isset($_GET['kmpage'])) {
 	$currentPage = $_GET['kmpage'];
 }
+include ('../ctrl/mercatoManager.php');
+$mercato = getCurrentMercato();
 ?>
 <header
 	class="headerstandard headerstandard-shrink">
@@ -30,20 +32,22 @@ if (isset($_GET['kmpage'])) {
 		} 
 	?> 
 	href="index.php?kmpage=fixtures" id="menu-target-fixtures">Compétition</a>
-	<a 
-	<?php
+<?php
+    if ($mercato != NULL) {
+        echo "<a ";
 		if ($currentPage == 'market') {
 			echo " class='current' "; 
 		} 
-	?> 
-	href="index.php?kmpage=market" id="menu-target-market">Mercato</a> 
+	   echo "href='index.php?kmpage=market' id='menu-target-market'>Mercato</a>";
+    }
+?>
 	<a
 	<?php
 		if ($currentPage == 'user') {
 			echo " class='current' "; 
 		} 
 	?> 
-	href="index.php?kmpage=user" id="menu-target-user">Utilisateur</a> 
+	href="index.php?kmpage=user" id="menu-target-user"><?php echo $_SESSION['username']?></a> 
 </nav>
 </div>
 </header>

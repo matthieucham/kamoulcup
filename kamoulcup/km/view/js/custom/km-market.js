@@ -35,11 +35,13 @@ function updateBudget() {
 
 function updateDynamicBudget(event,ui) {
 	updateBudget();
+    basketChanged();
 }
 
 function updateMarketAndBudget(event,ui) {
 	updateBudget();
 	updateMarket();
+    basketChanged();
 }
 
 function updateMarket(){
@@ -89,14 +91,14 @@ function addToCart(jsonData) {
 					title:"Salaire courant"
 				}).appendTo($addedLi);
     $addedLi.append(
-					'<input class="spinnerInput" name="amountForPlayer['+jsonData.ido+']" value="'+Math.max(0.1,jsonData.prize,jsonData.offer).toFixed(1)+'" size="3" maxlength="4" id="amountForIdo'+jsonData.ido+'"/>'
+					'<span class="freePlayerInput"><input class="spinnerInput" name="amountForPlayer['+jsonData.ido+']" value="'+Math.max(0.1,jsonData.prize,jsonData.offer).toFixed(1)+'" size="3" maxlength="4" id="amountForIdo'+jsonData.ido+'"/></span>'
 				);
     $addedLi.prepend($('<a>').addClass('removeCartBtn').text('X').data('ido',jsonData.ido).attr('href','#').click(function() {
 							$('#playerCart'+$(this).data('ido')).remove();
 							initCart();
 							updateBudget();
 							updateMarket();
-							//updateDisponibility();
+							basketChanged();
 						}));
     $li = $('<li>').attr('id','playerCart'+jsonData.ido).append($addedLi);
     $( '#cartContent ul' ).append($li);
@@ -117,6 +119,10 @@ function addToCart(jsonData) {
     
 }
 
+function basketChanged() {
+    $("#sendResult .uppings").removeClass("show").addClass("hide");
+    $("#sendResult .downings").removeClass("show").addClass("hide");
+}
 
 
 $( document ).ready(function() {
@@ -193,7 +199,7 @@ $( document ).ready(function() {
 			}).appendTo($addedLi);
 			}
 		});
-		$(".playerFree").draggable({ scroll:true, revert: 'invalid', helper: "clone" });
+		$("#playersList_list .playerFree").draggable({ scroll:true, scrollSensitivity:100, revert: 'invalid', helper: "clone" });
 		$( ".playerPosition" ).disableSelection();
 	};
     
@@ -205,6 +211,7 @@ $( document ).ready(function() {
 				$( this ).find( ".placeholder" ).remove();
 				
                 addToCart(ui.draggable.data('json'));
+                basketChanged();
 			}
 		});
 	$("#sendCartBtn").bind('budgetChanged',function() {
@@ -230,7 +237,30 @@ $( document ).ready(function() {
 		});
     
     $("form#cartForm").submit(function(event) {
-        console.log($("form#cartForm").serialize());
+        event.preventDefault();
+        // AJAX post du formulaire
+        $("#registerPopup").removeClass("hide").addClass("show");
+        
+        
+        $.post("../ctrl/saveOffers.php",$("form#cartForm").serialize(),function( data ) {
+                console.log(data);
+                console.log(data.success);
+                $("#registerPopup").removeClass("show").addClass("hide");
+                    if (data.success === true) {
+                        $("#sendResult .uppings").removeClass("hide").addClass("show");
+                        $("#sendResult .downings").removeClass("show").addClass("hide");
+                    } else {
+                        $("#sendResult .uppings").removeClass("show").addClass("hide");
+                        $("#sendResult .downings").removeClass("hide").addClass("show").text('ERREUR ! '+data.message);
+                    }
+                },'json'
+            ).error(
+               function( data ) {
+                $("#registerPopup").removeClass("show").addClass("hide");
+                    $("#sendResult .uppings").removeClass("show").addClass("hide");
+                    $("#sendResult .downings").removeClass("hide").addClass("show").text('Impossible d\'enregistrer les offres');
+                }
+            );
     });
     
     updateBudget();
