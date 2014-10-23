@@ -13,7 +13,7 @@
 	<div id="news">
 		<h2><i class="fa fa-inbox"></i> Dernières infos</h2>
 		<ul class="fa-ul">
-  			<li><i class="fa-li fa fa-info-circle"></i> Bilan du dernier merkato</li>
+  			<li><a href="./index.php?kmpage=transfers"><i class="fa-li fa fa-info-circle"></i> Bilan du dernier merkato</a></li>
   			<li><i class="fa-li fa fa-info-circle"></i> Merkato en cours ! Jusqu'au 15/10 20:00</li>
   			<li><i class="fa-li fa fa-info-circle"></i> Mes derniers résultats</li>
   		</ul>

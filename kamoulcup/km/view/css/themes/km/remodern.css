@@ -107,6 +107,9 @@ button:hover:enabled, button:focus:enabled{
 	border-radius: 12px;
 }
 
+.bullet {
+    color:#fab7e6;
+}
 
 /******************************************************
 

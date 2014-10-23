@@ -17,6 +17,7 @@
 		$INDEX10 - HOME
         $INDEX11 - PLAYER
         $INDEX12 - FIXTURES
+        $INDEX13 - TRANSFERS
 		
 ******************************************************/	
 
@@ -960,4 +961,22 @@ $INDEX 8-2 : Players list
 #fixtures td,th{
 	padding-top:0.5em;
 	padding-bottom:0.5em;
+}
+/******************************************************
+
+	$INDEX13 - TRANSFERS
+	
+******************************************************/
+#transfers h2{
+    text-align: left;
+    margin-top: 20px;
+}
+#transfers ul {
+    font-size: 1.3em;
+	/*list-style-type: none; 
+	margin:0;
+	padding: 0; */
+}
+#transfers li {
+    margin-top: 10px;
 }
