@@ -1,6 +1,10 @@
 <?php
     include("accessManager.php");
     include("mercatoManager.php");
+    include("franchiseManager.php");
+    include("journeeManager.php");
+    include("salaryManager.php");
+    include("../model/KMConstants.php");
     include("../model/Resultat.php");
 
     checkPlayerAccess();
@@ -9,25 +13,35 @@
     $mercato = getCurrentMercato();
     
     if ($mercato == NULL) {
-        echo json_encode(fail("Le mercato est fermé"));
+        echo fail("Le mercato est fermé");
         die();
     }
 
     if (isset($offers)) {
         $mercatoId = $mercato['mer_id'];
         $franchiseId = $_SESSION['myEkypId'];
+        $journeeId = getLastJournee()['id'];
         
         $offPlayers=array();
         $offTotalAmount=0.0;
+        $offTotalSalaires=0;
         foreach($offers as $playerId=>$amount) {
             array_push($offPlayers,$playerId);
             $offTotalAmount += $amount;
+            $offTotalSalaires += getRealSalary($playerId,$journeeId);
         }
+        $franchise = getFranchise($franchiseId);
         // 1 contrôle budget
-        //TODO
+        if ( round(floatval($franchise['fin_solde']),1) - $offTotalAmount < 0 ) {
+            echo fail("Le montant des offres dépasse le budget");
+            die();
+        }
                 
         // 2 contrôle salaire
-        //TODO
+        if (round(floatval($franchise['masseSalariale']),1)+$offTotalSalaires > $KM_maxSalary) {
+            echo fail("Acheter ces joueurs ferait dépasser le plafond de masse salariale");
+            die();
+        }
         
         // 3 contrôle places dans l'effectif
         //TODO

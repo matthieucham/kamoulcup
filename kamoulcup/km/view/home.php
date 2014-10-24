@@ -1,5 +1,6 @@
 <?php
 	include_once("../../vocabulaire.php");
+    include_once("../ctrl/mercatoManager.php");
 ?>
 <section id="home">
 <div id="realData">
@@ -14,7 +15,14 @@
 		<h2><i class="fa fa-inbox"></i> Dernières infos</h2>
 		<ul class="fa-ul">
   			<li><a href="./index.php?kmpage=transfers"><i class="fa-li fa fa-info-circle"></i> Bilan du dernier merkato</a></li>
-  			<li><i class="fa-li fa fa-info-circle"></i> Merkato en cours ! Jusqu'au 15/10 20:00</li>
+            <?php
+                $mercato = getCurrentMercato();
+                if ($mercato != NULL) {
+                    $mercatoDate = date_create($mercato['mer_date_fermeture']);
+                    $dateF = date_format($mercatoDate,'d-m-Y H:i');
+                    echo "<li><a href='./index.php?kmpage=market'><i class='fa-li fa fa-info-circle'></i> Mercato en cours ! Jusqu'au {$dateF}</a></li>";
+                }
+            ?>   
   			<li><i class="fa-li fa fa-info-circle"></i> Mes derniers résultats</li>
   		</ul>
 	</div>

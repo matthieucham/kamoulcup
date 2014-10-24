@@ -3,7 +3,7 @@ $currentPage = 'home';
 if (isset($_GET['kmpage'])) {
 	$currentPage = $_GET['kmpage'];
 }
-include ('../ctrl/mercatoManager.php');
+include_once ('../ctrl/mercatoManager.php');
 $mercato = getCurrentMercato();
 ?>
 <header

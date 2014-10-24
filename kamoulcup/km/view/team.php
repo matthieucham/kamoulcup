@@ -1,18 +1,14 @@
+<?php
+    include_once('../ctrl/franchiseManager.php');
+    $franchise = getFranchise($_SESSION['myEkypId']);
+?>
 <section id="team">
-<h1>Legion of Doom</h1>
+<h1><?php echo $franchise['nom']?></h1>
 <h2>En bref</h2>
 <div id='team_overview'>
 		<div class='overviewItem'>
 			<p><i class='fa fa-male'></i> Contrats</p>
-			<div class='contract_positions_container'>
-				<div class='contract_position'>A<div class='pos_marker pos_marker_filled'></div></div>
-				<div class='contract_position'>A<div class='pos_marker pos_marker_filled'></div></div>
-				<div class='contract_position'>M<div class='pos_marker pos_marker_empty'></div></div>
-				<div class='contract_position'>M<div class='pos_marker pos_marker_empty'></div></div>
-				<div class='contract_position'>D<div class='pos_marker pos_marker_empty'></div></div>
-				<div class='contract_position'>D<div class='pos_marker pos_marker_filled'></div></div>
-				<div class='contract_position'>G<div class='pos_marker pos_marker_filled' title='Cédric Carrasso'></div></div>
-			</div>
+			<?php include('fragments/franchisePositions.php'); ?>
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-bank'></i> Budget</p>
