@@ -14,8 +14,19 @@
 
     function getContratsFranchise($id) {
         global $db;
-        $sousContratQ="select id,prenom,nom,poste,eng_salaire from joueur inner join km_engagement on id=eng_joueur_id where eng_ekyp_id={$id} and eng_date_depart is null";
+        $sousContratQ="select joueur.id,joueur.prenom,joueur.nom,joueur.poste,eng_salaire,club.nom as nomClub from joueur inner join km_engagement on id=eng_joueur_id inner join club on joueur.club_id=club.id where eng_ekyp_id={$id} and eng_date_depart is null order by field(poste,'G','D','M','A')";
         $sousContrat = $db->getArray($sousContratQ);
         return $sousContrat;
+    }
+
+    function getScoreFranchise($id) {
+        global $db;
+        $scoreQ = "select sum(eks_score) from km_ekyp_score where eks_ekyp_id={$id}";
+        $sco = $db->getArray($scoreQ);
+        if ($sco == NULL) {
+            return 0.0;
+        } else {
+            return round(floatval($sco[0][0]),1);
+        }
     }
 ?>
