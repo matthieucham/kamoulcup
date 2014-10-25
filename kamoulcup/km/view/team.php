@@ -2,6 +2,8 @@
     include_once('../ctrl/franchiseManager.php');
     include_once('../ctrl/journeeManager.php');
     include_once('../ctrl/joueurManager.php');
+    include_once('../ctrl/salaryManager.php');
+    include_once('../ctrl/transferManager.php');
     $franchise = getFranchise($_SESSION['myEkypId']);
 ?>
 <section id="team">
@@ -58,10 +60,16 @@
 			
 			<div class='team_player_tab teamPlayerInfo'>
 				<div class='teamPlayerInfo_data'>
-				<ul>
-					<li class='vignette' title='Salaire'><i class='fa fa-pencil-square-o'></i><span class='main'>8 Ka</span><span class='annex'>virtuel : 12 Ka</span></li>
-					<li class='vignette' title='Points rapportés'><i class='fa fa-trophy'></i><span class='main'>48.7 pts</span><span class='annex'>en 5 journées</span></li>
-					<li class='vignette' title='Prix d''achat'><i class='fa fa-shopping-cart'></i><span class='main'>7.9 Ka</span><span class='annex'>02/09/2014</span></li>
+				<ul>";
+            $sal = number_format($player['eng_salaire'],0);
+            $realSal = number_format(getRealSalary($player['id'],$statsJournees[0]),0);
+			echo "<li class='vignette' title='Salaire'><i class='fa fa-pencil-square-o'></i><span class='main'>{$sal} Ka</span><span class='annex'>virtuel : {$realSal} Ka</span></li>";
+            $score = number_format(round($player['scoreJoueur'],2),2);
+            $nbJournees = $player['nbJournees'];
+			echo "<li class='vignette' title='Points rapportés'><i class='fa fa-trophy'></i><span class='main'>{$score} pts</span><span class='annex'>en {$nbJournees} journées</span></li>";
+            $transfer = getLastTransfer($player['id']);
+            $montant = number_format(round($transfer['eng_montant'],1),1);
+			echo "<li class='vignette' title='Prix d''achat'><i class='fa fa-shopping-cart'></i><span class='main'>{$montant} Ka</span><span class='annex'>{$transfer['dateArrivee']}</span></li>
 				</ul>
 				</div>
 				<div class='teamPlayerInfo_action'>
