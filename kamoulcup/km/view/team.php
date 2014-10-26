@@ -4,6 +4,7 @@
     include_once('../ctrl/joueurManager.php');
     include_once('../ctrl/salaryManager.php');
     include_once('../ctrl/transferManager.php');
+    include_once('../ctrl/mercatoManager.php');
     $franchise = getFranchise($_SESSION['myEkypId']);
 ?>
 <section id="team">
@@ -31,7 +32,9 @@
 <div id='team_players'>
 	<h2>Effectif sous contrat</h2>
     <?php
-    $players = getContratsFranchise($_SESSION['myEkypId']);
+        $currentMercato = getCurrentMercato();
+        $mercatoEnCours = $currentMercato != NULL;
+        $players = getContratsFranchise($_SESSION['myEkypId']);
     if (players == NULL) {
         echo "Pas de joueurs sous contrat";
     } else {
@@ -41,7 +44,7 @@
             $stats = getJoueurStats($player['id'],$statsJournees);
             echo "<li class='team_player_container'>
             <div class='team_player_tab realPlayerInfo'>
-				<h4>{$player['prenom']} {$player['nom']}</h4>
+				<h4><a href='./index.php?kmpage=home&page=detailJoueur&joueurid=${player['id']}'>{$player['prenom']} {$player['nom']}</a></h4>
 				<p><span class='playerPosition'>{$player['poste']}</span> {$player['nomClub']}</p>
 			</div>
 			<div class='team_player_tab gamePlayerInfo'>
@@ -69,30 +72,42 @@
 			echo "<li class='vignette' title='Points rapportés'><i class='fa fa-trophy'></i><span class='main'>{$score} pts</span><span class='annex'>en {$nbJournees} journées</span></li>";
             $transfer = getLastTransfer($player['id']);
             $montant = number_format(round($transfer['eng_montant'],1),1);
-			echo "<li class='vignette' title='Prix d''achat'><i class='fa fa-shopping-cart'></i><span class='main'>{$montant} Ka</span><span class='annex'>{$transfer['dateArrivee']}</span></li>
+			echo "<li class='vignette' title='Prix achat'><i class='fa fa-shopping-cart'></i><span class='main'>{$montant} Ka</span><span class='annex'>{$transfer['dateArrivee']}</span></li>
 				</ul>
-				</div>
-				<div class='teamPlayerInfo_action'>
-					<p><span class='vignette' title='Sur la liste des transferts'><i class='fa fa-money'></i><span class='main'>10 Ka</span><span class='annex'>En vente</span></span></p>
-					<a href='#' class='transferList_handle'><i class='fa fa-toggle-down'></i> Actions</a>
-					<div class='transferList_actions'>
-						<form method='post' id='firePlayerForm14785' action='#'>
-							<input type='hidden' name='playerid' value='14785' />
-							<button id='sendCartBtn'>Libérer (0 Ka)</button>
+				</div>";
+            echo "<div class='teamPlayerInfo_action'>";
+            $isListed=false;
+            if ($player['ltr_montant'] != NULL) {
+                $trMontant = number_format(round($player['ltr_montant'],1),1);
+                $isListed=true;
+                echo "<p><span class='vignette' title='Sur la liste des transferts'><i class='fa fa-money'></i><span class='main'>{$trMontant} Ka</span><span class='annex'>En vente</span></span></p>";
+            }
+            echo "<a href='#' class='transferList_handle'><i class='fa fa-toggle-down'></i> Actions</a>
+					<div class='transferList_actions'>";
+            if ($mercatoEnCours) {
+                echo "<p>Aucune action possible lorsqu'un mercato est en cours</p>";
+            } else {
+                echo "<form method='post' id='firePlayerForm{$player['id']}' action='#'>
+							<input type='hidden' name='playerid' value='{$player['id']}' />
+							<button>Libérer (0 Ka)</button>
 						</form>
-						<hr/>
-						<form method='post' id='sellPlayerForm14785' action='#'>
-							<input type='hidden' name='playerid' value='14785' />
-							<p><label for='sellValue14785'>Mettre en vente à </label>
-							<input type='text' id='sellValue14785' class='sellPrice_input' style='width:40px' maxLength='4' />
+						<hr/>";
+                if ($isListed) {
+                    echo "<form method='post' id='unlistPlayerForm{$player['id']}' action='#'>
+							<input type='hidden' name='playerid' value='{$player['id']}' />
+							<button>Retirer de la liste</button>
+						</form>";
+                } else {
+				    echo "<form method='post' id='sellPlayerForm{$player['id']}' action='#'>
+							<input type='hidden' name='playerid' value='{$player['id']}' />
+							<p><label for='sellValue{$player['id']}'>Mettre en vente à </label>
+							<input type='text' name='sellValue[{$player['id']}]' id='sellValue{$player['id']}' class='sellPrice_input' style='width:40px' maxLength='4' />
 							Ka</p>
-							<p><button id='sendCartBtn'>Lister</button></p>
-						</form>
-						<hr/>
-						<form method='post' id='unlistPlayerForm14785' action='#'>
-							<input type='hidden' name='playerid' value='14785' />
-							<button id='sendCartBtn'>Retirer de la liste</button>
-						</form>
+							<p><button>Lister</button></p>
+						</form>";
+                }
+            }
+			echo "		
 					</div>
 				</div>
 			</div>
@@ -107,6 +122,7 @@
 
 <h2>Finances</h2>
 <div id="team_money">
+    <?php include_once('../ctrl/financesManager.php');?>
 <table width="100%">
 	<thead>
 	<tr>
@@ -114,15 +130,23 @@
 	</tr>
 	</thead>
 	<tbody>
-	<tr>
-		<td>02/09/2014</td><td>Achat du joueur Mevlüt Erding</td><td></td><td  class="col_money">-7.9 Ka</td><td  class="col_money">82.1 Ka</td>
-	</tr>
-	<tr>
-		<td>03/09/2014</td><td>Prime de redistribution</td><td class="col_money">+2.1 Ka</td><td></td><td  class="col_money">84.2 Ka</td>
-	</tr>
-	<tr>
-		<td>08/09/2014</td><td>Revente du joueur Maxime Gonalons</td><td class="col_money">+14.1 Ka</td><td></td><td class="col_money">98.3 Ka</td>
-	</tr>
+    <?php
+    $finances = getFinances($_SESSION['myEkypId']);
+    if ($finances != NULL) {
+        foreach($finances as $evt) {
+            echo "<tr>
+                <td>{$evt['dateEvenement']}</td><td>{$evt['fin_event']}</td>";
+            $montantTransaction = number_format(round($evt['fin_transaction'],1),1);
+            $solde = number_format(round($evt['fin_solde'],1),1);
+            if ($evt['fin_transaction']>=0) {
+                echo"<td class='col_money'>+{$montantTransaction} Ka</td><td class='col_money'></td>";
+            } else {
+                echo"<td class='col_money'></td><td class='col_money'>{$montantTransaction} Ka</td>";
+            }
+            echo "<td  class='col_money'>{$solde} Ka</td>";
+            echo "</tr>";
+        }
+    } ?>
 	</tbody>
 </table>
 </div>

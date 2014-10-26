@@ -1,40 +1,58 @@
 <?php
+    include_once('../ctrl/joueurManager.php');
+    include_once('../ctrl/journeeManager.php');
+    include_once('../ctrl/transferManager.php');
+
 	if (! isset($_GET['joueurid'])) {
 		echo '<p class=\"error\">Pas de JoueurId !</p>';
 		exit;
 	}
 	$joueurId = ($_GET['joueurid']);
-	$getJoueurQuery = $db->getArray("select prenom,nom from joueur where id={$joueurId} limit 1");
+    $lastJournee = getLastJournee();
+    $joueur = getJoueur($joueurId,$lastJournee['id']);
 ?>
 
 <section id="player">
-	<div class='sectionInfo'>
-	<h2><?php echo $getJoueurQuery[0]['prenom'].' '.$getJoueurQuery[0]['nom'] ?></h2>
-		<p><span class="playerPosition" title="Défenseur">D</span> Lyon</p>
-	</div>
-	<div id="timeline">
+    <?php
+	echo "<div class='sectionInfo'>
+        <h2>{$joueur['prenom']} {$joueur['nomJoueur']}</h2>
+		<p><span class='playerPosition'>{$joueur['poste']}</span> <a href='./index.php?page=detailClub&clubid={$joueur['idClub']}'>{$joueur['nomClub']}</a></p>
+	   </div>";
+    ?>
+<div id="timeline">
 	<div id="cd-timeline" class="cd-container">
 		<!-- Présentation sous forme de timeline -->
-		<div class="cd-timeline-block">
-        	<div class="cd-timeline-img cd-picture">
-        		<i class="fa fa-exchange"></i>
-        	</div> <!-- cd-timeline-img -->
-        	<div class="cd-timeline-content">
-            	<h2>Transfert</h2>
-            	<p>Acheté par El Brutal Principe pour 17.4 Ka</p>
-            	<span class="cd-date">27/09/2014</span>
-       		 </div> <!-- cd-timeline-content -->
-    	</div> <!-- cd-timeline-block -->
-    	<div class="cd-timeline-block">
-        	<div class="cd-timeline-img cd-picture">
-        		<i class="fa fa-suitcase"></i>
-        	</div> <!-- cd-timeline-img -->
-        	<div class="cd-timeline-content">
-            	<h2>Libéré</h2>
-            	<p>Libéré par Legion of Doom</p>
-            	<span class="cd-date">15/09/2014</span>
-       		 </div> <!-- cd-timeline-content -->
-    	</div> <!-- cd-timeline-block -->
+        <?php
+        $transfers = listPlayerTransfers($joueurId);
+        if ($transfers != NULL) {
+            $lastDateArrivee = NULL;
+            foreach ($transfers as $tr) {
+                $isMove= ($lastDateArrivee == $tr['eng_date_depart'] || $tr['eng_date_depart'] == NULL);
+                echo "<div class='cd-timeline-block'>
+        	       <div class='cd-timeline-img cd-picture'>";
+                if ($isMove) {
+                    echo "<i class='fa fa-exchange'></i>";
+                } else {
+                    echo "<i class='fa fa-suitcase'></i>";
+                }
+        	   echo "</div> <!-- cd-timeline-img -->
+                    <div class='cd-timeline-content'>";
+                if ($isMove) {
+                    $montant = number_format(round($tr['eng_montant'],1),1);
+                    echo "<h2>Transfert</h2>
+            	       <p>Acheté par {$tr['nomEkyp']} pour {$montant} Ka</p>
+            	       <span class='cd-date'>{$tr['dateArrivee']}</span>";
+                } else {
+                    echo "<h2>Libéré</h2>
+            	       <p>Libéré par {$tr['nomEkyp']}</p>
+            	       <span class='cd-date'>{$tr['dateDepart']}</span>";
+                }
+            	echo "</div> <!-- cd-timeline-content -->
+    	           </div> <!-- cd-timeline-block -->";
+                $lastDateArrivee = $tr['eng_date_arrivee'];
+            }
+        }
+        ?>
 	</div>
 	</div>
 	<div id="playerInfo">

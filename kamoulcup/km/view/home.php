@@ -18,9 +18,9 @@
             <?php
                 $mercato = getCurrentMercato();
                 if ($mercato != NULL) {
-                    $mercatoDate = date_create($mercato['mer_date_fermeture']);
-                    $dateF = date_format($mercatoDate,'d-m-Y H:i');
-                    echo "<li><a href='./index.php?kmpage=market'><i class='fa-li fa fa-info-circle'></i> Mercato en cours ! Jusqu'au {$dateF}</a></li>";
+                    //$mercatoDate = date_create($mercato['mer_date_fermeture']);
+                    //$dateF = date_format($mercatoDate,'d-m-Y H:i');
+                    echo "<li><a href='./index.php?kmpage=market'><i class='fa-li fa fa-info-circle'></i> Mercato en cours ! Jusqu'au {$dateFermeture}</a></li>";
                 }
             ?>   
   			<li><i class="fa-li fa fa-info-circle"></i> Mes derniers résultats</li>
