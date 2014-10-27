@@ -35,7 +35,7 @@
         $currentMercato = getCurrentMercato();
         $mercatoEnCours = $currentMercato != NULL;
         $players = getContratsFranchise($_SESSION['myEkypId']);
-    if (players == NULL) {
+    if ($players == NULL) {
         echo "Pas de joueurs sous contrat";
     } else {
         echo "<ul>";
@@ -67,8 +67,9 @@
             $sal = number_format($player['eng_salaire'],0);
             $realSal = number_format(getRealSalary($player['id'],$statsJournees[0]),0);
 			echo "<li class='vignette' title='Salaire'><i class='fa fa-pencil-square-o'></i><span class='main'>{$sal} Ka</span><span class='annex'>virtuel : {$realSal} Ka</span></li>";
-            $score = number_format(round($player['scoreJoueur'],2),2);
-            $nbJournees = $player['nbJournees'];
+            $statsF = getStatsFranchiseJoueur($franchise,$player['id']);
+            $score = number_format(round($statsF[0],2),2);
+            $nbJournees = $statsF[1];
 			echo "<li class='vignette' title='Points rapportés'><i class='fa fa-trophy'></i><span class='main'>{$score} pts</span><span class='annex'>en {$nbJournees} journées</span></li>";
             $transfer = getLastTransfer($player['id']);
             $montant = number_format(round($transfer['eng_montant'],1),1);
