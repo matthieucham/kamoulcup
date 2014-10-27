@@ -67,7 +67,7 @@
             $sal = number_format($player['eng_salaire'],0);
             $realSal = number_format(getRealSalary($player['id'],$statsJournees[0]),0);
 			echo "<li class='vignette' title='Salaire'><i class='fa fa-pencil-square-o'></i><span class='main'>{$sal} Ka</span><span class='annex'>virtuel : {$realSal} Ka</span></li>";
-            $statsF = getStatsFranchiseJoueur($franchise,$player['id']);
+            $statsF = getStatsFranchiseJoueur($_SESSION['myEkypId'],$player['id']);
             $score = number_format(round($statsF[0],2),2);
             $nbJournees = $statsF[1];
 			echo "<li class='vignette' title='Points rapportés'><i class='fa fa-trophy'></i><span class='main'>{$score} pts</span><span class='annex'>en {$nbJournees} journées</span></li>";

@@ -32,14 +32,7 @@
 
     function getStatsFranchiseJoueur($franchiseId,$joueurId) {
         global $db;
-        $statsQ = "SELECT sum( jpe_score ) , count( sej_journee_id )
-FROM km_joueur_perf
-INNER JOIN km_engagement ON jpe_joueur_id = eng_joueur_id
-INNER JOIN km_selection_ekyp_journee ON sej_engagement_id = eng_id
-INNER JOIN rencontre ON jpe_match_id = rencontre.id
-INNER JOIN journee ON journee.id = rencontre.journee_id and sej_journee_id=rencontre.journee_id
-WHERE sej_substitute =0
-AND eng_ekyp_id ={$franchiseId} and eng_joueur_id={$joueurId} and journee.date>=eng_date_arrivee and (journee.date<eng_date_depart or eng_date_depart IS NULL)";
+        $statsQ = "SELECT sum( jpe_score ) , count( sej_journee_id ) FROM km_joueur_perf INNER JOIN km_engagement ON jpe_joueur_id = eng_joueur_id INNER JOIN km_selection_ekyp_journee ON sej_engagement_id = eng_id INNER JOIN rencontre ON jpe_match_id = rencontre.id INNER JOIN journee ON journee.id = rencontre.journee_id and sej_journee_id=rencontre.journee_id WHERE sej_substitute =0 AND eng_ekyp_id ={$franchiseId} and eng_joueur_id={$joueurId} and journee.date>=eng_date_arrivee and (journee.date<eng_date_depart or eng_date_depart IS NULL)";
         $stats = $db->getArray($statsQ);
         return $stats[0];
     }

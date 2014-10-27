@@ -25,9 +25,13 @@
         <?php
         $transfers = listPlayerTransfers($joueurId);
         if ($transfers != NULL) {
-            $lastDateArrivee = NULL;
-            foreach ($transfers as $tr) {
-                $isMove= ($lastDateArrivee == $tr['eng_date_depart'] || $tr['eng_date_depart'] == NULL);
+            $lastDateDepart = NULL;
+            $nbTransfers = sizeof($transfers);
+            for ($i=0;$i<$nbTransfers;$i++) {
+                $tr=$transfers[$i];
+                $isLast = ($i+1 == $nbTransfers);
+                $isMove= ($i==0 || $lastDateDepart == $tr['eng_date_arrivee']);
+                echo "{$lastDateDepart} == {$tr['eng_date_arrivee']}";
                 echo "<div class='cd-timeline-block'>
         	       <div class='cd-timeline-img cd-picture'>";
                 if ($isMove) {
@@ -49,7 +53,20 @@
                 }
             	echo "</div> <!-- cd-timeline-content -->
     	           </div> <!-- cd-timeline-block -->";
-                $lastDateArrivee = $tr['eng_date_arrivee'];
+                if (($isLast  && $tr['eng_date_depart']!=NULL) || (!$isLast && $tr['eng_date_depart'] != $transfers[$i+1]['eng_date_arrivee']) ) {
+                    echo "<div class='cd-timeline-block'>
+        	       <div class='cd-timeline-img cd-picture'>";
+                    echo "<i class='fa fa-suitcase'></i>";
+                    echo "</div> <!-- cd-timeline-img -->
+                    <div class='cd-timeline-content'>";
+                    echo "<h2>Libéré</h2>
+            	       <p>Libéré par {$tr['nomEkyp']}</p>
+            	       <span class='cd-date'>{$tr['dateDepart']}</span>";
+                    echo "</div> <!-- cd-timeline-content -->
+    	           </div> <!-- cd-timeline-block -->";
+                }
+                $lastDateDepart = $tr['eng_date_depart'];
+                
             }
         }
         ?>

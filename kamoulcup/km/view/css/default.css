@@ -814,9 +814,9 @@ $INDEX 8-2 : Players list
 }
 .cd-timeline-img {
     border-radius: 50%;
-    -webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
+    /*-webkit-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
 	-moz-box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7); 
-	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 1px 4px 1px rgba(0, 0, 0, 0.7);*/
     height: 24px;
     left: 50%;
     position: absolute;
@@ -888,8 +888,12 @@ $INDEX 8-2 : Players list
     	top: 6px;
     	width: 100%;
 	}
+    /*.cd-timeline-block:nth-child(2n+1) {
+    	margin-top: 4em;
+	}*/
 	.cd-timeline-block:nth-child(2n) .cd-timeline-content {
-    	float: right;
+    	/*float: right;*/
+        margin-left:55%;
 	}
 	.cd-timeline-block:nth-child(2n) .cd-timeline-content:before {
     	border-color: transparent white transparent transparent;
