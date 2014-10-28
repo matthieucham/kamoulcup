@@ -243,8 +243,6 @@ $( document ).ready(function() {
         
         
         $.post("../ctrl/saveOffers.php",$("form#cartForm").serialize(),function( data ) {
-                console.log(data);
-                console.log(data.success);
                 $("#registerPopup").removeClass("show").addClass("hide");
                     if (data.success === true) {
                         $("#sendResult .uppings").removeClass("hide").addClass("show");

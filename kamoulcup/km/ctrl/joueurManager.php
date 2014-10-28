@@ -23,7 +23,7 @@
 
     function getJoueur($joueurId,$journeeId) {
         global $db;
-        $joueurQ = "select joueur.id as idJoueur,joueur.nom as nomJoueur,prenom,poste,club.id as idClub,club.nom as nomClub,eng_salaire,eng_ekyp_id,ekyp.nom as nomEkyp,scl_salaire,ltr_montant from joueur inner join club on joueur.club_id=club.id inner join km_join_joueur_salaire on jjs_joueur_id=joueur.id and jjs_journee_id={$journeeId} inner join km_const_salaire_classe on scl_id=jjs_salaire_classe_id left outer join km_engagement on eng_joueur_id=joueur.id left outer join ekyp on ekyp.id=eng_ekyp_id left outer join km_liste_transferts on eng_id=ltr_engagement_id where eng_date_depart is NULL and joueur.id={$joueurId} limit 1";
+        $joueurQ = "select joueur.id as idJoueur,joueur.nom as nomJoueur,prenom,poste,club.id as idClub,club.nom as nomClub,eng_salaire,eng_ekyp_id,eng_date_depart,ekyp.nom as nomEkyp,scl_salaire,ltr_montant from joueur inner join club on joueur.club_id=club.id inner join km_join_joueur_salaire on jjs_joueur_id=joueur.id and jjs_journee_id={$journeeId} inner join km_const_salaire_classe on scl_id=jjs_salaire_classe_id left outer join km_engagement on eng_joueur_id=joueur.id left outer join ekyp on ekyp.id=eng_ekyp_id left outer join km_liste_transferts on eng_id=ltr_engagement_id where joueur.id={$joueurId} limit 1";
         $joueur = $db->getArray($joueurQ);
         return $joueur[0];
     }

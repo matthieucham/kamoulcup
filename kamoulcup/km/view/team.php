@@ -31,6 +31,7 @@
 
 <div id='team_players'>
 	<h2>Effectif sous contrat</h2>
+    <div id="dialog-confirm"></div>
     <?php
         $currentMercato = getCurrentMercato();
         $mercatoEnCours = $currentMercato != NULL;
@@ -88,23 +89,26 @@
             if ($mercatoEnCours) {
                 echo "<p>Aucune action possible lorsqu'un mercato est en cours</p>";
             } else {
-                echo "<form method='post' id='firePlayerForm{$player['id']}' action='#'>
+                echo "<form method='post' action='../ctrl/firePlayer.php' id='form-fire-{$player['id']}'>
 							<input type='hidden' name='playerid' value='{$player['id']}' />
+                            <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
 							<button>Libérer (0 Ka)</button>
 						</form>
 						<hr/>";
                 if ($isListed) {
-                    echo "<form method='post' id='unlistPlayerForm{$player['id']}' action='#'>
+                    echo "<form method='post' action='../ctrl/unlistPlayer.php' id='form-list-{$player['id']}'>
 							<input type='hidden' name='playerid' value='{$player['id']}' />
+                            <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
 							<button>Retirer de la liste</button>
 						</form>";
                 } else {
-				    echo "<form method='post' id='sellPlayerForm{$player['id']}' action='#'>
+				    echo "<form method='post' action='../ctrl/listPlayer.php' id='form-list-{$player['id']}'>
 							<input type='hidden' name='playerid' value='{$player['id']}' />
+                            <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
 							<p><label for='sellValue{$player['id']}'>Mettre en vente à </label>
-							<input type='text' name='sellValue[{$player['id']}]' id='sellValue{$player['id']}' class='sellPrice_input' style='width:40px' maxLength='4' />
+							<input type='text' name='sellValue[{$player['id']}]' id='sellValue{$player['id']}' class='sellPrice_input' style='width:40px' maxLength='4' value='0.1'/>
 							Ka</p>
-							<p><button>Lister</button></p>
+							<button>Lister</button>
 						</form>";
                 }
             }

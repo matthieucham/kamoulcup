@@ -76,7 +76,7 @@
 		<ul class="fa-ul">
             <?php
                 $sal=0;
-                if ($joueur['eng_ekyp_id'] != NULL) {
+                if ($joueur['eng_ekyp_id'] != NULL && $joueur['eng_date_depart'] == NULL) {
                     echo "<li><i class='fa-li fa fa-home'></i>Sous contrat avec {$joueur['nomEkyp']}</li>";
                     $sal = round($joueur['eng_salaire'],0);
                     echo "<li><i class='fa-li fa fa-pencil-square-o'></i>Salaire contractuel : {$sal} Ka</li>";
@@ -95,7 +95,7 @@
                     echo " ({$showEcart})";
                 }
                 echo "</li>";
-                if ($joueur['ltr_montant'] != NULL) {
+                if ($joueur['ltr_montant'] != NULL && $joueur['eng_date_depart'] == NULL) {
                     $mt = number_format(round($joueur['ltr_montant'],1),1);
                     echo "<li class='highlight'><i class='fa-li fa fa-money'></i>En vente pour {$mt} Ka</li>";
                 }
@@ -110,10 +110,10 @@
             echo "<p>Rien pour l'instant</p>" ;
         } else {
             echo "<table width='100%'><thead><tr>
-		          <th>Journée</th><th>Rencontre</th><th>Franchise</th><th>Score</th><th>Salaire virtuel</th>
+		          <th>Journée</th><th>Rencontre</th><th>Franchise</th><th>Score</th><th>Salaire</th>
                   </tr></thead><tbody>";
             foreach ($histo as $ligne) {
-                echo "<tr><td>{$ligne['numero']}</td><td><a href='index.php?kmpage=home&page=detailClub&clubid={$ligne['idClubDom']}'>{$ligne['nomClubDom']}</a> <a href='index.php?kmpage=home&page=detailMatch&rencontreid={$ligne['idRencontre']}'>{$ligne['buts_club_dom']} - {$ligne['buts_club_ext']}</a> <a href='index.php?kmpage=home&page=detailClub&clubid={$ligne['idClubExt']}'>{$ligne['nomClubExt']}</a></td><td>";
+                echo "<tr><td>{$ligne['numero']}</td><td><a href='index.php?kmpage=home&page=detailClub&clubid={$ligne['idClubDom']}'>{$ligne['nomClubDom']}</a> <a href='index.php?kmpage=home&page=detailMatch&rencontreid={$ligne['idRencontre']}'>{$ligne['buts_club_dom']} &nbsp;-&nbsp;{$ligne['buts_club_ext']}</a> <a href='index.php?kmpage=home&page=detailClub&clubid={$ligne['idClubExt']}'>{$ligne['nomClubExt']}</a></td><td>";
                 if ($ligne['nomEkyp'] == NULL) {
                     echo "Sans contrat</td>";
                 } else {
