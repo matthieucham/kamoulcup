@@ -1,7 +1,7 @@
 <section id="championship">
     <h1>Championnat KDF</h1>
 <div id="fixtures">
-	<h2>Classement</h2>
+	<h2>Classement Général</h2>
 	<table width="100%">
 	<thead>
 	<tr>

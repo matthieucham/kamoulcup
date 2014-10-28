@@ -96,7 +96,7 @@
 						</form>
 						<hr/>";
                 if ($isListed) {
-                    echo "<form method='post' action='../ctrl/unlistPlayer.php' id='form-list-{$player['id']}'>
+                    echo "<form method='post' action='../ctrl/unlistPlayer.php' id='form-unlist-{$player['id']}'>
 							<input type='hidden' name='playerid' value='{$player['id']}' />
                             <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
 							<button>Retirer de la liste</button>

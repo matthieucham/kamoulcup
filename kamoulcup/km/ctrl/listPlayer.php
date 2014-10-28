@@ -1,7 +1,12 @@
 <?php
     include("accessManager.php");
-    include("../../includes/db.php");
+    include("mercatoManager.php");
+
     checkPlayerAccess();
+    if (getCurrentMercato() != NULL) {
+        echo "ERREUR : MERCATO EN COURS";
+        die();
+    }
 
     $joueurId =  $_POST['playerid'];
     $franchiseId = $_SESSION['myEkypId'];
