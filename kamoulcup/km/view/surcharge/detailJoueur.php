@@ -30,43 +30,43 @@
             for ($i=0;$i<$nbTransfers;$i++) {
                 $tr=$transfers[$i];
                 $isLast = ($i+1 == $nbTransfers);
-                $isMove= ($i==0 || $lastDateDepart == $tr['eng_date_arrivee']);
-                echo "{$lastDateDepart} == {$tr['eng_date_arrivee']}";
+                
                 echo "<div class='cd-timeline-block'>
         	       <div class='cd-timeline-img cd-picture'>";
-                if ($isMove) {
-                    echo "<i class='fa fa-exchange'></i>";
-                } else {
-                    echo "<i class='fa fa-suitcase'></i>";
-                }
-        	   echo "</div> <!-- cd-timeline-img -->
+                echo "<i class='fa fa-exchange'></i>";
+                echo "</div> <!-- cd-timeline-img -->
                     <div class='cd-timeline-content'>";
-                if ($isMove) {
-                    $montant = number_format(round($tr['eng_montant'],1),1);
-                    echo "<h2>Transfert</h2>
+                $montant = number_format(round($tr['eng_montant'],1),1);
+                echo "<h2>Transfert</h2>
             	       <p>Acheté par {$tr['nomEkyp']} pour {$montant} Ka</p>
             	       <span class='cd-date'>{$tr['dateArrivee']}</span>";
-                } else {
-                    echo "<h2>Libéré</h2>
-            	       <p>Libéré par {$tr['nomEkyp']}</p>
-            	       <span class='cd-date'>{$tr['dateDepart']}</span>";
-                }
-            	echo "</div> <!-- cd-timeline-content -->
+                echo "</div> <!-- cd-timeline-content -->
     	           </div> <!-- cd-timeline-block -->";
-                if (($isLast  && $tr['eng_date_depart']!=NULL) || (!$isLast && $tr['eng_date_depart'] != $transfers[$i+1]['eng_date_arrivee']) ) {
+                // Faut il ensuite faire appaître un evènement "Libéré" ?
+                $showFinContrat=false;
+                if ($isLast) {
+                    $currentDateDepart = $tr['eng_date_depart'];
+                    $showFinContrat = $currentDateDepart != NULL;
+                } else {
+                    $nextDateArrivee = $transfers[$i+1]['eng_date_arrivee'];
+                    $currentDateDepart = $tr['eng_date_depart'];
+                    if ($currentDateDepart != $nextDateArrivee) {
+                        //Fin de contrat à matérialiser
+                        $showFinContrat = true;
+                    }
+                }
+                if ($showFinContrat) {
                     echo "<div class='cd-timeline-block'>
         	       <div class='cd-timeline-img cd-picture'>";
                     echo "<i class='fa fa-suitcase'></i>";
                     echo "</div> <!-- cd-timeline-img -->
                     <div class='cd-timeline-content'>";
-                    echo "<h2>Libéré</h2>
+                    echo "<h2>Fin de contrat</h2>
             	       <p>Libéré par {$tr['nomEkyp']}</p>
             	       <span class='cd-date'>{$tr['dateDepart']}</span>";
                     echo "</div> <!-- cd-timeline-content -->
-    	           </div> <!-- cd-timeline-block -->";
+    	               </div> <!-- cd-timeline-block -->";
                 }
-                $lastDateDepart = $tr['eng_date_depart'];
-                
             }
         }
         ?>
@@ -74,32 +74,57 @@
 	</div>
 	<div id="playerInfo">
 		<ul class="fa-ul">
-			<li><i class="fa-li fa fa-home"></i>Sous contrat avec El Brutal Principe</li>
-			<li><i class="fa-li fa fa-suitcase"></i>Sans contrat</li>
-			<li><i class="fa-li fa fa-pencil-square-o"></i>Salaire contractuel : 12 Ka</li>
-			<li><i class="fa-li fa fa-futbol-o"></i>Salaire virtuel : 8 Ka (-4) <span class='uppings' title='En hausse'><i class="fa fa-arrow-up"></i></span> <span class='downings' title='En baisse'><i class="fa fa-arrow-down"></i></span></li>
-			<li class='highlight'><i class="fa-li fa fa-money"></i>En vente pour 5.5 Ka</li>
+            <?php
+                $sal=0;
+                if ($joueur['eng_ekyp_id'] != NULL) {
+                    echo "<li><i class='fa-li fa fa-home'></i>Sous contrat avec {$joueur['nomEkyp']}</li>";
+                    $sal = round($joueur['eng_salaire'],0);
+                    echo "<li><i class='fa-li fa fa-pencil-square-o'></i>Salaire contractuel : {$sal} Ka</li>";
+                } else {
+                    echo "<li><i class='fa-li fa fa-suitcase'></i>Sans contrat</li>";
+                }
+                $actualSal = round($joueur['scl_salaire'],0);
+                $ecart = $actualSal - $sal;
+                if ($ecart > 0) {
+                    $showEcart = '+'.$ecart;
+                } else {
+                    $showEcart = ''.$ecart;
+                }
+                echo "<li><i class='fa-li fa fa-futbol-o'></i>Salaire virtuel : {$actualSal} Ka";
+                if ($sal > 0) {
+                    echo " ({$showEcart})";
+                }
+                echo "</li>";
+                if ($joueur['ltr_montant'] != NULL) {
+                    $mt = number_format(round($joueur['ltr_montant'],1),1);
+                    echo "<li class='highlight'><i class='fa-li fa fa-money'></i>En vente pour {$mt} Ka</li>";
+                }
+            ?>
 		</ul>
 	</div>
 	<div id="playerPerf">
 	<h2>Historique des performances</h2>
-	<table width="100%">
-	<thead>
-	<tr>
-		<th>Journée</th><th>Rencontre</th><th>Franchise</th><th>Score</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr>
-		<td>1</td><td>Reims 0 - 0 Nice</td><td>Libre</td><td>9.75</td>
-	</tr>
-	<tr>
-		<td>2</td><td>Nice 1 - 2 Montpellier</td><td>Nation of Breizh</td><td>5.12</td>
-	</tr>
-	<tr>
-		<td>3</td><td>Nice 3 - 1 Monaco</td><td>Nation of Breizh</td><td>11.4</td>
-	</tr>
-	</tbody>
-	</table>
+    <?php
+        $histo = getJoueurHistorique($joueurId);
+        if ($histo == NULL) {
+            echo "<p>Rien pour l'instant</p>" ;
+        } else {
+            echo "<table width='100%'><thead><tr>
+		          <th>Journée</th><th>Rencontre</th><th>Franchise</th><th>Score</th><th>Salaire virtuel</th>
+                  </tr></thead><tbody>";
+            foreach ($histo as $ligne) {
+                echo "<tr><td>{$ligne['numero']}</td><td><a href='index.php?kmpage=home&page=detailClub&clubid={$ligne['idClubDom']}'>{$ligne['nomClubDom']}</a> <a href='index.php?kmpage=home&page=detailMatch&rencontreid={$ligne['idRencontre']}'>{$ligne['buts_club_dom']} - {$ligne['buts_club_ext']}</a> <a href='index.php?kmpage=home&page=detailClub&clubid={$ligne['idClubExt']}'>{$ligne['nomClubExt']}</a></td><td>";
+                if ($ligne['nomEkyp'] == NULL) {
+                    echo "Sans contrat</td>";
+                } else {
+                    echo "{$ligne['nomEkyp']}</td>";
+                }
+                $perf = number_format(round($ligne['jpe_score'],2),2);
+                $sal = number_format(round($ligne['scl_salaire'],0),0);
+                echo "<td>{$perf}</td><td>{$sal} Ka</td></tr>";
+            }
+            echo "</tbody></table>";
+        }
+    ?>
 	</div>
 </section>
