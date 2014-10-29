@@ -377,17 +377,41 @@ body {
 	$INDEX12 - FIXTURES
 	
 ******************************************************/
-#fixtures table {
+#championship table {
 	background-color:#3E4147;
 	border-collapse:collapse;
 }
-#fixtures table th {
+#championship table th {
 	color:#ECECED;
 }
 
-#fixtures table tbody tr:nth-child(even){
+#championship table tbody tr:nth-child(even){
 	background-color:#fab7e6;
 }
-#fixtures table tbody tr:nth-child(odd){
+#championship table tbody tr:nth-child(odd){
 	background-color:#ECECED;
+}
+#compo {
+    background: url("images/Fond-herbe.jpg") repeat scroll 0 0 #3E4147;
+    border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+}
+.compoPlayer {
+    background: none repeat scroll 0 0 rgba(236, 236, 237, 0.5);
+    border: 1px solid #ECECED;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.compoPlayerDrop {
+    background: none repeat scroll 0 0 rgba(236, 236, 237, 0.8);
+    border: 3px solid #ECECED;
+}
+.benchPlayer {
+    background-color:#3E4147;
+	color:#ECECED;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }

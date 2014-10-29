@@ -955,17 +955,110 @@ $INDEX 8-2 : Players list
 	$INDEX12 - FIXTURES
 	
 ******************************************************/
-#championship #fixtures table{
-	margin:1em;
+#championship table{
 	font-size:1.3em;
 	text-align:center;
 	-moz-border-radius: 12px;
 	-webkit-border-radius: 12px;
 	border-radius: 12px;
+    margin-bottom: 1em;
 }
-#fixtures td,th{
+#championship td,th{
 	padding-top:0.5em;
 	padding-bottom:0.5em;
+}
+#championship #lastRound{
+    display: table;
+    width: 100%;
+    font-size: 80%
+}
+#championship #lastRound div{
+    display: table-cell;
+    padding: 1em;
+}
+
+#compoContainer {
+    width:850px;
+    display:table;
+}
+#dayScores {
+    width:540px;
+    display:table-cell;
+}
+#daysList {
+    display:table-cell;
+}
+#compo{
+    width:536px;
+    height:200px;
+    padding:5px;
+    position:relative;
+}
+.compoPlayer{
+    position:absolute;
+}
+.compoPlayer,.benchPlayer {
+    min-width: 120px;
+    max-width: 120px;
+    min-height: 40px;
+    max-height: 100px;
+    padding:3px;
+    margin:7px;
+    overflow: hidden;
+    text-align:center;
+    vertical-align: middle;
+    cursor:pointer;
+}
+.compoPlayer p,.benchPlayer p{
+    display:block;
+    font-size:1.0em;
+}
+#compoG {
+    left:0px;
+    top:50px;
+}
+#compoD1 {
+    left:134px;
+    top:7px;
+}
+#compoD2 {
+    left:134px;
+    bottom:7px;
+}
+#compoM1 {
+    left:268px;
+    top:7px;
+}
+#compoM2 {
+    left:268px;
+    bottom:7px;
+}
+#compoA1 {
+    left:402px;
+    top:7px;
+}
+#compoA2 {
+    left:402px;
+    bottom:7px;
+}
+#bench ul {
+	list-style-type: none; 
+	margin:0;
+	padding: 0; 
+}
+#bench ul li {
+	display:inline-block;
+}
+#compoBench {
+    display:table;
+}
+#compoBench div {
+    display: table-cell;
+}
+#compoBench div ul {
+    list-style-type: none; 
+	margin:0;
+	padding: 0; 
 }
 /******************************************************
 
