@@ -1,5 +1,6 @@
 <?php
 include("Club.php");
-include("MarketFranchise.php");
 include("player.php");
+include("CompoPlayer.php");
+include("Compo.php");
 ?>

@@ -1,6 +1,8 @@
 <?php
 	include_once("../../vocabulaire.php");
     include_once("../ctrl/mercatoManager.php");
+    include_once("../ctrl/journeeManager.php");
+    include_once("../ctrl/compoManager.php");
 ?>
 <section id="home">
 <div id="realData">
@@ -14,16 +16,29 @@
 	<div id="news">
 		<h2><i class="fa fa-inbox"></i> Dernières infos</h2>
 		<ul class="fa-ul">
-  			<li><a href="./index.php?kmpage=transfers"><i class="fa-li fa fa-info-circle"></i> Bilan du dernier merkato</a></li>
+  			<li><i class="fa-li fa fa-info-circle"></i><a href="./index.php?kmpage=transfers"> Bilan du dernier merkato</a></li>
             <?php
                 $mercato = getCurrentMercato();
                 if ($mercato != NULL) {
-                    //$mercatoDate = date_create($mercato['mer_date_fermeture']);
-                    //$dateF = date_format($mercatoDate,'d-m-Y H:i');
-                    echo "<li><a href='./index.php?kmpage=market'><i class='fa-li fa fa-info-circle'></i> Mercato en cours ! Jusqu'au {$mercato['dateFermeture']}</a></li>";
+                    echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=market'> Mercato en cours ! Jusqu'au {$mercato['dateFermeture']}</a></li>";
+                }
+                $journee = getLastJournee();
+                if ($journee != NULL) {
+                    echo "<li><i class='fa-li fa fa-info-circle'></i><a href='#' linkCompo='../api/compos.php?franchiseid={$_SESSION['myEkypId']}&journeeid={$journee['id']}'> Mes derniers résultats</a></li>";
+                }
+                $nextJ = getNextJournee();
+                if ($nextJ == NULL) {
+                    echo "<li><i class='fa-li fa fa-info-circle'></i>Pas de journée prochainement programmée.</li>";
+                } else {
+                    $nextCompo = getCompoNoScore($_SESSION['myEkypId'],$nextJ['id'],true);
+                    if ($nextCompo == NULL) {
+                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&journeeid={$nextJ['id']}'>Faire sa compo pour la journée {$nextJ['numero']} du {$nextJ['dateJournee']}.</a></li>";
+                    } else {
+                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&journeeid={$nextJ['id']}'>Compo pour la journée {$nextJ['numero']} du {$nextJ['dateJournee']} enregistrée.</a></li>";
+                    }
                 }
             ?>   
-  			<li><i class="fa-li fa fa-info-circle"></i> Mes derniers résultats</li>
+  			
   		</ul>
 	</div>
 	<div id="kmWrapper">
@@ -39,6 +54,6 @@
 	?>
 	</div>
 </div>
-
+<?php include('fragments/compoPopup.php');?>
 </section>
 <script src="js/custom/km-home.js"></script>

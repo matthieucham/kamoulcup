@@ -1,6 +1,6 @@
 $( document ).ready(function() {
   
-    $('#news li a[linkCompo]').click(function (){
+    $('#teamsRanking table a').click(function (){
         var compoReq = $(this).attr('linkCompo');
         loadCompo(compoReq);
     });
