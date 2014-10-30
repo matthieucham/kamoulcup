@@ -33,8 +33,13 @@ foreach ($contrats as $contrat) {
 echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
 ?>
 <p>Sélectionnez les titulaires par "glisser-déposer" depuis le banc de touche</p>
+<div id="pitchBench">
     <div id="compo">
-        <form method="post">
+        <form id="compoForm">
+            <?php
+                echo "<input type='hidden' name='franchiseid' value='{$franchiseId}'/>";
+                echo "<input type='hidden' name='journeeid' value='{$journeeId}'/>";
+            ?>
             <div id="compoG" class="compoPlayer" position="posG">
                 <input type="hidden" name="player[0]" value=""/>
             </div>
@@ -109,5 +114,20 @@ echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
                 </ul>
             </div>
     </div>
+</div>
+<div id="actions">
+    <button id="registerBtn">Enregistrer</button>
+        <div id='registerResult'>
+            <div class='uppings hide'><p><i class="fa fa-thumbs-up fa-2x"></i> Compo enregistrée</p></div>
+            <div class='downings hide'><p><i class="fa fa-warning fa-2x"></i> </p></div>
+        </div>
+</div>
+
+<div id="registerPopup" class="popup hide">
+<div class="cover"></div>
+<div class="frame">
+    <p><i class="fa fa-spinner fa-spin"></i> Enregistrement...</p>
+</div>
+</div>
 </section>
 <script src="js/custom/km-chooseTeam.js"></script>

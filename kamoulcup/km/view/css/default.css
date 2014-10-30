@@ -1087,3 +1087,15 @@ $INDEX 8-2 : Players list
 #transfers li {
     margin-top: 10px;
 }
+/*****************************************************
+
+    $INDEX14 - CHOOSE TEAM
+
+*******************************************************/
+#chooseTeam #pitchBench {
+    float:left;
+}
+#chooseTeam #actions {
+    width: 100%;
+    text-align: center;
+}

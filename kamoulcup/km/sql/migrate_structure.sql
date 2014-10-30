@@ -195,3 +195,5 @@ CREATE TABLE IF NOT EXISTS `km_selection_ekyp_journee` (
   `sej_substitute` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`sej_engagement_id`,`sej_journee_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `journee` CHANGE `date` `date` DATETIME NOT NULL ;

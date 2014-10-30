@@ -1,4 +1,7 @@
 $( document ).ready(function() {
+    $("#registerBtn").click(function(event) {
+        $("form#compoForm").submit();
+    });
     
     $("#compoBench .benchPlayer").draggable({ scroll:true, revert: 'invalid', helper: "clone" });
     
@@ -39,5 +42,30 @@ $( document ).ready(function() {
         $('#compoBench').find('#bp_'+newVal).addClass('hide');
     }
     
+    $("form#compoForm").submit(function(event) {
+        event.preventDefault();
+        // AJAX post du formulaire
+        $("#registerPopup").removeClass("hide").addClass("show");
+        
+        // TODO sauver les remplaçants !
+        console.log("hello");
+        $.post("../ctrl/saveCompo.php",$("form#compoForm").serialize(),function( data ) {
+                $("#registerPopup").removeClass("show").addClass("hide");
+                    if (data.success === true) {
+                        $("#registerResult .uppings").removeClass("hide").addClass("show");
+                        $("#registerResult .downings").removeClass("show").addClass("hide");
+                    } else {
+                        $("#registerResult .uppings").removeClass("show").addClass("hide");
+                        $("#registerResult .downings").removeClass("hide").addClass("show").text('ERREUR ! '+data.message);
+                    }
+                },'json'
+            ).error(
+               function( data ) {
+                $("#registerPopup").removeClass("show").addClass("hide");
+                    $("#registerResult .uppings").removeClass("show").addClass("hide");
+                    $("#registerResult .downings").removeClass("hide").addClass("show").text('Impossible d\'enregistrer la composition');
+                }
+            );
+    });
 });
 
