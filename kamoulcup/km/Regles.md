@@ -35,21 +35,60 @@ L'aspect primordial du jeu concerne le recrutement de *joueurs de Ligue 1 (L1)* 
 - Défenseur (D)
 - Milieu (M)
 - Attaquant (A)
+
 Les postes sont attribués en se basant sur ce que déclarent *les sites officiels des clubs de L1* dans leur page de présentation d'effectif. A défaut d'une telle page, on se base sur le consensus de la presse sportive.
 
 ### Préparation du championnat
 
 #### Initialisation des budgets
+En début de saison, chaque franchise reçoit 100 Ka. Tout le monde part donc à égalité.
 
-#### Recrutement de l'effectif : le merkato principal
+#### Recrutement de l'effectif : le mercato principal
+C'est le moment d'être attentif car une grande part de vos succès futurs se joue lors du mercato de début de saison. C'est le moment où, partant de rien, vous allez choisir entre 7 et 12 joueurs qui composeront votre effectif initial. Mais vous n'êtes pas tout seul sur l'affaire : tout le monde se bat pour les mêmes joueurs, et il n'y a qu'un seul Zlatan ! Tout va donc se jouer lors d'enchères...
+
+Rendez-vous sur la page "Mercato". Là, vous pouvez parcourir les effectifs des clubs de L1 et repérer les joueurs qui vous intéresse. Pour placer une offre sur un joueur, faites le glisser vers le cadre "Mon panier" de la partie droite de la page, puis entrez un montant d'enchère.
+
+Remplissez ainsi votre panier en sélectionnant successivement les joueurs de votre choix. Vous pourrez enregistrer vos enchères une fois que:
+- vous aurez placé au moins 7 joueurs, 12 au maximum, dans votre panier, dont au moins 1 gardien, 2 défenseurs, 2 milieux et 2 attaquants
+- la somme des salaires des joueurs choisis respectera le plafond de masse salariale du championnat
+- les enchères placées sur les joueurs du panier ne dépasseront pas votre budget
+
+Lorsque vous êtes satisfaits, enregistrez votre enchères en cliquant sur le bouton "Enregistrer". Vous pourrez néanmoins modifier vos choix autant de fois que vous le souhaitez tant que le tour de mercato n'est pas fini.
+
+Pour ce mercato de début de saison, 5 rounds d'une journée vont se succéder (*nombre et modalités exactes à valider par la pratique*).
 
 #### Règles de recrutement des joueurs
+Lors d'un mercato il faut impérativement :
+- faire des offres sur les postes vacants de votre effectif en priorité.
+- ne pas dépasser le plafond de masse salariale
+- respecter son budget transfert
+- ne pas faire d'offres sur plus de 12 joueurs
 
 #### Résolution des enchères
+A la fin de chaque round de mercato, chaque joueur rejoint la franchise qui a placé l'enchère la plus élevée sur sa tête. En cas d'égalité entre deux enchères, le vainqueur est tiré au sort.
 
 ### Déroulement du championnat
 
+Les effectifs étant désormais constitués, la compétition peut s'engager
+
 #### Calendrier d'une semaine-type
+- Du vendredi au dimanche : Journée "j-1" de L1
+- lundi : saisie des résultats, calcul des scores, mise à jour des salaires des joueurs
+- mercredi : mercato (dépôt d'enchères). Impossible de placer un joueur sur la liste des transferts ou de mettre fin à son contrat pendant cette période.
+- jeudi (matin) : résolution des enchères du mercato de la veille
+- avant le coup d'envoi du premier match de la journée "j" : enregistrement de la composition d'équipe votre franchise.
+
+
+#### Composition d'équipe
+Les franchises peuvent avoir sous contrat de 7 à 12 joueurs. Or la sélection qui rapporte des points à la franchise ne doit se composer que de 7 joueurs seulement. Il faut donc que ces 7 joueurs soient désignés par chaque franchise avant chaque journée.
+Heureusement, un lien est là pour vous rappeler de le faire dans la page "Bureau".
+
+Il est possible d'enregistrer et de modifier sa sélection jusqu'au coup d'envoi du premier match de la journée.
+
+A l'issue de la journée de championnat, on calcule le score de chaque franchise en additionnant les points marqués par les 7 joueurs sélectionnés. **Les joueurs non sélectionnés ne rapportent pas de point**
+Si jamais une franchise n'a pas effectué cette sélection avant le début de la journée de championnat, ou que cette sélection est incomplète, voici comment sont sélectionnés automatiquement les joueurs :
+- on prend d'abord les joueurs sous contrat ayant le salaire le plus élevé
+- en cas d'égalité, on choisit celui qui a signé son contrat le plus récemment.
 
 #### Evaluation des joueurs
 
@@ -74,40 +113,3 @@ Les postes sont attribués en se basant sur ce que déclarent *les sites officie
 #### La mise à jour économique
 
 ### Les finances
-
-
-TODO (le futur):
-- les remplaçants
-- sélectionner l'équipe type.
-- 
-
-
------------------------------------------- Ancienne version
-
-# But du jeu
-Désigné manager d'une **franchise**, votre but est de constituer une sélection de joueurs de football évoluant en Ligue 1 dont **les performances réelles après chaque match vont vous rapporter des points**. Pour cela, vous disposez d'un budget et d'une masse salariale à ne pas dépasser. Des périodes de **mercato** vous permettent de recruter et de vendre des joueurs. Mais attention: vos concurrents aussi vont chercher à s'attacher les services des meilleurs joueurs, et il vous faudra remporter les enchères pour avoir leur signature !
-A la fin de la compétition, la franchise qui a accumulé le plus de points remporte le titre !
-
-# Modalités
-
-## Votre franchise
-Au démarrage, votre franchise dispose d'un budget de **100 Ka** (Ka pour *Kamouls* qui est la monnaie du jeu) pour recruter 7 joueurs : 1 gardien, 2 défenseurs, 2 milieux de terrain et 2 attaquants. Chaque joueur à un salaire que votre franchise doit assumer : Au total, la somme des salaires de vos 7 joueurs ne doit pas dépasser **60 Ka**
-
-## Recrutement des joueurs
-Les joueurs recrutables sont tous les joueurs qui font partie des effectifs des clubs de Ligue 1. Chacun d'eux a un poste immuable tout au long de la saison courante de L1 : Gardien (G), Défenseur (D), Milieu de terrain (M) ou Attaquant (A).
-Au démarrage de la compétition, votre franchise ne compte aucun joueur. Il vous faut donc recruter vos 7 joueurs avant le premier match.
-Les joueurs se recrutent par un système de **vente aux enchères** : Pour gagner un joueur, il faut avoir formulé l'offre d'achat la plus élevée sur celui-ci. Attention : vous ne pourrez pas proposer plus d'argent que vous n'en possédez. Ainsi, la somme des 7 offres simultanées que vous allez envoyer ne pourra pas dépasser 100 Ka au début du jeu.
-Mais il vous faut aussi respecter le plafond de masse salariale, qui est le même pour toutes les franchises : 60 Ka. En effet chaque joueur de L1 est affublé d'un salaire dont la valeur dépend de sa renommée et de ses performances récentes. Logiquement, les joueurs stars exigent des salaires élevés et les seconds couteaux sont moins onéreux. Pour plus de détail sur les salaires des joueurs, voir plus loin le chapitre concerné.
-
-## Résolution des enchères
-A l'issue de la période de **mercato** qui a permis à chaque franchise de votre ligue de soumettre ses offres d'achat, celles-ci sont dépouillées, et chaque joueur rejoint l'équipe qui a formulé l'offre la plus élevée. Ainsi:
- - si un joueur n'a été demandé que par une seul franchise, il rejoint cette franchise pour le montant stipulé
- - si un joueur a été demandé par plusieurs franchises il rejoint l'équipe qui a formulé l'offre la plus élevée. En cas d'égalité entre plusieurs franchises pour l'offre la plus élevée, le vainqueur de l'enchère est tiré au sort.
- 
-
-
-
-## Calcul des score
-Les joueurs de votre franchise disputent des matchs en Ligue 1 (du moins, si vous les choisissez bien : il vaut mieux engager des joueurs assurés de jouer régulièrement que Wattoo-Wattoo)
-
-Le score de votre franchise est la somme des points apportés par vos joueurs
