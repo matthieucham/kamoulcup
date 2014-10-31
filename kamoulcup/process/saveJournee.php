@@ -11,9 +11,9 @@
 	$date = correctSlash($_POST['date']);
 	
 	if ($_POST['nouveau']) {
-		$saveJourneeQuery = "insert into journee(numero,date) values('{$numero}',str_to_date('{$date}','%Y-%m-%d'))";
+		$saveJourneeQuery = "insert into journee(numero,date) values('{$numero}',str_to_date('{$date}','%Y-%m-%d %H:%i'))";
 	} else {
-		$saveJourneeQuery = "update journee set numero='{$numero}', date=str_to_date('{$date}','%Y-%m-%d') where id='{$_POST['id']}'";
+		$saveJourneeQuery = "update journee set numero='{$numero}', date=str_to_date('{$date}','%Y-%m-%d %H:%i') where id='{$_POST['id']}'";
 	}
 	$db->query($saveJourneeQuery) or die('Error, insert query failed, see log');
 	

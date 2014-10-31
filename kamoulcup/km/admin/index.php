@@ -36,7 +36,7 @@ checkAdminAccess();
 <h2>Step 1: Sélections des franchises</h2>
 <p>Evolution possible : chaque franchise remplit sa feuille de match</p>
 <form method="post" action="process/updateSelections.php">
-<p>Sélections de la journée <select size=1 name="journee">
+<p>Valider les compositions de la journée <select size=1 name="journee">
 <?php
 $listJourneesQuery = $db->getArray("select id,numero from journee order by numero asc");
 if ( $listJourneesQuery != NULL) {

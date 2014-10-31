@@ -17,12 +17,16 @@
         return $db->getArray($compoQ);
     }
 
+    function clearCompo($franchiseId,$journeeId) {
+        global $db;
+        $cleanQ="delete from km_selection_ekyp_journee where sej_journee_id={$journeeId} and sej_engagement_id in (select eng_id from km_engagement where eng_ekyp_id={$franchiseId})";
+        $db->query($cleanQ);
+    }
+
     function saveCompo($franchiseId,$journeeId,$playerIds,$sub) {
         global $db;
         $ids=implode(",",$playerIds);
-        $cleanQ="delete from km_selection_ekyp_journee where sej_journee_id={$journeeId} and sej_engagement_id in (select eng_id from km_engagement where eng_ekyp_id={$franchiseId})";
         $compoQ="insert into km_selection_ekyp_journee(sej_engagement_id,sej_journee_id,sej_substitute) select eng_id,{$journeeId},{$sub} from km_engagement where eng_date_depart is null and eng_ekyp_id={$franchiseId} and eng_joueur_id in ({$ids}) on duplicate key update sej_substitute={$sub}";
-        $db->query($cleanQ);
         $db->query($compoQ);
     }
 ?>

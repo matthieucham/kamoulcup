@@ -1,31 +1,69 @@
-/* Visualisation Franchise */
-<section id="team">
-<h1>Ze Gypsy Queens</h1>
+<?php
+    include_once('../ctrl/franchiseManager.php');
+    include_once('../ctrl/rankingManager.php');
+    include_once('../ctrl/engagementManager.php');
+
+    $franchiseId = $_GET['franchiseid'];
+    $franchise = getFranchise($franchiseId);
+?>
+<section id="otherTeam">
+<h1><?php echo $franchise['nom']?></h1>
 <h2>En bref</h2>
 <div id='team_overview'>
 		<div class='overviewItem'>
 			<p><i class='fa fa-male'></i> Contrats</p>
-			<div class='contract_positions_container'>
-				<div class='contract_position'>A<div class='pos_marker pos_marker_filled'></div></div>
-				<div class='contract_position'>A<div class='pos_marker pos_marker_filled'></div></div>
-				<div class='contract_position'>M<div class='pos_marker pos_marker_empty'></div></div>
-				<div class='contract_position'>M<div class='pos_marker pos_marker_empty'></div></div>
-				<div class='contract_position'>D<div class='pos_marker pos_marker_empty'></div></div>
-				<div class='contract_position'>D<div class='pos_marker pos_marker_filled'></div></div>
-				<div class='contract_position'>G<div class='pos_marker pos_marker_filled' title='Cédric Carrasso'></div></div>
-			</div>
+			<?php include('fragments/franchisePositions.php'); ?>
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-bank'></i> Budget</p>
-			<p><span class='budgetValue'>98.3 Ka</span></p>
+			<p><span class='budgetValue'><?php echo number_format(floatval($franchise['fin_solde']),1).' Ka' ?></span></p>
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-pencil-square-o'></i> Masse salariale</p>
-			<p><span class='budgetValue'>27 Ka</span></p>
+			<p><span class='budgetValue'><?php echo intval($franchise['masseSalariale']).' Ka' ?></span></p>
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-trophy'></i> Score</p>
-			<p><span class='budgetValue'>127.55 Pts</span></p>
+			<p><span class='budgetValue'><?php echo number_format(getScoreFranchise($franchiseId),1).' Pts' ?></span></p>
 		</div>
 </div>
+<div id='team_scores'>
+    <h2>Résultats</h2>
+    <ul class='fa-ul'>
+<?php
+    $scores = getScoresFranchise($franchiseId);
+    if ($scores != NULL) {
+        foreach($scores as $sc) {
+            $score=number_format(round($sc['eks_score'],2),2);
+            echo "<li><i class='fa-li fa fa-trophy'></i><a href='#' linkCompo='../api/compos.php?franchiseid={$franchiseId}&journeeid={$sc['id']}'>Journee {$sc['numero']} : {$score} Pts</a></li>";
+        }
+    }
+?>
+    </ul>
+</div>
+<div id='team_players'>
+    <h2>Joueurs</h2>
+<?php
+    $contrats = getContrats($franchiseId);
+
+
+    echo "<table width='100%'>
+	<thead>
+	<tr>
+		<th>Joueur</th><th>Poste</th><th>Prix d'achat</th><th>Salaire</th>
+	</tr>
+	</thead>
+    <tbody>";
+    if ($contrats != NULL) {
+        foreach($contrats as $j) {
+            $prix = number_format(round($j['eng_montant'],1),1);
+            $sal = number_format(round($j['eng_salaire'],0),0);
+            echo "<tr><td><a href='index.php?kmpage=home&page=detailJoueur&joueurid={$j['id']}'>{$j['prenom']} {$j['nomJoueur']} ({$j['nomClub']})</a></td><td>{$j['poste']}</td><td class='col_money'>{$prix} Ka</td><td class='col_money'>{$sal} Ka</td></tr>";
+        }
+    }
+    echo "</tbody></table>";
+?>
+</div>
+<?php include('fragments/compoPopup.php');?>
 </section>
+<script src="js/custom/km-otherTeam.js"></script>

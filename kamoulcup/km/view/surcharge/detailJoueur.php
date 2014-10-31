@@ -77,7 +77,7 @@
             <?php
                 $sal=0;
                 if ($joueur['eng_ekyp_id'] != NULL && $joueur['eng_date_depart'] == NULL) {
-                    echo "<li><i class='fa-li fa fa-home'></i>Sous contrat avec {$joueur['nomEkyp']}</li>";
+                    echo "<li><i class='fa-li fa fa-home'></i>Sous contrat avec <a href='./index.php?kmpage=otherTeam&franchiseid={$joueur['idEkyp']}'>{$joueur['nomEkyp']}</a></li>";
                     $sal = round($joueur['eng_salaire'],0);
                     echo "<li><i class='fa-li fa fa-pencil-square-o'></i>Salaire contractuel : {$sal} Ka</li>";
                 } else {
@@ -117,7 +117,7 @@
                 if ($ligne['nomEkyp'] == NULL) {
                     echo "Sans contrat</td>";
                 } else {
-                    echo "{$ligne['nomEkyp']}</td>";
+                    echo "<a href='./index.php?kmpage=otherTeam&franchiseid={$ligne['idEkyp']}'>{$ligne['nomEkyp']}</a></td>";
                 }
                 $perf = number_format(round($ligne['jpe_score'],2),2);
                 $sal = number_format(round($ligne['scl_salaire'],0),0);

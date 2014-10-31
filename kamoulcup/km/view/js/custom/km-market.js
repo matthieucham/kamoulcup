@@ -218,19 +218,24 @@ $( document ).ready(function() {
             // 1) Check budget
 			if ($currentTrans < 0) {
 				$(this).attr('disabled', 'disabled');
+                $('#pourquoi').removeClass('hide');
 			} else if ($masseSalarialeMax-$currentSal < 0) {
                 $(this).attr('disabled', 'disabled');
+                $('#pourquoi').removeClass('hide');
             } else {
                 // Check players in cart
                 if ($currentNbPlayers >= $nbMaxJoueurs) {
                     $(this).attr('disabled', 'disabled');
+                    $('#pourquoi').removeClass('hide');
                 } else {
                     $disable = false;
                     $disable = ($currentSpots['G'] > 0 || $currentSpots['D'] > 0 || $currentSpots['M'] > 0 || $currentSpots['A'] > 0)
                     if ($disable) {
                         $(this).attr('disabled', 'disabled');
+                        $('#pourquoi').removeClass('hide');
                     } else {
                         $(this).removeAttr('disabled');
+                        $('#pourquoi').addClass('hide');
                     }
                 }
 			}

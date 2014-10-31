@@ -39,7 +39,7 @@ $( document ).ready(function() {
         $( this ).find('p').remove();
         $(this).append('<p>'+ui.draggable.text()+'</p>');
         
-        $('#compoBench').find('#bp_'+newVal).addClass('hide');
+        $('#compoBench').find('#bp_'+newVal).addClass('hide').find('input[name*="sub"]').val(0);
     }
     
     $("form#compoForm").submit(function(event) {

@@ -17,7 +17,7 @@ $mercato = getCurrentMercato();
 			echo " class='current' "; 
 		} 
 	?> 
-	href="index.php?kmpage=home" id="menu-target-home">Maison</a> 
+	href="index.php?kmpage=home" id="menu-target-home">Bureau</a> 
 	<a
 	<?php
 		if ($currentPage == 'team') {
@@ -31,13 +31,14 @@ $mercato = getCurrentMercato();
 			echo " class='current' "; 
 		} 
 	?> 
-	href="index.php?kmpage=fixtures" id="menu-target-fixtures">Compétition</a>
+	href="index.php?kmpage=fixtures" id="menu-target-fixtures">Classements</a>
 <?php
     if ($mercato != NULL) {
         echo "<a ";
 		if ($currentPage == 'market') {
 			echo " class='current' "; 
-		} 
+		}  else {
+        }
 	   echo "href='index.php?kmpage=market' id='menu-target-market'>Mercato</a>";
     }
 ?>
@@ -47,7 +48,7 @@ $mercato = getCurrentMercato();
 			echo " class='current' "; 
 		} 
 	?> 
-	href="index.php?kmpage=user" id="menu-target-user"><?php echo $_SESSION['username']?></a> 
+	href="index.php?kmpage=user" id="menu-target-user">Déconnexion</a> 
 </nav>
 </div>
 </header>

@@ -24,7 +24,7 @@
 		$storedJournee = $db->getArray($loadJourneeQuery);
 		$nouveau = 0;
 		if ($storedJournee == NULL) {
-			$storedJournee = array(array('id' => '', 'numero' => '', 'date' => ''));
+			$storedJournee = array(array('id' => '', 'numero' => '', 'date' => ' 20:00'));
 			$nouveau = 1;
 		}
 		

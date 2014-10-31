@@ -299,7 +299,7 @@ body {
 #team  #team_money tbody tr:nth-child(odd){
 	background-color:#ECECED;
 }
-#team #team_overview  .overviewItem{
+#team_overview  .overviewItem{
 	-moz-border-radius: 12px;
 	-webkit-border-radius: 12px;
 	border-radius: 12px;
@@ -414,4 +414,23 @@ body {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+}
+/******************************************************
+
+	$INDEX15 - OTHER TEAM
+	
+******************************************************/
+#otherTeam table {
+	background-color:#3E4147;
+	border-collapse:collapse;
+}
+#otherTeam table th {
+	color:#ECECED;
+}
+
+#otherTeam table tbody tr:nth-child(even){
+	background-color:#fab7e6;
+}
+#otherTeam table tbody tr:nth-child(odd){
+	background-color:#ECECED;
 }

@@ -19,7 +19,7 @@
     $rank=1;
     foreach ($ranking as $r) {
         $sco = number_format(round($r['sumScore'],2),2);
-        echo "<tr><td>{$rank}</td><td>{$r['nom']}</td><td>{$sco}</td></tr>";
+        echo "<tr><td>{$rank}</td><td><a href='index.php?kmpage=otherTeam&franchiseid={$r['id']}'>{$r['nom']}</a></td><td>{$sco}</td></tr>";
         $rank++;
     }
 ?>

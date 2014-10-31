@@ -21,11 +21,33 @@ foreach ($contrats as $contrat) {
 
 
 
-    $currentCompo = getCompoNoScore($franchiseId,$journeeId,true);
+$currentCompo = getCompoNoScore($franchiseId,$journeeId,true);
 // TODO croiser avec contrats.
+$compoJoueurs = array('G'=>NULL,'D'=>NULL,'M'=>NULL,'A'=>NULL);
+$toHide = array();
+if ($currentCompo != NULL) {
+foreach ($currentCompo as $current) {
+    $currPoste = $current['poste'];
+    if ($compoJoueurs[$currPoste] == NULL) {
+        $compoJoueurs[$currPoste] = array();
+    }
+    array_push($compoJoueurs[$currPoste],$current);
+    array_push($toHide,$current['idJoueur']);
+}    
+}
+    function buildBenchPlayer($j,$hide) {
+        $hideClass='';
+        if ($hide) {
+            $hideClass=' hide';
+        }
+        return "<li class='benchPlayer{$hideClass}' id='bp_{$j['id']}'>{$j['prenom']} {$j['nomJoueur']} ({$j['nomClub']})<input type='hidden' name='playerid' value='{$j['id']}'/><input type='hidden' name='sub[{$j['id']}]' value='1'/></li>";
+    }
 
-    function buildBenchPlayer($j) {
-        return "<li class='benchPlayer' id='bp_{$j['id']}'>{$j['prenom']} {$j['nomJoueur']} ({$j['nomClub']})<input type='hidden' name='playerid' value='{$j['id']}'/></li>";
+    function buildCompoPlayer($j,$index) {
+        $idVal=$j['idJoueur'];
+        $nom=$j['prenom'].' '.$j['nomJoueur'].' ('.$j['nomClub'].')';
+        echo "<input type='hidden' name='player[{$index}]' value='{$idVal}'/>";
+        echo "<p>{$nom}</p>";
     }
 ?>
 <section id="chooseTeam">
@@ -34,34 +56,75 @@ echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
 ?>
 <p>Sélectionnez les titulaires par "glisser-déposer" depuis le banc de touche</p>
 <div id="pitchBench">
+    <form id="compoForm">
     <div id="compo">
-        <form id="compoForm">
             <?php
                 echo "<input type='hidden' name='franchiseid' value='{$franchiseId}'/>";
                 echo "<input type='hidden' name='journeeid' value='{$journeeId}'/>";
             ?>
             <div id="compoG" class="compoPlayer" position="posG">
-                <input type="hidden" name="player[0]" value=""/>
+                <?php
+                    if ($compoJoueurs['G'] != NULL && sizeof($compoJoueurs['G'])>0) {
+                        echo buildCompoPlayer($compoJoueurs['G'][0],0);
+                    } else {
+                        echo "<input type='hidden' name='player[0]' value=''/>";
+                    }  
+                ?>
             </div>
             <div id="compoD1" class="compoPlayer" position="posD">
-                <input type="hidden" name="player[1]" value=""/>
+                <?php
+                    if ($compoJoueurs['D'] != NULL && sizeof($compoJoueurs['D'])>0) {
+                        echo buildCompoPlayer($compoJoueurs['D'][0],1);
+                    } else {
+                        echo "<input type='hidden' name='player[1]' value=''/>";
+                    }  
+                ?>
             </div>
             <div id="compoD2" class="compoPlayer" position="posD">
-                <input type="hidden" name="player[2]" value=""/>
+                <?php
+                    if ($compoJoueurs['D'] != NULL && sizeof($compoJoueurs['D'])>1) {
+                        echo buildCompoPlayer($compoJoueurs['D'][1],2);
+                    } else {
+                        echo "<input type='hidden' name='player[2]' value=''/>";
+                    }  
+                ?>
             </div>
             <div id="compoM1" class="compoPlayer" position="posM">
-                <input type="hidden" name="player[3]" value=""/>
+                <?php
+                    if ($compoJoueurs['M'] != NULL && sizeof($compoJoueurs['M'])>0) {
+                        echo buildCompoPlayer($compoJoueurs['M'][0],3);
+                    } else {
+                        echo "<input type='hidden' name='player[3]' value=''/>";
+                    }  
+                ?>                
             </div>
             <div id="compoM2" class="compoPlayer" position="posM">
-                <input type="hidden" name="player[4]" value=""/>
+                <?php
+                    if ($compoJoueurs['M'] != NULL && sizeof($compoJoueurs['M'])>1) {
+                        echo buildCompoPlayer($compoJoueurs['M'][1],4);
+                    } else {
+                        echo "<input type='hidden' name='player[4]' value=''/>";
+                    }  
+                ?>  
             </div>
             <div id="compoA1" class="compoPlayer" position="posA">
-                <input type="hidden" name="player[5]" value=""/>
+                <?php
+                    if ($compoJoueurs['A'] != NULL && sizeof($compoJoueurs['A'])>0) {
+                        echo buildCompoPlayer($compoJoueurs['A'][0],5);
+                    } else {
+                        echo "<input type='hidden' name='player[5]' value=''/>";
+                    }  
+                ?>                  
             </div>
             <div id="compoA2" class="compoPlayer" position="posA">
-                <input type="hidden" name="player[6]" value=""/>
+                <?php
+                    if ($compoJoueurs['A'] != NULL && sizeof($compoJoueurs['A'])>1) {
+                        echo buildCompoPlayer($compoJoueurs['A'][1],6);
+                    } else {
+                        echo "<input type='hidden' name='player[6]' value=''/>";
+                    }  
+                ?>                  
             </div>
-        </form>
     </div>
     <h2>Banc de touche</h2>
     <div id="compoBench">
@@ -71,7 +134,7 @@ echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
 <?php
     if ($joueurs['G'] != NULL) {
         foreach ($joueurs['G'] as $j) {
-            echo buildBenchPlayer($j);
+            echo buildBenchPlayer($j,in_array($j['id'],$toHide));
         }
     }
 ?>
@@ -83,7 +146,7 @@ echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
  <?php
     if ($joueurs['D'] != NULL) {
         foreach ($joueurs['D'] as $j) {
-            echo buildBenchPlayer($j);
+            echo buildBenchPlayer($j,in_array($j['id'],$toHide));
         }
     }
 ?>
@@ -95,7 +158,7 @@ echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
 <?php
     if ($joueurs['M'] != NULL) {
         foreach ($joueurs['M'] as $j) {
-            echo buildBenchPlayer($j);
+            echo buildBenchPlayer($j,in_array($j['id'],$toHide));
         }
     }
 ?>
@@ -107,12 +170,13 @@ echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
 <?php
     if ($joueurs['A'] != NULL) {
         foreach ($joueurs['A'] as $j) {
-            echo buildBenchPlayer($j);
+            echo buildBenchPlayer($j,in_array($j['id'],$toHide));
         }
     }
 ?>
                 </ul>
             </div>
+        </form>
     </div>
 </div>
 <div id="actions">

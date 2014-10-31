@@ -83,6 +83,15 @@
 			<p>Budget transfert restant : <span></span> Ka</p>
 		</div>
 		<button id="sendCartBtn">Envoyer</button>
+        <div id='pourquoi' class='hide'>
+            <p>Pourquoi je ne peux pas cliquer sur envoyer ?</p>
+            <ul class='fa-ul'>
+                <li><i class='fa-li fa fa-info-circle'></i>Parce que la somme des offres dépasse ton budget</li>
+                <li><i class='fa-li fa fa-info-circle'></i>Parce que les joueurs que tu as choisis font dépasser ton plafond de masse salariale</li>
+                <li><i class='fa-li fa fa-info-circle'></i>Parce que tu n'as pas sélectionné assez de joueur : il te faut au moins de quoi remplir chaque spot libre de ta franchise (cf ronds blancs ci dessus)</li>
+                <li><i class='fa-li fa fa-info-circle'></i>Parce que tu as sélectionné trop de joueurs. Le maximum autorisé dans l'effectif est de <?php echo $KM_maxPlayers; ?> joueurs.</li>
+            </ul>
+        </div>
         <div id='sendResult'>
             <div class='uppings hide'><p><i class="fa fa-thumbs-up fa-2x"></i> Offres enregistrées</p></div>
             <div class='downings hide'><p><i class="fa fa-warning fa-2x"></i> </p></div>

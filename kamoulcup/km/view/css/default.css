@@ -541,6 +541,9 @@ $INDEX 8-2 : Players list
 	width:462px;
 	text-align:center;
 }
+#playersCart #pourquoi{
+	text-align:left;
+}
 #cartContent{
 	width:100%;
 	min-height:100px;
@@ -715,7 +718,7 @@ $INDEX 8-2 : Players list
 #team  #team_money table td.col_money{
 	text-align:right;
 }
-#team #team_overview{
+#team_overview{
 	display:table;
 	font-size:1.3em;
 	width:100%;
@@ -728,6 +731,11 @@ $INDEX 8-2 : Players list
 	padding:0.5em;
 	width:25%;
 	display:table-cell;
+}
+#team_overview p{
+	font-weight: 300;
+	font-size: 1.0em;
+	display:block;
 }
 .contract_positions_container {
 	display:table;
@@ -1063,6 +1071,7 @@ $INDEX 8-2 : Players list
 }
 #compoBench div {
     display: table-cell;
+    padding:5px;
 }
 #compoBench div ul {
     list-style-type: none; 
@@ -1098,4 +1107,32 @@ $INDEX 8-2 : Players list
 #chooseTeam #actions {
     width: 100%;
     text-align: center;
+}
+/******************************************************
+
+    $INDEX15 - OTHER TEAM
+
+*******************************************************/
+#otherTeam #team_scores li{
+    font-size:1.3em;
+}
+#otherTeam #team_scores{
+    float:left;
+    width:40%;
+}
+#otherTeam #team_players{
+    float:right;
+    width:60%;
+}
+#otherTeam table{
+	font-size:1.3em;
+	text-align:center;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+    margin-bottom: 1em;
+}
+#otherTeam td,th{
+	padding-top:0.5em;
+	padding-bottom:0.5em;
 }
