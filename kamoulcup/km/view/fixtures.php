@@ -1,10 +1,13 @@
 <?php
     include_once('../ctrl/rankingManager.php');
     include_once('../ctrl/journeeManager.php');
+    $champId = $_SESSION['champId'];
+    $champ = getChampionnat($champId);
+
+echo "<section id='championship'>
+    <h1>{$champ['nom']}</h1>";
 ?>
 
-<section id="championship">
-    <h1>Championnat KDF</h1>
 <div id="fixtures">
 	<h2>Classement Général</h2>
 	<table width="100%">
@@ -15,7 +18,7 @@
 	</thead>
     <tbody>
 <?php
-    $ranking = getRanking();
+    $ranking = getRanking($champId);
     $rank=1;
     foreach ($ranking as $r) {
         $sco = number_format(round($r['sumScore'],2),2);
@@ -38,7 +41,7 @@
 	</tr>
 	</thead>
     <tbody>";
-        $ranking = getRankingJournee($lastJ['id']);
+        $ranking = getRankingJournee($champId,$lastJ['id']);
         $rank=1;
         foreach ($ranking as $r) {
             $sco = number_format(round($r['eks_score'],2),2);

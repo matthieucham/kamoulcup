@@ -45,11 +45,12 @@
 	<?php	
 	if (isset($_GET['page'])) {
 		$contenuPage = $_GET['page'];
-		// On essaye par defaut d'inclure les pages du dossier surcharge, 
-		// et en cas d'echec on inclus la page KCUP
-		if ((@include('surcharge/'.$contenuPage.'.php'))===false) {
-			include('../../'.$contenuPage.'.php');
-		}
+        include('surcharge/'.$contenuPage.'.php');
+		//// On essaye par defaut d'inclure les pages du dossier surcharge, 
+		//// et en cas d'echec on inclus la page KCUP
+		//if ((include('surcharge/'.$contenuPage.'.php'))===false) {
+		//	include('../../'.$contenuPage.'.php');
+		//}
 	}
 	?>
 	</div>

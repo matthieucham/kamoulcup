@@ -1,15 +1,26 @@
 <?php
     include_once("../../includes/db.php");
 
-    function getRanking() {
+    function getChampionnat($champId) {
         global $db;
-        $rankQ = "select ekyp.id, ekyp.nom, sum(eks_score) as sumScore from ekyp inner join km_ekyp_score on ekyp.id=eks_ekyp_id group by ekyp.id order by sumScore desc";
+        $rankQ = "select chp_nom from km_championnat where chp_id={$champId}";
+        $chp = $db->getArray($rankQ);
+        if ($chp == NULL) {
+            return NULL;
+        } else {
+            return $chp[0];
+        }
+    }
+
+    function getRanking($champId) {
+        global $db;
+        $rankQ = "select ekyp.id, ekyp.nom, sum(eks_score) as sumScore from ekyp inner join km_join_ekyp_championnat on jec_ekyp_id=ekyp.id left outer join km_ekyp_score on ekyp.id=eks_ekyp_id where jec_championnat_id={$champId} group by ekyp.id order by sumScore desc";
         return $db->getArray($rankQ);
     }
 
-    function getRankingJournee($journeeId) {
+    function getRankingJournee($champId, $journeeId) {
         global $db;
-        $rankQ = "select ekyp.id, ekyp.nom, eks_score from ekyp inner join km_ekyp_score on ekyp.id=eks_ekyp_id where eks_journee_id={$journeeId} group by ekyp.id order by eks_score desc";
+        $rankQ = "select ekyp.id, ekyp.nom, eks_score from ekyp inner join km_join_ekyp_championnat on jec_ekyp_id=ekyp.id left outer join km_ekyp_score on ekyp.id=eks_ekyp_id where jec_championnat_id={$champId} and eks_journee_id={$journeeId} group by ekyp.id order by eks_score desc";
         return $db->getArray($rankQ);
     }
 

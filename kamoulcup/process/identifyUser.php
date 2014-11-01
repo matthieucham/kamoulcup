@@ -13,7 +13,7 @@ if (!get_magic_quotes_gpc()) {
 	$mdp = addslashes($_POST['password']);
 }
 
-$getUserQuery = "select ut.droit,ut.ekyp_id,ek.poule_id,ek.km from utilisateur as ut, ekyp as ek where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') and ((ek.id = ut.ekyp_id) or(ut.ekyp_id is NULL))limit 1";
+$getUserQuery = "select ut.droit,ut.ekyp_id,ek.poule_id,ek.km,jec_championnat_id from utilisateur as ut left outer join ekyp as ek on ek.id = ut.ekyp_id left outer join km_join_ekyp_championnat on jec_ekyp_id=ek.id where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') limit 1";
 $storedUser = $db->getArray($getUserQuery);
 if ($storedUser == NULL) {
 	// Utilisateur inconnu
@@ -34,6 +34,7 @@ else {
 			$km = $storedUser[0]['km'];
 			$_SESSION['myEkypId'] = $storedUser[0]['ekyp_id'];
 			$_SESSION['km'] = $km;
+            $_SESSION['champId'] = $storedUser[0]['jec_championnat_id'];
 		}
 		if (isset($storedUser[0]['poule_id'])) {
 			$_SESSION['pouleId'] = $storedUser[0]['poule_id'];
