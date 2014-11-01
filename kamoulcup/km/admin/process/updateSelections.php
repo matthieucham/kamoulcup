@@ -34,6 +34,7 @@ $franchises = $db->getArray($franchisesQ);
 $possibleCompoQ = "select journee.id,joueur.poste,eng_id,sej_substitute from km_engagement inner join joueur on eng_joueur_id=joueur.id inner join journee on journee.id={$journeeId} left outer join km_selection_ekyp_journee on sej_journee_id=journee.id and sej_engagement_id=eng_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_ekyp_id={$fr['id']} order by field(poste,'G','D','M','A'),sej_substitute,eng_salaire desc, eng_date_arrivee desc";
 foreach ($franchises as $fr) {
     $possibleCompoQ = "select journee.id,joueur.poste,eng_id,sej_substitute from km_engagement inner join joueur on eng_joueur_id=joueur.id inner join journee on journee.id={$journeeId} left outer join km_selection_ekyp_journee on sej_journee_id=journee.id and sej_engagement_id=eng_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_ekyp_id={$fr['id']} order by field(poste,'G','D','M','A'),sej_substitute,eng_salaire desc, eng_date_arrivee desc";
+    // ATTENTION BUG A CORRIGER : les substitute "0" sont forcément avant les "NULL" : erreur !
     $selection=$db->getArray($possibleCompoQ);
     adjustSelection($selection,$db);
 }
