@@ -7,7 +7,8 @@ include('../../../process/validateForm.php');
 $journeeId = correctSlash($_POST['journee']);
 
 // Principe : la moyenne des 3 journées précedentes détermine si on monte ou si on descend de classe.
-$getJourneesId = $db->getArray("select distinct jjs_journee_id from km_join_joueur_salaire inner join journee j on j.id = jjs_journee_id where j.date <= ( select j2.date from journee j2 where j2.id={$journeeId}) order by j.date desc limit 3");
+//$getJourneesId = $db->getArray("select distinct jjs_journee_id from km_join_joueur_salaire inner join journee j on j.id = jjs_journee_id where j.date <= ( select j2.date from journee j2 where j2.id={$journeeId}) order by j.date desc limit 3");
+$getJourneesId = $db->getArray("select j1.id from journee as j1 where j1.date<=(select j2.date from journee as j2 where j2.id={$journeeId}) order by j1.date desc limit 3");
 $getClasses = $db->getArray("select scl_id,scl_salaire,scl_seuil_inf,scl_seuil_sup,scl_next_down,scl_next_up from km_const_salaire_classe");
 $classesMap = array();
 foreach ($getClasses as $value) {
