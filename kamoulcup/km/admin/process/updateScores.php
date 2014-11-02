@@ -73,8 +73,8 @@
 		}
 		
 		// Bonus individuels
-		$bonus += (intval($presta['arrets'])*$NOT_arret[$poste]);
-		$bonus += (intval($presta['encaisses'])*$NOT_encaisse[$poste]);
+		/*$bonus += (intval($presta['arrets'])*$NOT_arret[$poste]);
+		$bonus += (intval($presta['encaisses'])*$NOT_encaisse[$poste]);*/
 		$bonus += (intval($presta['but_marque'])*$NOT_but);
 		$bonus += (intval($presta['passe_dec'])*$NOT_passedec);
 		$bonus += (intval($presta['penalty_marque'])*$NOT_penalty);

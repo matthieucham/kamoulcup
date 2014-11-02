@@ -1,5 +1,5 @@
 <?php
-    $KM_maxSalary=60.0;
+    $KM_maxSalary=50.0;
     $KM_minG=1;
     $KM_minD=2;
     $KM_minM=2;
