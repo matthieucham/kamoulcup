@@ -92,6 +92,8 @@ Si jamais une franchise n'a pas effectué cette sélection avant le début de la
 
 #### Evaluation des joueurs
 
+Exactement la même chose que pour la Kamoulcup, hormis les prix UNFP. Pour des raison pratiques, les arrêts ne rapportent pas de point. Je ne rentre pas dans les détails pour l'instant.
+
 ##### Critères communs d'évaluation
 
 ##### Critères spécifiques aux gardiens de but
@@ -103,13 +105,36 @@ Si jamais une franchise n'a pas effectué cette sélection avant le début de la
 ##### Critères spécifiques aux attaquants
 
 #### Mise à jour salariale
+Chaque jour qui suit le dernier match de la journée (donc en général le lundi), une fois que les notes, buts et passes décisives sont renseignés, on déclenche la mise à jour salariale :
+Chaque joueur, en fonction des points qu'il a gagné lors des 3 journées précédentes, ajuste ses prétentions salariales. L'algorithme qui calcule ce nouveau salaire n'est pas dévoilé mais logiquement, plus le joueur  rapporté de points, plus ses prétentions augmentent, et réciproquement.
+
+Quand est joueur est sous contrat avec une franchise, son salaire ne bouge pas (il est fixé contractuellement). Mais le salaire auquel il aurait droit "virtuellement" est tout de même calculé et est appelé "Salaire virtuel" sur la fiche du joueur.
 
 #### Licencier un joueur
+Pour libérer de la place dans l'effectif ou soulager sa masse salariale, un franchise peut décider de mettre au fin au contrat de ses joueurs, et ce autant de fois qu'elle le souhaite. Avantage : c'est gratuit. Désavantage : ça ne rapporte rien !
+**Attention** il n'est pas permis de licencier un joueur pendant qu'un mercato est ouvert (en général, le mercredi).
 
 #### Placer un joueur sur la liste des transferts
+L'autre moyen de se séparer d'un joueur est de le placer sur la liste des transferts. Il faut alors préciser son prix de mise en vente, et espérer qu'une franchise fera une offre au moins égale à ce prix lors du mercato.
+Les joueurs de la liste des transferts sont disponibles pour les enchères de la même manière que les joueurs sans contrat.
+Le vendeur peut aussi décider de retirer son joueur de la liste des transferts s'il change d'avis, tant que le mercato n'a pas commencé
+
+**Attention** il n'est pas permis de mettre ou d'enlever un joueur de la liste des transferts pendant qu'un mercato est ouvert (en général, le mercredi)
+
+Un joueur reste listé jusqu'à ce qu'il soit acheté ou que le vendeur décide de l'enlever de la liste.
 
 #### Le merkato hebdomadaire
 
-#### La mise à jour économique
+Tous les mercredis (en général) un mercato d'une journée s'ouvre. Les franchises peuvent procéder à autant d'achats qu'elles le souhaitent, dans la limite de leur budget et de leur masse salariale
+
+**N'oubliez pas de mettre à jour votre composition d'équipe si votre effectif s'est renouvelé !**
 
 ### Les finances
+
+Chaque franchise part avec *100 Ka* de budget. Ce budget sert exclusivement à recruter des joueurs aux enchères. A chaque fois qu'une franchise remporte une enchère, la somme qu'elle vient de dépenser est divisée et distribuée à toutes les **autres** franchises de son championnat. Celà apparaît dans le bilan financier de la franchise sous la dénomination "Prime de redistribution".
+En revanche, lorsqu'une franchise achète un joueur placé sur la liste des tranferts par une autre franchise, l'argent lui est versé intégralement.
+
+On s'assure ainsi que le montant de l'argent en circulation reste constant.
+
+
+**Fin du règlement**
