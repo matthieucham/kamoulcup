@@ -17,10 +17,17 @@
         die();
     }
 
+    $selectPreviousDate = $db->getArray("select id from journee where date<str_to_time({$jDate}) order by date desc limit 1");
+    $previousJourneeId = 0;
+    if ($selectPreviousDate != NULL && sizeof($selectPreviousDate==1)) {
+        $previousJourneeId = $selectPreviousDate[0][0];
+    }
+    
+
 
 // Algo:
 // 1- On essaye de prendre la compo rentrée par les joueurs. On y exclue les joueurs qui ne sont plus sous contrat
-// 2- Si pas de compo, on prend celle de la journée d'avant. Même exclusion <---- NON ON FAIT PAS CE 2/
+// 2- Si pas de compo, on prend celle de la journée d'avant. Même exclusion.
 // 3- On remplace tous les trous par les joueurs sous contrat hors compo par ordre décroissant de salaire.
 
     $cleanCompoQ = "delete from km_selection_ekyp_journee where sej_journee_id={$journeeId} and sej_engagement_id in (select eng_id from km_engagement inner join journee on id={$journeeId} where (date<=eng_date_arrivee) or (date>eng_date_depart))";
@@ -31,8 +38,16 @@
 $franchisesQ = "select id from ekyp where km=1";
 $franchises = $db->getArray($franchisesQ);
 
-$possibleCompoQ = "select journee.id,joueur.poste,eng_id,sej_substitute from km_engagement inner join joueur on eng_joueur_id=joueur.id inner join journee on journee.id={$journeeId} left outer join km_selection_ekyp_journee on sej_journee_id=journee.id and sej_engagement_id=eng_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_ekyp_id={$fr['id']} order by field(poste,'G','D','M','A'),sej_substitute,eng_salaire desc, eng_date_arrivee desc";
 foreach ($franchises as $fr) {
+    // On regarde si l'utilisateur a bien pensé (ou du moins essayé) à enregistrer sa compo. S'il n'a rien fait, on recopie la compo de la journée d'avant.
+    $existingCompoQ = "select count(sej_engagement_id) from km_selection_ekyp_journee inner join km_engagement on sej_engagement_id=eng_id where sej_journee_id={$journeeId} and eng_ekyp_id={$fr['id']}";
+    $compoExists = intval($db->getArray($existingCompoQ)[0][0])>0;
+    if (!compoExists && $previousJourneeId>0) {
+        // Recopier les engagements (valides) de la journée d'avant.
+        $copyQ = "insert into(sej_engagment_id,sej_journee_id,sej_substitute) select sej_engagement_id, sej_journee_id,sej_substitute from km_selection_ekyp_journee inner join km_engagement on eng_id=sej_engagement_id inner join journee on journee.id={$journeeId} where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_ekyp_id={$fr['id']} and sej_journee_id={$previousJourneeId}";
+        $db->query($copyQ);
+    }
+    
     $possibleCompoQ = "select journee.id,joueur.poste,eng_id,sej_substitute from km_engagement inner join joueur on eng_joueur_id=joueur.id inner join journee on journee.id={$journeeId} left outer join km_selection_ekyp_journee on sej_journee_id=journee.id and sej_engagement_id=eng_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_ekyp_id={$fr['id']} order by field(poste,'G','D','M','A'),sej_substitute,eng_salaire desc, eng_date_arrivee desc";
     // ATTENTION BUG A CORRIGER : les substitute "0" sont forcément avant les "NULL" : erreur !
     $selection=$db->getArray($possibleCompoQ);
