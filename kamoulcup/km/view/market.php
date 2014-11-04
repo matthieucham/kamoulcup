@@ -32,7 +32,7 @@
 <section id="market">
 <h1>Merkato</h1>
 <div id="marketInfo" class="sectionInfo">
-	<p>Marché ouvert du 17/11 au 19/11</p>
+	<p><?php echo "<p>Enregistrez vos offres avant {$merkato['dateFermeture']}</p>" ?></p>
 </div>
 <div class='rightColumn'>
 <div id="budgetInfo">
