@@ -5,6 +5,7 @@
     include_once('../ctrl/salaryManager.php');
     include_once('../ctrl/transferManager.php');
     include_once('../ctrl/mercatoManager.php');
+    include('fragments/franchisePositions.php'); 
     $franchise = getFranchise($_SESSION['myEkypId']);
 ?>
 <section id="team">
@@ -13,7 +14,9 @@
 <div id='team_overview'>
 		<div class='overviewItem'>
 			<p><i class='fa fa-male'></i> Contrats</p>
-			<?php include('fragments/franchisePositions.php'); ?>
+			<?php /*include('fragments/franchisePositions.php');*/
+                displayPositions($_SESSION['myEkypId']);
+            ?>
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-bank'></i> Budget</p>

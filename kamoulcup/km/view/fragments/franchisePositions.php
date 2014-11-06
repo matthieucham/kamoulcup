@@ -2,11 +2,14 @@
     <?php
         include_once('../ctrl/franchiseManager.php');
         
-        $sousContrat=getContratsFranchise($_SESSION['myEkypId']);
-    $nbG=0;
-    $nbD=0;
-    $nbM=0;
-    $nbA=0;
+        //$sousContrat=getContratsFranchise($_SESSION['myEkypId']);
+
+    function displayPositions($franchiseId) {
+        $sousContrat=getContratsFranchise($franchiseId);
+        $nbG=0;
+        $nbD=0;
+        $nbM=0;
+        $nbA=0;
 				$position = array();
 				$position['G']=NULL;
 				$position['D1']=NULL;
@@ -56,6 +59,7 @@
 				echoPosition($position, 'M', 'M2');
 				echoPosition($position, 'A', 'A1');
 				echoPosition($position, 'A', 'A2');
+    }
 
 function echoPosition($positionArray,$targetPos,$targetSpot) {
 		echo "<div class='contract_position'>{$targetPos}<br/>";

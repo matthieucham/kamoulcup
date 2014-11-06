@@ -2,6 +2,7 @@
     include_once('../ctrl/franchiseManager.php');
     include_once('../ctrl/rankingManager.php');
     include_once('../ctrl/engagementManager.php');
+    include('fragments/franchisePositions.php');
 
     $franchiseId = $_GET['franchiseid'];
     $franchise = getFranchise($franchiseId);
@@ -12,7 +13,9 @@
 <div id='team_overview'>
 		<div class='overviewItem'>
 			<p><i class='fa fa-male'></i> Contrats</p>
-			<?php include('fragments/franchisePositions.php'); ?>
+			<?php /*include('fragments/franchisePositions.php');*/
+                displayPositions($franchiseId);
+            ?>
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-bank'></i> Budget</p>

@@ -7,6 +7,7 @@
     }
     include_once("../ctrl/franchiseManager.php");
     include_once("../ctrl/mercatoManager.php");
+    include('fragments/franchisePositions.php');
 
 // Init constants.
     $maxSalary=$KM_maxSalary;
@@ -40,7 +41,9 @@
 	<div class='budgetInfo_line'>
 		<div class='budgetItem'><p>Contrats</p></div>
 		<div class='budgetItem'>
-			<?php include('fragments/franchisePositions.php'); ?>
+			<?php /*include('fragments/franchisePositions.php');*/
+                displayPositions($_SESSION['myEkypId']);
+            ?>
 		</div>
 	</div>
 	<div class='budgetInfo_line'>
