@@ -22,7 +22,6 @@ foreach ($contrats as $contrat) {
 
 
 $currentCompo = getCompoNoScore($franchiseId,$journeeId,true);
-// TODO croiser avec contrats.
 $compoJoueurs = array('G'=>NULL,'D'=>NULL,'M'=>NULL,'A'=>NULL);
 $toHide = array();
 if ($currentCompo != NULL) {
@@ -31,16 +30,21 @@ foreach ($currentCompo as $current) {
     if ($compoJoueurs[$currPoste] == NULL) {
         $compoJoueurs[$currPoste] = array();
     }
-    array_push($compoJoueurs[$currPoste],$current);
-    array_push($toHide,$current['idJoueur']);
+    //echo $current['nomJoueur'].' '.$current['sub'].'<br/>';
+    if ($current['sub']==0) {
+        array_push($compoJoueurs[$currPoste],$current);
+        array_push($toHide,$current['idJoueur']);
+    }
 }    
 }
     function buildBenchPlayer($j,$hide) {
         $hideClass='';
+        $subVal=1;
         if ($hide) {
             $hideClass=' hide';
+            $subVal=0;
         }
-        return "<li class='benchPlayer{$hideClass}' id='bp_{$j['id']}'>{$j['prenom']} {$j['nomJoueur']} ({$j['nomClub']})<input type='hidden' name='playerid' value='{$j['id']}'/><input type='hidden' name='sub[{$j['id']}]' value='1'/></li>";
+        return "<li class='benchPlayer{$hideClass}' id='bp_{$j['id']}'>{$j['prenom']} {$j['nomJoueur']} ({$j['nomClub']})<input type='hidden' name='playerid' value='{$j['id']}'/><input type='hidden' name='sub[{$j['id']}]' value='{$subVal}'/></li>";
     }
 
     function buildCompoPlayer($j,$index) {

@@ -1,10 +1,12 @@
 <?php
 include("../model/model_include.php");
+include("../ctrl/journeeManager.php");
 include ("../../includes/db.php");
 
-$lastJQ = "select id from journee order by date desc limit 1";
-$lastJ = $db->getArray($lastJQ);
-$lastJourneeId = $lastJ[0][0];
+//$lastJQ = "select id from journee order by date desc limit 1";
+//$lastJ = $db->getArray($lastJQ);
+$lastJ = getLastJournee();
+$lastJourneeId = $lastJ['id'];
 
 $clubsQ = "select id, nom from club order by nom asc";
 $clubs = $db->getArray($clubsQ);

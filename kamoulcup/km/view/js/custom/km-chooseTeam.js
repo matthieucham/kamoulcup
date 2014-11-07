@@ -1,4 +1,13 @@
 $( document ).ready(function() {
+    
+    // Initialiser la valeur 'sub=0' sur tous les joueurs qui sont déjà titulaires:
+    // $('#compoBench').find('#bp_'+newVal).addClass('hide').find('input[name*="sub"]').val(0);
+    
+    /*$(".compoPlayer").each(function() {
+        var titulaireId= $(this).find('input[type="hidden"]').val();
+        $('#compoBench').find('#bp_'+titulaireId).find('input[name*="sub"]').val(0);
+    });*/
+    
     $("#registerBtn").click(function(event) {
         $("form#compoForm").submit();
     });

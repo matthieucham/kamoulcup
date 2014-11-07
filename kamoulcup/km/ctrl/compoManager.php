@@ -25,8 +25,10 @@
 
     function saveCompo($franchiseId,$journeeId,$playerIds,$sub) {
         global $db;
-        $ids=implode(",",$playerIds);
-        $compoQ="insert into km_selection_ekyp_journee(sej_engagement_id,sej_journee_id,sej_substitute) select eng_id,{$journeeId},{$sub} from km_engagement where eng_date_depart is null and eng_ekyp_id={$franchiseId} and eng_joueur_id in ({$ids}) on duplicate key update sej_substitute={$sub}";
+        //$ids=implode(",",$playerIds);
+        foreach($playerIds as $playerId) {
+        $compoQ="insert into km_selection_ekyp_journee(sej_engagement_id,sej_journee_id,sej_substitute) select eng_id,{$journeeId},{$sub} from km_engagement where eng_date_depart is null and eng_ekyp_id={$franchiseId} and eng_joueur_id={$playerId} on duplicate key update sej_substitute={$sub}";
         $db->query($compoQ);
+        }
     }
 ?>
