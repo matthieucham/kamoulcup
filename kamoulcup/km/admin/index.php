@@ -142,17 +142,8 @@ if ($franchises != NULL) {
 	}
 }
 ?>
-</select> Nom:<input name="nom" /> Démarre après la J <select size=1
-	name="jStart">
-	<?php
-	if ( $listJourneesQuery != NULL) {
-		echo "<option value=\"0\">0</option>";
-		foreach($listJourneesQuery as $journee) {
-			echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
-		}
-	}
-	?>
-</select> Nombre de journées=<input name="nbJ" size="2" maxlength="2" />
+</select> Nom:<input name="nom" /> Numéro première J <input
+	name="jStart"  size="2" maxlength="2"/> ; Numéro dernière J <input name="jEnd" size="2" maxlength="2" />
 <input type="submit" value="creer" /></p>
 </form>
 <h2>Rattacher des franchises à un championnat existant</h2>

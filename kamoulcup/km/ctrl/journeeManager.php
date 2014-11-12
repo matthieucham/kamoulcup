@@ -34,6 +34,7 @@ function getLastNJournees($n) {
 
 function getNextJournee() {
     global $db;
+    // TODO : filtrer pour le championnat en cours de l'ekyp courante.
     $nextJQ = "select id, numero, date_format(date,'%d/%m/%Y') as dateJournee,date from journee where date >= now() order by date asc limit 1";
     $nextJ = $db->getArray($nextJQ);
     if ($nextJ == NULL) {

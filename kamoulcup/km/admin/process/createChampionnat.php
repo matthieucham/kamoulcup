@@ -7,9 +7,9 @@
 	$inscrits = $_POST['ekyps'];
 	$nom = correctSlash($_POST['nom']);
 	$jStart = correctSlash($_POST['jStart']);
-	$nbJ = correctSlash($_POST['nbJ']);
+	$jEnd = correctSlash($_POST['jEnd']);
 	
-	$createChampQ = "insert into km_championnat(chp_nom,chp_first_journee_id,chp_nb_journees) values ('{$nom}',{$jStart},{$nbJ})";
+	$createChampQ = "insert into km_championnat(chp_nom,chp_first_journee_numero,chp_last_journee_numero) values ('{$nom}',{$jStart},{$jEnd})";
 	$db->query($createChampQ);
 	$lastId = mysql_insert_id();
 	if ($inscrits != NULL) {

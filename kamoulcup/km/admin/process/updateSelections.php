@@ -8,8 +8,9 @@
 	$journeeId = correctSlash($_POST['journee']);
 	
 	// 	1) Récupérer la date de la journée choisie
-	$selectDateQ = $db->getArray("select date from journee where id={$journeeId}");
+	$selectDateQ = $db->getArray("select date,numero from journee where id={$journeeId}");
 	$jDate = $selectDateQ[0][0];
+    $jNumero = $selectDateQ[0][1];
 
     if (strtotime($jDate)>time() ) {
         // Trop tôt
@@ -35,9 +36,15 @@
     $db->query($cleanCompoQ);
 
 // TODO : vraie gestion des ligues pour sélectionner les franchises
-$franchisesQ = "select id from ekyp where km=1";
+
+// 1 on récupére tous les championnats concernés par la journée écoulée
+// 2 on récupère toutes les franchises de ces championnats
+// OLD (facile) $franchisesQ = "select id from ekyp where km=1";
+$franchisesQ = "select jec_ekyp_id from km_join_ekyp_championnat inner join km_championnat on jec_championnat_id=chp_id where {$jNumero} in (chp_first_journee_numero,chp_last_journee_numero)";
+
 $franchises = $db->getArray($franchisesQ);
 
+if ($franchises != NULL) {
 foreach ($franchises as $fr) {
     // On regarde si l'utilisateur a bien pensé (ou du moins essayé) à enregistrer sa compo. S'il n'a rien fait, on recopie la compo de la journée d'avant.
     $existingCompoQ = "select count(sej_engagement_id) from km_selection_ekyp_journee inner join km_engagement on sej_engagement_id=eng_id where sej_journee_id={$journeeId} and eng_ekyp_id={$fr['id']}";
@@ -53,7 +60,7 @@ foreach ($franchises as $fr) {
     $selection=$db->getArray($possibleCompoQ);
     adjustSelection($selection,$db);
 }
-
+}
 	
 	header('Location: ../index.php');
 	die();

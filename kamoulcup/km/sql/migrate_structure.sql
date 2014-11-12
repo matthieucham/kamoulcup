@@ -66,7 +66,8 @@ CREATE TABLE IF NOT EXISTS `km_ekyp_score` (
   `eks_ekyp_id` int(11) NOT NULL,
   `eks_journee_id` int(11) NOT NULL,
   `eks_score` float NOT NULL,
-  PRIMARY KEY (`eks_ekyp_id`,`eks_journee_id`)
+  `eks_championnat_id` INT(11) NOT NULL, 
+  PRIMARY KEY (`eks_ekyp_id`,`eks_journee_id`,`eks_championnat_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -197,3 +198,5 @@ CREATE TABLE IF NOT EXISTS `km_selection_ekyp_journee` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 ALTER TABLE `journee` CHANGE `date` `date` DATETIME NOT NULL ;
+
+ALTER TABLE `km_ekyp_score` ADD `eks_championnat_id` INT NOT NULL 

@@ -5,11 +5,14 @@
     $champ = getChampionnat($champId);
 
 echo "<section id='championship'>
-    <h1>{$champ['chp_nom']}</h1>";
+    <h1>{$champ['chp_nom']}</h1>
+    <p>Se déroule de la journée {$champ['chp_first_journee_numero']} à la journée {$champ['chp_last_journee_numero']} de L1</p>";
+    $nbJournees = $champ['chp_last_journee_numero'] - $champ['chp_first_journee_numero'] +1;
+    $indexJournee = $champ['nbPlayed'].'/'.$nbJournees;
+echo "<div id='fixtures'>
+	<h2>Classement Général après la journée {$indexJournee}</h2>";
 ?>
 
-<div id="fixtures">
-	<h2>Classement Général</h2>
 	<table width="100%">
 	<thead>
 	<tr>
@@ -43,10 +46,12 @@ echo "<section id='championship'>
     <tbody>";
         $ranking = getRankingJournee($champId,$lastJ['id']);
         $rank=1;
+        if ($ranking != NULL) {
         foreach ($ranking as $r) {
             $sco = number_format(round($r['eks_score'],2),2);
             echo "<tr><td>{$rank}</td><td><a href='#' linkCompo='../api/compos.php?franchiseid={$r['id']}&journeeid={$lastJ['id']}'>{$r['nom']}</a></td><td>{$sco}</td></tr>";
             $rank++;
+        }
         }
         echo "</tbody>
 	</table>

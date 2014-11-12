@@ -976,6 +976,10 @@ $INDEX 8-2 : Players list
 	$INDEX12 - FIXTURES
 	
 ******************************************************/
+#championship p{
+    text-align:center;
+    display:inherit;
+}
 #championship table{
 	font-size:1.3em;
 	text-align:center;
