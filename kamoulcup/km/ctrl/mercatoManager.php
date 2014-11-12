@@ -14,7 +14,7 @@ function getCurrentMercato() {
 
 function listProcessedMercatos() {
     global $db;
-    $mecatQ = "select mer_id,date_format(mer_date_ouverture,'%d/%m/%Y %H:%i') as dateFermeture from km_mercato where mer_processed=1 order by mer_date_fermeture desc";
+    $mecatQ = "select mer_id,date_format(mer_date_fermeture,'%d/%m/%Y %H:%i') as dateFermeture from km_mercato where mer_processed=1 order by mer_date_fermeture desc";
     $mercatos = $db->getArray($mecatQ);
     return $mercatos;
 }
