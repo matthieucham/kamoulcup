@@ -44,7 +44,7 @@ foreach ($franchises as $fr) {
     $compoExists = intval($db->getArray($existingCompoQ)[0][0])>0;
     if (!compoExists && $previousJourneeId>0) {
         // Recopier les engagements (valides) de la journée d'avant.
-        $copyQ = "insert into(sej_engagment_id,sej_journee_id,sej_substitute) select sej_engagement_id, sej_journee_id,sej_substitute from km_selection_ekyp_journee inner join km_engagement on eng_id=sej_engagement_id inner join journee on journee.id={$journeeId} where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_ekyp_id={$fr['id']} and sej_journee_id={$previousJourneeId}";
+        $copyQ = "insert into km_selection_ekyp_journee(sej_engagement_id,sej_journee_id,sej_substitute) select sej_engagement_id, sej_journee_id,sej_substitute from km_selection_ekyp_journee inner join km_engagement on eng_id=sej_engagement_id inner join journee on journee.id={$journeeId} where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_ekyp_id={$fr['id']} and sej_journee_id={$previousJourneeId}";
         $db->query($copyQ);
     }
     
@@ -72,12 +72,11 @@ function adjustSelection($selection,$db) {
             $insertQ="insert into km_selection_ekyp_journee(sej_engagement_id,sej_journee_id,sej_substitute) values ({$sel['eng_id']},{$sel['id']},0) on duplicate key update sej_substitute=0";
             $db->query($insertQ);
             $countPoste[$poste] = $countPoste[$poste]+1;
-        } else if ($sel['sej_substitute']===0 && $countPoste[$poste]>$minPoste[$poste]) {
+        } else if ($sel['sej_substitute']==0 && $countPoste[$poste]>$minPoste[$poste]) {
             // Enregistrement "en trop", à supprimer !
             $supprQ="delete from km_selection_ekyp_journee where sej_journee_id={$sel['id']} and sej_engagement_id={$sel['eng_id']}";
             $db->query($supprQ);
         }
-        $countPoste[$poste] = $countPoste[$poste]+1;
     }
 }
 ?>

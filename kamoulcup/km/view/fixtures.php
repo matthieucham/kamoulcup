@@ -5,7 +5,7 @@
     $champ = getChampionnat($champId);
 
 echo "<section id='championship'>
-    <h1>{$champ['nom']}</h1>";
+    <h1>{$champ['chp_nom']}</h1>";
 ?>
 
 <div id="fixtures">

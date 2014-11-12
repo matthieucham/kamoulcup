@@ -1,7 +1,6 @@
 <?php
 include("../model/model_include.php");
 include("../ctrl/journeeManager.php");
-include ("../../includes/db.php");
 
 //$lastJQ = "select id from journee order by date desc limit 1";
 //$lastJ = $db->getArray($lastJQ);
