@@ -225,9 +225,10 @@ body {
 	color:#3E4147;
 	background-color:#fab7e6;
 }
-.removeCartBtn{
+.removeCartBtn,.addCartBtn{
 	color:#3E4147;
 	background-color:#ECECED;
+    margin:0 3px;
 }
 /******************************************************
 

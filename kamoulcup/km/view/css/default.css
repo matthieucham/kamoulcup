@@ -580,6 +580,17 @@ $INDEX 8-2 : Players list
 	margin-top: 0.2em;
 	margin-bottom:0.2em;
 } 
+.addCartBtn{
+	font-size:0.9em;
+	font-weight:bold;
+	text-align:center;
+	padding:0px 5px;
+	margin:2px;
+	float:right;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
 /******************************************************
 
 	$INDEX9 - TEAM

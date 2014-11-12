@@ -47,8 +47,9 @@ function updateMarketAndBudget(event,ui) {
 function updateMarket(){
 	$.each($('#clubPlayersList .playerFree').not('.ui-draggable-dragging'),function(index,value) {
 		$(value).removeClass('playerBlocked');
+        $(value).removeClass('playerBlocked').find('a.addCartBtn').removeClass('hide');
 		if (($(value).data('json').prize > $currentTrans)){
-			$(value).draggable('disable');
+			$(value).draggable('disable').find('a.addCartBtn').addClass('hide');
 		} else {
 			$(value).draggable('enable');
 		}
@@ -68,12 +69,12 @@ function updateDisponibility() {
 		($currentSpots[currPlayerPosition])--;
         $currentNbPlayers++;
 		var currPlayerIdo = $(value).data('json').ido;
-		$('#clubPlayersList #freePlayer'+currPlayerIdo).addClass('playerBlocked').draggable('disable');
+		$('#clubPlayersList #freePlayer'+currPlayerIdo).addClass('playerBlocked').draggable('disable').find('a.addCartBtn').addClass('hide');
 	});
     if ($currentNbPlayers >= $nbMaxJoueurs) {
         // Blocage de tous les joueurs
         $.each($('#clubPlayersList .playerFree').not('.ui-draggable-dragging'),function(index,value) {
-			$(value).addClass('playerBlocked').draggable('disable');
+			$(value).addClass('playerBlocked').draggable('disable').find('a.addCartBtn').addClass('hide');
         });
     }
     $('#sendCartBtn').trigger('budgetChanged');
@@ -184,7 +185,18 @@ $( document ).ready(function() {
 				text:value.position,
 				title:"Attaquant"
 			}).appendTo($addedLi);
-			
+            
+            if (value.prize >=0) {
+            jQuery("<a/>",{
+				class: "addCartBtn",
+                html:"<i class='fa fa-shopping-cart'></i>",
+				title:"Ajouter au panier",
+                href:'#'
+			}).click(function() {
+                            addToCart(value);
+							basketChanged();
+						}).appendTo($addedLi);
+            }
 			jQuery("<span/>",{
 				class: "playerSalary",
 				text:value.salary+' Ka',
