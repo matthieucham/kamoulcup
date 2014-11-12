@@ -41,9 +41,11 @@
 	<div class='budgetInfo_line'>
 		<div class='budgetItem'><p>Contrats</p></div>
 		<div class='budgetItem'>
+            <div class='budgetInfo_line'>
 			<?php /*include('fragments/franchisePositions.php');*/
                 displayPositions($_SESSION['myEkypId']);
             ?>
+            </div>
 		</div>
 	</div>
 	<div class='budgetInfo_line'>

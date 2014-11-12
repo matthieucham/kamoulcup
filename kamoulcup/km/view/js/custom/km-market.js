@@ -207,7 +207,7 @@ $( document ).ready(function() {
 				jQuery("<span/>",{
 				class: "playerPrize",
 				text:value.prize+' Ka',
-				title:"Vendu par Nation of Domination"
+				title:"Sur la liste des transferts"
 			}).appendTo($addedLi);
 			}
 		});
