@@ -12,10 +12,10 @@
 // Init constants.
     $maxSalary=$KM_maxSalary;
     $maxPlayers=$KM_maxPlayers;
-    $nbG=0;
+    /*$nbG=0;
     $nbD=0;
     $nbM=0;
-    $nbA=0;
+    $nbA=0;*/
 
 
     $merkato= getCurrentMercato();
@@ -43,7 +43,7 @@
 		<div class='budgetItem'>
             <div class='budgetInfo_line'>
 			<?php /*include('fragments/franchisePositions.php');*/
-                displayPositions($_SESSION['myEkypId']);
+                $contractPositions = displayPositions($_SESSION['myEkypId']);
             ?>
             </div>
 		</div>
@@ -62,12 +62,12 @@
             echo "<input type='hidden' id='initBudgetValue' value='{$ekyp['fin_solde']}' />";
             echo "<input type='hidden' id='initSalaryValue' value='{$salaires}' />";
             echo "<input type='hidden' id='maxSalary' value='{$maxSalary}' />";
-            $pl = $maxPlayers-($nbG+$nbD+$nbM+$nbA);
+            $pl = $maxPlayers-($contractPositions['nbG']+$contractPositions['nbD']+$contractPositions['nbM']+$contractPositions['nbA']);
             echo "<input type='hidden' id='maxPlayers' value='{$pl}' />";
-            $g = $KM_minG-$nbG;
-            $d= $KM_minD-$nbD;
-            $m=$KM_minM-$nbM;
-            $a=$KM_minA-$nbA;
+            $g = $KM_minG-$contractPositions['nbG'];
+            $d= $KM_minD-$contractPositions['nbD'];
+            $m=$KM_minM-$contractPositions['nbM'];
+            $a=$KM_minA-$contractPositions['nbA'];
             echo "<input type='hidden' id='nbMinG' value='{$g}' />";
             echo "<input type='hidden' id='nbMinD' value='{$d}' />";
             echo "<input type='hidden' id='nbMinM' value='{$m}' />";

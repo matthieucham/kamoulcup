@@ -59,6 +59,7 @@
 				echoPosition($position, 'M', 'M2');
 				echoPosition($position, 'A', 'A1');
 				echoPosition($position, 'A', 'A2');
+        return array('nbG'=>$nbG,'nbD'=>$nbD,'nbM'=>$nbM,'nbA'=>$nbA);
     }
 
 function echoPosition($positionArray,$targetPos,$targetSpot) {
@@ -70,5 +71,5 @@ function echoPosition($positionArray,$targetPos,$targetSpot) {
 		}
 		echo "</div>";
 	}
-			?>
+    ?>
 		</div>
