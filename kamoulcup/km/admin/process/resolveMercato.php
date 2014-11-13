@@ -11,7 +11,7 @@ $encheresQ = "SELECT o2.off_joueur_id,o2.off_ekyp_id, o2.off_montant, count(o2.o
 select off_joueur_id,max(off_montant) as off_montant from km_offre WHERE off_mercato_id={$mercatoId} group by off_joueur_id
 ) o1 join km_offre o2 on (o2.off_montant=o1.off_montant and o2.off_joueur_id=o1.off_joueur_id) group by o2.off_joueur_id";
 // Requete pour connaitre la journee courante
-$journeeQ = "select id from journee order by date desc limit 1";
+$journeeQ = "select id from journee where date < now() order by date desc limit 1";
 $lastJournee = 0;
 $currentJourneeArray = $db->getArray($journeeQ);
 if (currentJourneeArray != NULL) {
