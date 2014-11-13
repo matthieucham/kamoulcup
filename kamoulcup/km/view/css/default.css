@@ -227,7 +227,7 @@ header{
     left: 0;
     width: 100%;
     z-index: 10000;
-    overflow: hidden;
+    overflow: visible;
     -webkit-transition: height 0.3s;
     -moz-transition: height 0.3s;
     transition: height 0.3s;
@@ -242,7 +242,7 @@ header h1{
 header h1, header nav a {
 	-webkit-transition: all 0.2s;
 	-moz-transition: all 0.2s;
-	transition: all 0.2s;	
+	transition: all 0.2s;
 }
 
 footer {
@@ -272,7 +272,7 @@ nav a.current, nav a:hover{}
 
 
 .headerstandard {
-    height: 230px;
+    /*height: 230px;*/
 }
 
 
@@ -285,9 +285,8 @@ nav a.current, nav a:hover{}
 
 
 		 /* We just have one-lined elements, so we'll center the elements with the line-height set to the height of the header */
-		.headerstandard h1,
-		.headerstandard nav.menustandard a {
-			line-height: 230px;
+		.headerstandard h1 {
+			/*line-height: 230px;*/
 		}
 
 		 .headerstandard h1 {
@@ -307,7 +306,7 @@ nav a.current, nav a:hover{}
 			font-size: 1.3em;
 			font-weight: 300;
 			padding: 8px 10px;
-			
+			/*line-height: 230px;*/
 			border-radius: 5px;
 			-moz-border-radius: 5px;
 			-webkit-border-radius: 5px;
@@ -329,7 +328,7 @@ nav a.current, nav a:hover{}
 
 
 .headerstandard.headerstandard-shrink {
-    height: 90px;
+    /*height: 90px;*/
 }
  
 .headerstandard.headerstandard-shrink h1,
