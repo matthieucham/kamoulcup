@@ -20,4 +20,11 @@
         $trQ = "select ekyp.id as idEkyp,ekyp.nom as nomEkyp, eng_montant, eng_salaire, date_format(eng_date_arrivee,'%d/%m/%Y') as dateArrivee, date_format(eng_date_depart,'%d/%m/%Y') as dateDepart,eng_date_arrivee,eng_date_depart from ekyp inner join km_engagement on eng_ekyp_id=ekyp.id where eng_joueur_id={$playerId} order by eng_date_arrivee asc";
         return $db->getArray($trQ);
     }
+
+    function isListed($playerId) {
+        global $db;
+        $listQ = "select count(ltr_engagement_id) from km_liste_transferts inner join km_engagement on eng_id=ltr_engagement_id and eng_joueur_id={$playerId} where eng_date_depart is null";
+        $listed = $db->getArray($listQ);
+        return $listed[0][0] == 1;
+    }
 ?>

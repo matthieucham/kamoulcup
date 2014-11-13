@@ -87,11 +87,9 @@
                 $isListed=true;
                 echo "<p><span class='vignette' title='Sur la liste des transferts'><i class='fa fa-money'></i><span class='main'>{$trMontant} Ka</span><span class='annex'>En vente</span></span></p>";
             }
-            echo "<a href='#' class='transferList_handle'><i class='fa fa-toggle-down'></i> Actions</a>
+            if (! ($isListed && $mercatoEnCours)) {
+                echo "<a href='#' class='transferList_handle'><i class='fa fa-toggle-down'></i> Actions</a>
 					<div class='transferList_actions'>";
-            if ($mercatoEnCours) {
-                echo "<p>Aucune action possible lorsqu'un mercato est en cours</p>";
-            } else {
                 echo "<form method='post' action='../ctrl/firePlayer.php' id='form-fire-{$player['id']}'>
 							<input type='hidden' name='playerid' value='{$player['id']}' />
                             <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
@@ -104,7 +102,7 @@
                             <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
 							<button>Retirer de la liste</button>
 						</form>";
-                } else {
+                } else if (!mercatoEnCours) {
 				    echo "<form method='post' action='../ctrl/listPlayer.php' id='form-list-{$player['id']}'>
 							<input type='hidden' name='playerid' value='{$player['id']}' />
                             <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
@@ -114,9 +112,9 @@
 							<button>Lister</button>
 						</form>";
                 }
+            echo "</div>";
             }
-			echo "		
-					</div>
+			echo "
 				</div>
 			</div>
 		</li> <!-- End player view -->";
