@@ -1044,6 +1044,9 @@ $INDEX 8-2 : Players list
     display:block;
     font-size:1.0em;
 }
+.actionCompoPlayer {
+    float:right;
+}
 #compoG {
     left:0px;
     top:50px;

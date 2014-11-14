@@ -44,12 +44,13 @@ foreach ($currentCompo as $current) {
             $hideClass=' hide';
             $subVal=0;
         }
-        return "<li class='benchPlayer{$hideClass}' id='bp_{$j['id']}'>{$j['prenom']} {$j['nomJoueur']} ({$j['nomClub']})<input type='hidden' name='playerid' value='{$j['id']}'/><input type='hidden' name='sub[{$j['id']}]' value='{$subVal}'/></li>";
+        return "<li class='benchPlayer{$hideClass}' id='bp_{$j['id']}' position='pos{$j['poste']}'><div class='actionCompoPlayer'><i class='fa fa-plus-square'></i></div>{$j['prenom']} {$j['nomJoueur']} ({$j['nomClub']})<input type='hidden' name='playerid' value='{$j['id']}'/><input type='hidden' name='sub[{$j['id']}]' value='{$subVal}'/></li>";
     }
 
     function buildCompoPlayer($j,$index) {
         $idVal=$j['idJoueur'];
         $nom=$j['prenom'].' '.$j['nomJoueur'].' ('.$j['nomClub'].')';
+        echo "<div class='actionCompoPlayer'><i class='fa fa-minus-square'></i></div>";
         echo "<input type='hidden' name='player[{$index}]' value='{$idVal}'/>";
         echo "<p>{$nom}</p>";
     }
