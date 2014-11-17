@@ -70,13 +70,6 @@ $( document ).ready(function() {
         $(this).find('p').remove();
         $(this).find('.actionCompoPlayer').remove();
         
-        /*var newVal= ui.draggable.find('input[type="hidden"]').val();
-        $(this).find('input[type="hidden"]').val(newVal);
-        var btnDiv = $('<div>').addClass('actionCompoPlayer').html("<i class='fa fa-minus-square'></i>").click(removePlayerHandler);
-        $(this).append(btnDiv);
-        $(this).append('<p>'+ui.draggable.text()+'</p>');
-        
-        $('#compoBench').find('#bp_'+newVal).addClass('hide').find('input[name*="sub"]').val(0);*/
         addCompoPlayer($(this),ui.draggable);
     }
     

@@ -102,7 +102,7 @@
                             <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
 							<button>Retirer de la liste</button>
 						</form>";
-                } else if (!mercatoEnCours) {
+                } else if (!$mercatoEnCours) {
 				    echo "<form method='post' action='../ctrl/listPlayer.php' id='form-list-{$player['id']}'>
 							<input type='hidden' name='playerid' value='{$player['id']}' />
                             <input type='hidden' name='playername' value='{$player['prenom']} {$player['nom']}' />
