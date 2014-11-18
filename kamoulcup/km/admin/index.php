@@ -2,6 +2,10 @@
 include("../../includes/db.php");
 include("../ctrl/accessManager.php");
 checkAdminAccess();
+
+$listJourneesQuery = $db->getArray("select id,numero from journee order by numero asc");
+$listChampionnatsQuery = $db->getArray("select chp_id,chp_nom,chp_first_journee_numero,chp_last_journee_numero from km_championnat order by chp_nom asc");
+
 ?>
 
 <html>
@@ -28,6 +32,8 @@ checkAdminAccess();
 <h1>Kamoul Manager : Administration</h1>
 <div id="tabs">
 <ul>
+    <li><a href="#tabs-4">Supports</a></li>
+    <li><a href="#tabs-5">Championnats du jeu</a></li>
 	<li><a href="#tabs-1">Effectifs et scores</a></li>
 	<li><a href="#tabs-2">Transferts et finances</a></li>
 	<li><a href="#tabs-3">Championnats</a></li>
@@ -38,7 +44,7 @@ checkAdminAccess();
 <form method="post" action="process/updateSelections.php">
 <p>Valider les compositions de la journée <select size=1 name="journee">
 <?php
-$listJourneesQuery = $db->getArray("select id,numero from journee order by numero asc");
+
 if ( $listJourneesQuery != NULL) {
 	foreach($listJourneesQuery as $journee) {
 		echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
@@ -180,6 +186,112 @@ if ($champ != NULL) {
 </select> <input type="submit" value="associer"/></p>
 </form>
 </div>
+
+<div id="tabs-4">
+    <h2>Scores et salaires des joueurs</h2>
+    <table>
+        <tr>
+            <th></th><th></th><th>par journée</th><th>global</th>
+        </tr>
+        <tr>
+            <td>1</td><td>MAJ scores</td><td>
+            <form method="post" action="process/updateScores.php">
+                <select size=1 name="journee">
+                    <?php
+if ( $listJourneesQuery != NULL) {
+	foreach($listJourneesQuery as $journee) {
+		echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
+	}
+}
+                    ?>
+                </select> 
+                <input type="submit" value="journee" />
+            </form>
+            </td>
+            <td>
+            <form method="post" action="process/updateScores.php">
+                <input type='hidden' name='journee' value='0' />
+                <input type="submit" value="global" />
+            </form>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td><td>MAJ salaires</td><td>
+            <form method="post" action="process/updateSalaires.php">
+                <select size=1 name="journee">
+                    <?php
+if ( $listJourneesQuery != NULL) {
+	foreach($listJourneesQuery as $journee) {
+		echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
+	}
+}
+                    ?>
+                </select> 
+                <input type="submit" value="journee" />
+            </form>
+            </td>
+            <td>
+            <form method="post" action="process/updateSalaires.php">
+                <select size=1 name="journee">
+                    <?php
+if ( $listJourneesQuery != NULL) {
+	foreach($listJourneesQuery as $journee) {
+		echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
+	}
+}
+                    ?>
+                </select> 
+                <input type='hidden' name='global' value='1' />
+                <input type="submit" value="global" />
+            </form>
+            </td>
+        </tr>
+    </table>
+
+<h2>Step X: Initialiser les classes de salaire basées sur les perfs de
+l'année d'avant</h2>
+<form method="post" action="process/initSalaires.php">
+<p>Score référence <select size=1 name="champ">
+	<option value="score1">Apertura</option>
+	<option value="score2">Clausura</option>
+	<option value="score">Saison</option>
+</select> <input type="submit" value="init" /></p>
+</form>
+</div>
+    
+    
+    
+    
+<div id="tab-5">
+    <h2>Mise à jour des championnats</h2>
+    <form method="post" action="process/updateChampionnatsJournee.php">
+    <p>Tous les championnats après la journée
+                <select size=1 name="journee">
+                    <?php
+if ( $listJourneesQuery != NULL) {
+	foreach($listJourneesQuery as $journee) {
+		echo "<option value=\"{$journee[0]}\">{$journee[1]}</option>";
+	}
+}
+                    ?>
+                </select> 
+                <input type="submit" value="par journée" /></p>
+            </form>
+    <form method="post" action="process/updateChampionnat.php">
+    <p>Toutes les journées du championnat 
+                <select size=1 name="championnat">
+                    <?php
+if ( $listChampionnatsQuery != NULL) {
+	foreach($listChampionnatsQuery as $champ) {
+		echo "<option value=\"{$champ[0]}\">{$champ[1]} de J{$champ[2]} à J{$champ[3]}</option>";
+	}
+}
+                    ?>
+                </select> 
+                <input type="submit" value="par championnat" /></p>
+            </form>
+</div>
+
 </div>
 </body>
 </html>

@@ -47,3 +47,51 @@ CREATE TABLE IF NOT EXISTS `km_palmares` (
   PRIMARY KEY (`pal_franchise_id`,`pal_championnat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `km_mercato` ADD `mer_championnat_id` INT NOT NULL ;
+UPDATE `km_mercato` SET mer_championnat_id = ( SELECT chp_id
+FROM km_championnat
+WHERE km_championnat.chp_first_journee_numero =14 );
+
+ALTER TABLE `km_ekyp_score` DROP `eks_championnat_id` ;
+RENAME TABLE `km_ekyp_score` TO km_franchise_score;
+ALTER TABLE `km_franchise_score` CHANGE `eks_ekyp_id` `fsc_inscription_id` INT( 11 ) NOT NULL ,
+CHANGE `eks_journee_id` `fsc_round_id` INT( 11 ) NOT NULL ;
+
+TRUNCATE `km_franchise_score`;
+
+UPDATE `km_engagement` SET eng_ekyp_id = ( SELECT ins_id
+FROM km_inscription
+WHERE ins_franchise_id = eng_ekyp_id
+AND ins_championnat_id = (
+SELECT chp_id
+FROM km_championnat
+WHERE km_championnat.chp_first_journee_numero =14 ) );
+ALTER TABLE `km_engagement` CHANGE `eng_ekyp_id` `eng_inscription_id` INT( 11 ) NOT NULL ;
+
+UPDATE `km_finances` SET fin_ekyp_id = ( SELECT ins_id
+FROM km_inscription
+WHERE ins_franchise_id = fin_ekyp_id
+AND ins_championnat_id = (
+SELECT chp_id
+FROM km_championnat
+WHERE km_championnat.chp_first_journee_numero =14 ) ) ;
+ALTER TABLE `km_finances` CHANGE `fin_ekyp_id` `fin_inscription_id` INT( 11 ) NOT NULL ;
+
+UPDATE `km_offre` SET off_ekyp_id = ( SELECT ins_id
+FROM km_inscription
+WHERE ins_franchise_id = off_ekyp_id
+AND ins_championnat_id = (
+SELECT mer_championnat_id
+FROM km_mercato
+WHERE mer_id=off_mercato_id ) ) ;
+ALTER TABLE `km_offre` CHANGE `off_ekyp_id` `off_inscription_id` INT( 11 ) NOT NULL ;
+
+update `km_selection_ekyp_journee` set sej_journee_id=(select cro_id from km_championnat_round inner join km_championnat on chp_id=cro_championnat_id inner join km_inscription on ins_championnat_id=chp_id inner join km_engagement on eng_inscription_id=ins_id where cro_journee_id=sej_journee_id and eng_id=sej_engagement_id)
+
+RENAME TABLE `km_selection_ekyp_journee` TO km_selection_round;
+ALTER TABLE `km_selection_round` CHANGE `sej_engagement_id` `sro_engagement_id` INT( 11 ) NOT NULL ,
+CHANGE `sej_journee_id` `sro_round_id` INT( 11 ) NOT NULL ,
+CHANGE `sej_substitute` `sro_substitute` TINYINT( 1 ) NOT NULL DEFAULT '0';
+
+
+
