@@ -35,6 +35,10 @@ CREATE TABLE IF NOT EXISTS `km_championnat_round` (
   PRIMARY KEY (`cro_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+ALTER TABLE `km_championnat_round` DROP `cro_processed`;
+ALTER TABLE `km_championnat_round` ADD `cro_status` ENUM( 'CREATED', 'PLAYED', 'PROCESSED', 'CANCELLED', 'ARCHIVED' ) NOT NULL DEFAULT 'CREATED';
+
+
 
 ALTER TABLE `km_championnat` ADD `chp_status` ENUM( 'CREATED', 'STARTED', 'FINISHED', 'CANCELLED', 'ABORTED' ) NOT NULL DEFAULT 'CREATED';
 UPDATE `kamoulcup`.`km_championnat` SET `chp_status` = 'STARTED' WHERE `km_championnat`.`chp_first_journee_numero` =14;

@@ -25,6 +25,19 @@
 			$db->query($updateQ);
 		}
 	}
+
+    // Mise à jour du statut des rounds si journée spécifiée et résultats existant
+    if ($journeeId > 0) {
+        updateRounds($journeeId);
+    } else {
+        $journeesQ = 'select id from journee where journee.date <= now()';
+        $journees = $db->getArray($journeesQ);
+        if ($journees != NULL) {
+            foreach ($journees as $j) {
+                updateRounds($j['id']);
+            }
+        }
+    }
 	
 	// 4) calculer les points marqués par chaque ekyp à chaque journée pour chaque championnat concerné par la journée écoulée.
 //    $ekypQ = "select eng_ekyp_id,journee.id,sum(jpe_score) as ekScore,chp_id FROM km_joueur_perf inner join km_engagement on eng_joueur_id=jpe_joueur_id inner join km_selection_ekyp_journee on sej_engagement_id=eng_id inner join rencontre on jpe_match_id=rencontre.id inner join journee on rencontre.journee_id=journee.id inner join km_championnat on journee.numero in (chp_first_journee_numero,chp_last_journee_numero) inner join km_join_ekyp_championnat on jec_ekyp_id=eng_ekyp_id where sej_journee_id=journee.id and sej_substitute=0 and journee.id={$journeeId} group by eng_ekyp_id";
@@ -93,4 +106,11 @@
 		
 		return $bonus + $note;
 	}
+
+function updateRounds($journeeId) {
+    global $db;
+        // Mise à jour du statut des rounds si résultats existant
+    $updateRoundsQ = "update km_championnat_round set cro_status='PLAYED' where cro_status='CREATED' and cro_journee_id={$journeeId} and (select count(prestation.id) from prestation inner join rencontre on match_id=rencontre.id inner join journee on journee.id=rencontre.journee_id where journee.id={$journeeId})>150";
+    $db->query($updateRoundsQ);
+}
 ?>
