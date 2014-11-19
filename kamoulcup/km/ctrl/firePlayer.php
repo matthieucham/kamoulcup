@@ -1,6 +1,7 @@
 <?php
     include("accessManager.php");
     include("mercatoManager.php");
+    include("transferManager.php");
 
     checkPlayerAccess();
 
