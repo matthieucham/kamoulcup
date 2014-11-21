@@ -22,8 +22,12 @@ ALTER TABLE km_join_ekyp_championnat DROP PRIMARY KEY;
 ALTER TABLE `km_join_ekyp_championnat` ADD `ins_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ;
 ALTER TABLE `km_join_ekyp_championnat` CHANGE `jec_ekyp_id` `ins_franchise_id` INT( 11 ) NOT NULL ,
 CHANGE `jec_championnat_id` `ins_championnat_id` INT( 11 ) NOT NULL ;
-ALTER TABLE `kamoulcup`.`km_join_ekyp_championnat` ADD UNIQUE `unique_franchise_champ` ( `ins_franchise_id` , `ins_championnat_id` ) ;
+
 RENAME TABLE km_join_ekyp_championnat TO km_inscription;
+ALTER TABLE `km_inscription` ADD UNIQUE (
+`ins_franchise_id` ,
+`ins_championnat_id`
+);
 
 
 CREATE TABLE IF NOT EXISTS `km_championnat_round` (

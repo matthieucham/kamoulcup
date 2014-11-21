@@ -38,16 +38,7 @@
             }
         }
     }
-	
-	// 4) calculer les points marqués par chaque ekyp à chaque journée pour chaque championnat concerné par la journée écoulée.
-//    $ekypQ = "select eng_ekyp_id,journee.id,sum(jpe_score) as ekScore,chp_id FROM km_joueur_perf inner join km_engagement on eng_joueur_id=jpe_joueur_id inner join km_selection_ekyp_journee on sej_engagement_id=eng_id inner join rencontre on jpe_match_id=rencontre.id inner join journee on rencontre.journee_id=journee.id inner join km_championnat on journee.numero in (chp_first_journee_numero,chp_last_journee_numero) inner join km_join_ekyp_championnat on jec_ekyp_id=eng_ekyp_id where sej_journee_id=journee.id and sej_substitute=0 and journee.id={$journeeId} group by eng_ekyp_id";
 
-//	//$ekypQ = "SELECT eng_ekyp_id,{$journeeId},sum(jpe_score) as ekScore FROM km_joueur_perf inner join km_engagement on eng_joueur_id=jpe_joueur_id inner join km_selection_ekyp_journee on sej_engagement_id=eng_id where jpe_match_id in (select id from rencontre where journee_id={$journeeId}) and sej_journee_id={$journeeId} and sej_substitute=0 group by eng_ekyp_id";
-        
-//	$updateEkypScoreQ = "insert into km_ekyp_score(eks_ekyp_id,eks_journee_id,eks_score,eks_championnat_id) {$ekypQ} on duplicate key update eks_score=values(eks_score)";
-
-//	$db->query($updateEkypScoreQ);
-	
 	header('Location: ../index.php');
 	exit();
 	
