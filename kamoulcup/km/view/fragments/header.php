@@ -4,7 +4,7 @@ if (isset($_GET['kmpage'])) {
 	$currentPage = $_GET['kmpage'];
 }
 include_once ('../ctrl/mercatoManager.php');
-$mercato = getCurrentMercato();
+$mercato = getCurrentMercato($_SESSION['myChampionnatId']);
 ?>
 <header
 	class="headerstandard headerstandard-shrink">

@@ -94,7 +94,7 @@ FROM km_mercato
 WHERE mer_id=off_mercato_id ) ) ;
 ALTER TABLE `km_offre` CHANGE `off_ekyp_id` `off_inscription_id` INT( 11 ) NOT NULL ;
 
-update `km_selection_ekyp_journee` set sej_journee_id=(select cro_id from km_championnat_round inner join km_championnat on chp_id=cro_championnat_id inner join km_inscription on ins_championnat_id=chp_id inner join km_engagement on eng_inscription_id=ins_id where cro_journee_id=sej_journee_id and eng_id=sej_engagement_id)
+update `km_selection_ekyp_journee` set sej_journee_id=(select cro_id from km_championnat_round inner join km_championnat on chp_id=cro_championnat_id inner join km_inscription on ins_championnat_id=chp_id inner join km_engagement on eng_inscription_id=ins_id where cro_journee_id=sej_journee_id and eng_id=sej_engagement_id);
 
 RENAME TABLE `km_selection_ekyp_journee` TO km_selection_round;
 ALTER TABLE `km_selection_round` CHANGE `sej_engagement_id` `sro_engagement_id` INT( 11 ) NOT NULL ,

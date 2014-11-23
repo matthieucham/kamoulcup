@@ -20,17 +20,11 @@ if ($storedUser == NULL) {
 	$userrights=$storedUser[0]['droit'];
 	$_SESSION['username'] = $username;
 	$_SESSION['userrights'] = $userrights;
-    $km = $storedUser[0]['km'];
 	$_SESSION['myFranchiseId'] = $storedUser[0]['fra_id'];
     $_SESSION['myInscriptionId'] = $storedUser[0]['ins_id'];
     $_SESSION['myChampionnatId'] = $storedUser[0]['ins_championnat_id'];
-    if ($km) {
         header('Location: ../view/index.php');
         die();
-    } else {
-        header('Location: ../../index.php');
-        die();
-    }
 } 
 
 ?>
