@@ -1,18 +1,24 @@
 <?php
     include_once('../ctrl/rankingManager.php');
     include_once('../ctrl/journeeManager.php');
-    $champId = $_SESSION['champId'];
+    include_once('../ctrl/roundManager.php');
+
+    $champId = $_SESSION['myChampionnatId'];
     $champ = getChampionnat($champId);
 
 echo "<section id='championship'>
     <h1>{$champ['chp_nom']}</h1>
     <p>Se déroule de la journée {$champ['chp_first_journee_numero']} à la journée {$champ['chp_last_journee_numero']} de L1</p>";
-    $nbJournees = $champ['chp_last_journee_numero'] - $champ['chp_first_journee_numero'] +1;
-    $indexJournee = $champ['nbPlayed'].'/'.$nbJournees;
-echo "<div id='fixtures'>
-	<h2>Classement Général après la journée {$indexJournee}</h2>";
-?>
+    $nbTours = $champ['chp_last_journee_numero'] - $champ['chp_first_journee_numero'] +1;
+    $indexJournee = $champ['nbPlayed'].'/'.$nbTours;
+echo "<div id='fixtures'>";
 
+if ($champ['chp_status'] == CREATED) {
+    echo "<p>Le championnat débutera prochainement</p>";
+} else {
+
+echo "<h2>Classement Général après le tour {$indexJournee}</h2>";
+?>
 	<table width="100%">
 	<thead>
 	<tr>
@@ -25,7 +31,7 @@ echo "<div id='fixtures'>
     $rank=1;
     foreach ($ranking as $r) {
         $sco = number_format(round($r['sumScore'],2),2);
-        echo "<tr><td>{$rank}</td><td><a href='index.php?kmpage=otherTeam&franchiseid={$r['id']}'>{$r['nom']}</a></td><td>{$sco}</td></tr>";
+        echo "<tr><td>{$rank}</td><td><a href='index.php?kmpage=otherTeam&franchiseid={$r['fra_id']}'>{$r['fra_nom']}</a></td><td>{$sco}</td></tr>";
         $rank++;
     }
 ?>
@@ -33,10 +39,10 @@ echo "<div id='fixtures'>
 	</table>
 </div>
 <?php
-    $lastJ = getLastJournee();
-    if ($lastJ != NULL ){
+    $lastR = getLastProcessedRound($champId);
+    if ($lastR != NULL ){
         echo "<div id='lastRound'><div id='teamsRanking'>";
-        echo "<h2>Dernière journée ({$lastJ['numero']})</h2>";
+        echo "<h2>Classement du dernier tour ({$lastR['cro_numero']})</h2>";
         echo "<table width='100%'>
 	<thead>
 	<tr>
@@ -44,12 +50,12 @@ echo "<div id='fixtures'>
 	</tr>
 	</thead>
     <tbody>";
-        $ranking = getRankingJournee($champId,$lastJ['id']);
+        $ranking = getRankingJournee($champId,$lastR['cro_id']);
         $rank=1;
         if ($ranking != NULL) {
         foreach ($ranking as $r) {
-            $sco = number_format(round($r['eks_score'],2),2);
-            echo "<tr><td>{$rank}</td><td><a href='#' linkCompo='../api/compos.php?franchiseid={$r['id']}&journeeid={$lastJ['id']}'>{$r['nom']}</a></td><td>{$sco}</td></tr>";
+            $sco = number_format(round($r['fsc_score'],2),2);
+            echo "<tr><td>{$rank}</td><td><a href='#' linkCompo='../api/compos.php?franchiseid={$r['fra_id']}&roundid={$lastR['cro_id']}'>{$r['fra_nom']}</a></td><td>{$sco}</td></tr>";
             $rank++;
         }
         }
@@ -65,7 +71,7 @@ echo "<div id='fixtures'>
 	</tr>
 	</thead>
     <tbody>";
-        $ranking = getRankingPlayersJournee($lastJ['id'],10);
+        $ranking = getRankingPlayersJournee($lastR['cro_id'],10);
         $rank=1;
         foreach ($ranking as $r) {
             $sco = number_format(round($r['jpe_score'],2),2);
@@ -83,6 +89,7 @@ echo "<div id='fixtures'>
 	</table>
     </div></div>";
     }
+}
 ?>
 <?php include('fragments/compoPopup.php');?>
 </section>

@@ -7,7 +7,7 @@
     $franchiseId = $_GET['franchiseid'];
 
     $round=getRound($roundId);
-    $compo = getCompo($franchiseId,$journeeId);
+    $compo = getCompo($franchiseId,$roundId);
     // Conversion du retour de la requête en objet JSON.
     $g=array();
     $d=array();

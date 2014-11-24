@@ -2,20 +2,19 @@
     include_once('../ctrl/franchiseManager.php');
     include_once('../ctrl/journeeManager.php');
     include_once('../ctrl/joueurManager.php');
-    include_once('../ctrl/salaryManager.php');
     include_once('../ctrl/transferManager.php');
     include_once('../ctrl/mercatoManager.php');
     include('fragments/franchisePositions.php'); 
-    $franchise = getFranchise($_SESSION['myEkypId']);
+    $franchise = getFranchise($_SESSION['myInscriptionId']);
 ?>
 <section id="team">
-<h1><?php echo $franchise['nom']?></h1>
+<h1><?php echo $franchise['fra_nom']?></h1>
 <h2>En bref</h2>
 <div id='team_overview'>
 		<div class='overviewItem'>
 			<p><i class='fa fa-male'></i> Contrats</p>
 			<?php /*include('fragments/franchisePositions.php');*/
-                displayPositions($_SESSION['myEkypId']);
+                displayPositions($_SESSION['myInscriptionId']);
             ?>
 		</div>
 		<div class='overviewItem'>
@@ -28,7 +27,7 @@
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-trophy'></i> Score</p>
-			<p><span class='budgetValue'><?php echo number_format(getScoreFranchise($_SESSION['myEkypId']),1).' Pts' ?></span></p>
+			<p><span class='budgetValue'><?php echo number_format(getScoreFranchise($_SESSION['myInscriptionId']),2).' Pts' ?></span></p>
 		</div>
 </div>
 
@@ -36,9 +35,9 @@
 	<h2>Effectif sous contrat</h2>
     <div id="dialog-confirm"></div>
     <?php
-        $currentMercato = getCurrentMercato();
+        $currentMercato = getCurrentMercato($_SESSION['myChampionnatId']);
         $mercatoEnCours = $currentMercato != NULL;
-        $players = getContratsFranchise($_SESSION['myEkypId']);
+        $players = getContratsFranchise($_SESSION['myInscriptionId']);
     if ($players == NULL) {
         echo "Pas de joueurs sous contrat";
     } else {
@@ -46,9 +45,10 @@
         $statsJournees = getLastNJournees(3);
         foreach ($players as $player) {
             $stats = getJoueurStats($player['id'],$statsJournees);
+            $joueurInfos = getJoueurCommonInfo($player['id']);
             echo "<li class='team_player_container'>
             <div class='team_player_tab realPlayerInfo'>
-				<h4><a href='./index.php?kmpage=home&page=detailJoueur&joueurid=${player['id']}'>{$player['prenom']} {$player['nom']}</a></h4>
+				<h4><a href='./index.php?kmpage=home&page=detailJoueur&joueurid={$player['id']}'>{$player['prenom']} {$player['nom']}</a></h4>
 				<p><span class='playerPosition'>{$player['poste']}</span> {$player['nomClub']}</p>
 			</div>
 			<div class='team_player_tab gamePlayerInfo'>
@@ -69,13 +69,13 @@
 				<div class='teamPlayerInfo_data'>
 				<ul>";
             $sal = number_format($player['eng_salaire'],0);
-            $realSal = number_format(getRealSalary($player['id'],$statsJournees[0]),0);
+            $realSal = number_format($joueurInfos['scl_salaire'],0);
 			echo "<li class='vignette' title='Salaire'><i class='fa fa-pencil-square-o'></i><span class='main'>{$sal} Ka</span><span class='annex'>virtuel : {$realSal} Ka</span></li>";
-            $statsF = getStatsFranchiseJoueur($_SESSION['myEkypId'],$player['id']);
+            $statsF = getStatsFranchiseJoueur($_SESSION['myInscriptionId'],$player['id']);
             $score = number_format(round($statsF[0],2),2);
             $nbJournees = $statsF[1];
-			echo "<li class='vignette' title='Points rapportés'><i class='fa fa-trophy'></i><span class='main'>{$score} pts</span><span class='annex'>en {$nbJournees} journées</span></li>";
-            $transfer = getLastTransfer($player['id']);
+			echo "<li class='vignette' title='Points rapportés'><i class='fa fa-trophy'></i><span class='main'>{$score} pts</span><span class='annex'>en {$nbJournees} tours</span></li>";
+            $transfer = getLastTransfer($player['id'],$_SESSION['myChampionnatId']);
             $montant = number_format(round($transfer['eng_montant'],1),1);
 			echo "<li class='vignette' title='Prix achat'><i class='fa fa-shopping-cart'></i><span class='main'>{$montant} Ka</span><span class='annex'>{$transfer['dateArrivee']}</span></li>
 				</ul>
@@ -137,7 +137,7 @@
 	</thead>
 	<tbody>
     <?php
-    $finances = getFinances($_SESSION['myEkypId']);
+    $finances = getFinances($_SESSION['myInscriptionId']);
     if ($finances != NULL) {
         foreach($finances as $evt) {
             echo "<tr>

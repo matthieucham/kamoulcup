@@ -66,6 +66,7 @@ ALTER TABLE `km_franchise_score` CHANGE `eks_ekyp_id` `fsc_inscription_id` INT( 
 CHANGE `eks_journee_id` `fsc_round_id` INT( 11 ) NOT NULL ;
 
 TRUNCATE `km_franchise_score`;
+ALTER TABLE `km_franchise_score` CHANGE `eks_score` `fsc_score` FLOAT NOT NULL ;
 
 UPDATE `km_engagement` SET eng_ekyp_id = ( SELECT ins_id
 FROM km_inscription

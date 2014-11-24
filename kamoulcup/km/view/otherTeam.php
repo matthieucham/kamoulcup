@@ -7,7 +7,8 @@
 
     $franchiseId = $_GET['franchiseid'];
     $chpId = $_SESSION['myChampionnatId'];
-    $inscriptionId = getInscriptionFromChampionnat($franchiseId,$chpId)['ins_id'];
+    $inscription = getInscriptionFromChampionnat($franchiseId,$chpId);
+    $inscriptionId = $inscription['ins_id'];
     $franchise = getFranchise($inscriptionId);
 ?>
 <section id="otherTeam">
