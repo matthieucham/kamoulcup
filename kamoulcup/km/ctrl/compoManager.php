@@ -17,17 +17,17 @@
         return $db->getArray($compoQ);
     }
 
-    function clearCompo($franchiseId,$journeeId) {
+    function clearCompo($franchiseId,$roundId) {
         global $db;
-        $cleanQ="delete from km_selection_ekyp_journee where sej_journee_id={$journeeId} and sej_engagement_id in (select eng_id from km_engagement where eng_ekyp_id={$franchiseId})";
+        $cleanQ="delete from km_selection_round where sro_round_id={$roundId} and sro_engagement_id in (select eng_id from km_engagement inner join km_inscription on ins_id=eng_inscription_id inner join km_championnat_round on cro_championnat_id=ins_championnat_id where ins_franchise_id={$franchiseId} and cro_id={$roundId})";
         $db->query($cleanQ);
     }
 
-    function saveCompo($franchiseId,$journeeId,$playerIds,$sub) {
+    function saveCompo($franchiseId,$roundId,$playerIds,$sub) {
         global $db;
         //$ids=implode(",",$playerIds);
         foreach($playerIds as $playerId) {
-        $compoQ="insert into km_selection_ekyp_journee(sej_engagement_id,sej_journee_id,sej_substitute) select eng_id,{$journeeId},{$sub} from km_engagement where eng_date_depart is null and eng_ekyp_id={$franchiseId} and eng_joueur_id={$playerId} on duplicate key update sej_substitute={$sub}";
+        $compoQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) select eng_id,{$roundId},{$sub} from km_engagement inner join km_inscription on ins_id=eng_inscription_id inner join km_championnat_round on cro_championnat_id=ins_championnat_id where eng_date_depart is null and ins_franchise_id={$franchiseId} and eng_joueur_id={$playerId} on duplicate key update sro_substitute={$sub}";
         $db->query($compoQ);
         }
     }

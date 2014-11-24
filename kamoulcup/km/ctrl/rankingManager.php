@@ -30,9 +30,4 @@
         return $db->getArray($rankQ);
     }
 
-    function getScoresFranchise($franchiseId) {
-        global $db;
-        $scoresQ = "select journee.id,journee.numero,eks_score,chp_nom from km_ekyp_score inner join journee on journee.id=eks_journee_id  inner join km_join_ekyp_championnat on jec_ekyp_id=eks_ekyp_id  and jec_championnat_id=eks_championnat_id inner join km_championnat on chp_id=jec_championnat_id where eks_ekyp_id={$franchiseId} order by journee.numero asc";
-        return $db->getArray($scoresQ);
-    }
 ?>

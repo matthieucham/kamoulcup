@@ -3,7 +3,7 @@
 <?php
     include_once('../ctrl/mercatoManager.php');
     include_once('../ctrl/transferManager.php');
-    $mercatos = listProcessedMercatos();
+    $mercatos = listProcessedMercatos($_SESSION['myChampionnatId']);
     if ($mercatos == NULL) {
         echo "<p>Aucun mercato terminé pour l'instant</p>";
     } else {

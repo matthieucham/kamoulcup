@@ -2,10 +2,9 @@
     <?php
         include_once('../ctrl/franchiseManager.php');
         
-        //$sousContrat=getContratsFranchise($_SESSION['myEkypId']);
 
-    function displayPositions($franchiseId) {
-        $sousContrat=getContratsFranchise($franchiseId);
+    function displayPositions($insId) {
+        $sousContrat=getContratsFranchise($insId);
         $nbG=0;
         $nbD=0;
         $nbM=0;

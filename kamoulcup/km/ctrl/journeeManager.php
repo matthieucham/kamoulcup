@@ -17,6 +17,14 @@ function getJournee($id) {
     return $lastJournee;
 }
 
+function getJourneeFromRound($roundid) {
+    global $db;
+    $lastJQ = "select id,numero,date_format(date,'%d/%m/%Y') as dateJournee,date from journee inner join km_championnat_round on cro_journee_id=journee.id where cro_id={$roundid} limit 1";
+    $lastJ = $db->getArray($lastJQ);
+    $lastJournee = $lastJ[0];
+    return $lastJournee;
+}
+
 function getLastNJournees($n) {
     global $db;
     $lastJQ = "select id from journee where date < now() order by date desc limit {$n}";

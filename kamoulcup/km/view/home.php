@@ -25,7 +25,7 @@
                 }
                 $round = getLastProcessedRound($_SESSION['myChampionnatId']);
                 if ($round != NULL) {
-                    echo "<li><i class='fa-li fa fa-info-circle'></i><a href='#' linkCompo='../api/compos.php?franchiseid={$_SESSION['myEkypId']}&roundid={$round['cro_id']}'> Résultats du tour {$round['cro_numero']} (Ligue 1 journée n°{$round['numero']})</a></li>";
+                    echo "<li><i class='fa-li fa fa-info-circle'></i><a href='#' linkCompo='../api/compos.php?franchiseid={$_SESSION['myFranchiseId']}&roundid={$round['cro_id']}'> Résultats du tour {$round['cro_numero']} (Ligue 1 journée n°{$round['numero']} du {$round['dateJournee']})</a></li>";
                 } else {
                     echo "<li><i class='fa-li fa fa-info-circle'></i> Pas encore de résultats à afficher</li>";
                 }
@@ -35,9 +35,9 @@
                 } else {
                     $nextCompo = getCompoNoScore($_SESSION['myFranchiseId'],$nextRound['cro_id'],true);
                     if ($nextCompo == NULL) {
-                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Faire sa compo pour le tour {$nextRound['cro_numero']} (L1 journée {$nextRound['numero']} du {$nextRound['dateJournee']})</a></li>";
+                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Faire sa compo pour le tour {$nextRound['cro_numero']} (L1 journée n°{$nextRound['numero']} du {$nextRound['dateJournee']})</a></li>";
                     } else {
-                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Compo pour le tour {$nextRound['cro_numero']} (L1 journée {$nextRound['numero']} du {$nextRound['dateJournee']}) enregistrée.</a></li>";
+                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Compo pour le tour {$nextRound['cro_numero']} (L1 journée n°{$nextRound['numero']} du {$nextRound['dateJournee']}) enregistrée.</a></li>";
                     }
                 }
             ?>   

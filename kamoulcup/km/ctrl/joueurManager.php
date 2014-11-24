@@ -21,16 +21,30 @@
         return $stats;
     }
 
-    function getJoueur($joueurId,$journeeId) {
+/*    function getJoueur($joueurId,$journeeId) {
         global $db;
         $joueurQ = "select joueur.id as idJoueur,joueur.nom as nomJoueur,prenom,poste,club.id as idClub,club.nom as nomClub,eng_salaire,eng_ekyp_id,eng_date_depart,ekyp.id as idEkyp,ekyp.nom as nomEkyp,scl_salaire,ltr_montant from joueur inner join club on joueur.club_id=club.id inner join km_join_joueur_salaire on jjs_joueur_id=joueur.id and jjs_journee_id={$journeeId} inner join km_const_salaire_classe on scl_id=jjs_salaire_classe_id left outer join km_engagement on eng_joueur_id=joueur.id left outer join ekyp on ekyp.id=eng_ekyp_id left outer join km_liste_transferts on eng_id=ltr_engagement_id where joueur.id={$joueurId} limit 1";
         $joueur = $db->getArray($joueurQ);
         return $joueur[0];
+    }*/
+
+    function getJoueurCommonInfo($joueurId) {
+        global $db;
+        $joueurQ = "select joueur.id as idJoueur,joueur.nom as nomJoueur,prenom,poste,club.id as idClub,club.nom as nomClub,scl_salaire from joueur inner join club on joueur.club_id=club.id inner join km_join_joueur_salaire on jjs_joueur_id=joueur.id inner join km_const_salaire_classe on scl_id=jjs_salaire_classe_id inner join journee on jjs_journee_id=journee.id where joueur.id={$joueurId} order by journee.date desc limit 1";
+        $joueur = $db->getArray($joueurQ);
+        return $joueur[0];
     }
 
-    function getJoueurHistorique($joueurId) {
+    function getJoueurChampionnatInfo($joueurId,$championnatId) {
         global $db;
-        $histoQ = "select jpe_score, rencontre.id as idRencontre, rencontre.club_dom_id, rencontre.club_ext_id, rencontre.buts_club_dom, rencontre.buts_club_ext, journee.numero, clDom.id as idClubDom, clDom.nom as nomClubDom, clExt.id as idClubExt, clExt.nom as nomClubExt, scl_salaire, ekyp.id as idEkyp,ekyp.nom as nomEkyp from km_joueur_perf inner join rencontre on rencontre.id=jpe_match_id inner join club as clDom on rencontre.club_dom_id=clDom.id inner join club as clExt on rencontre.club_ext_id=clExt.id inner join journee on rencontre.journee_id=journee.id inner join km_join_joueur_salaire on jjs_journee_id=journee.id and jjs_joueur_id=jpe_joueur_id inner join km_const_salaire_classe on jjs_salaire_classe_id=scl_id left outer join km_engagement on eng_joueur_id=jpe_joueur_id and eng_date_arrivee<=journee.date and (eng_date_depart>journee.date or eng_date_depart is null) left outer join ekyp on eng_ekyp_id=ekyp.id where jpe_joueur_id={$joueurId} order by journee.numero asc";
+        $joueurQ = "select fra_id,fra_nom,eng_salaire,ltr_montant from km_franchise inner join km_inscription on fra_id=ins_franchise_id inner join km_engagement on eng_inscription_id=ins_id left outer join km_liste_transferts on ltr_engagement_id=eng_id where eng_joueur_id={$joueurId} and eng_date_depart is null and ins_championnat_id={$championnatId}";
+        $joueur = $db->getArray($joueurQ);
+        return $joueur[0];
+    }
+
+    function getJoueurHistorique($joueurId,$championnatId) {
+        global $db;
+        $histoQ = "select jpe_score, rencontre.id as idRencontre, rencontre.club_dom_id, rencontre.club_ext_id, rencontre.buts_club_dom, rencontre.buts_club_ext, journee.numero, cro_numero, clDom.id as idClubDom, clDom.nom as nomClubDom, clExt.id as idClubExt, clExt.nom as nomClubExt, scl_salaire, fra_id,fra_nom from km_joueur_perf inner join rencontre on rencontre.id=jpe_match_id inner join club as clDom on rencontre.club_dom_id=clDom.id inner join club as clExt on rencontre.club_ext_id=clExt.id inner join journee on rencontre.journee_id=journee.id inner join km_join_joueur_salaire on jjs_journee_id=journee.id and jjs_joueur_id=jpe_joueur_id inner join km_const_salaire_classe on jjs_salaire_classe_id=scl_id inner join km_championnat_round on cro_journee_id=journee.id  left outer join km_engagement on eng_joueur_id=jpe_joueur_id and eng_date_arrivee<=journee.date and (eng_date_depart>journee.date or eng_date_depart is null) left outer join km_inscription on eng_inscription_id=ins_id and cro_championnat_id=ins_championnat_id left outer join km_franchise on fra_id=ins_franchise_id where jpe_joueur_id={$joueurId} and cro_championnat_id={$championnatId} order by journee.numero asc";
         return $db->getArray($histoQ);
     }
 

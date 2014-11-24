@@ -1,9 +1,9 @@
 <?php
     include_once("../../includes/db.php");
     
-    function getLastTransfer($playerId) {
+    function getLastTransfer($playerId,$championnatId) {
         global $db;
-        $trQ = "select eng_montant,eng_salaire,date_format(eng_date_arrivee,'%d/%m/%Y') as dateArrivee from km_engagement where eng_joueur_id={$playerId} and eng_date_depart is NULL limit 1";
+        $trQ = "select eng_montant,eng_salaire,date_format(eng_date_arrivee,'%d/%m/%Y') as dateArrivee from km_engagement inner join km_inscription on eng_inscription_id=ins_id where eng_joueur_id={$playerId} and ins_championnat_id={$championnatId} and eng_date_depart is NULL limit 1";
         $tr = $db->getArray($trQ);
         return $tr[0];
     }
@@ -15,9 +15,9 @@
         return $trs;
     }
 
-    function listPlayerTransfers($playerId){
+    function listPlayerTransfers($playerId,$championnatId){
         global $db;
-        $trQ = "select ekyp.id as idEkyp,ekyp.nom as nomEkyp, eng_montant, eng_salaire, date_format(eng_date_arrivee,'%d/%m/%Y') as dateArrivee, date_format(eng_date_depart,'%d/%m/%Y') as dateDepart,eng_date_arrivee,eng_date_depart from ekyp inner join km_engagement on eng_ekyp_id=ekyp.id where eng_joueur_id={$playerId} order by eng_date_arrivee asc";
+        $trQ = "select fra_id,fra_nom as nomEkyp, eng_montant, eng_salaire, date_format(eng_date_arrivee,'%d/%m/%Y') as dateArrivee, date_format(eng_date_depart,'%d/%m/%Y') as dateDepart,eng_date_arrivee,eng_date_depart from km_franchise inner join km_inscription on fra_id=ins_franchise_id and ins_championnat_id={$championnatId} inner join km_engagement on eng_inscription_id=ins_id where eng_joueur_id={$playerId} order by eng_date_arrivee asc";
         return $db->getArray($trQ);
     }
 

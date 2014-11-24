@@ -2,19 +2,22 @@
     include_once('../ctrl/franchiseManager.php');
     include_once('../ctrl/rankingManager.php');
     include_once('../ctrl/engagementManager.php');
+    include_once('../ctrl/inscriptionManager.php');
     include('fragments/franchisePositions.php');
 
     $franchiseId = $_GET['franchiseid'];
-    $franchise = getFranchise($franchiseId);
+    $chpId = $_SESSION['myChampionnatId'];
+    $inscriptionId = getInscriptionFromChampionnat($franchiseId,$chpId)['ins_id'];
+    $franchise = getFranchise($inscriptionId);
 ?>
 <section id="otherTeam">
-<h1><?php echo $franchise['nom']?></h1>
+<h1><?php echo $franchise['fra_nom']?></h1>
 <h2>En bref</h2>
 <div id='team_overview'>
 		<div class='overviewItem'>
 			<p><i class='fa fa-male'></i> Contrats</p>
-			<?php /*include('fragments/franchisePositions.php');*/
-                displayPositions($franchiseId);
+			<?php 
+                displayPositions($inscriptionId);
             ?>
 		</div>
 		<div class='overviewItem'>
@@ -27,18 +30,18 @@
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-trophy'></i> Score</p>
-			<p><span class='budgetValue'><?php echo number_format(getScoreFranchise($franchiseId),1).' Pts' ?></span></p>
+			<p><span class='budgetValue'><?php echo number_format(getScoreFranchise($inscriptionId),1).' Pts' ?></span></p>
 		</div>
 </div>
 <div id='team_scores'>
     <h2>Résultats</h2>
     <ul class='fa-ul'>
 <?php
-    $scores = getScoresFranchise($franchiseId);
+    $scores = getScoresHistorique($inscriptionId);
     if ($scores != NULL) {
         foreach($scores as $sc) {
-            $score=number_format(round($sc['eks_score'],2),2);
-            echo "<li><i class='fa-li fa fa-trophy'></i><a href='#' linkCompo='../api/compos.php?franchiseid={$franchiseId}&journeeid={$sc['id']}'>Journee {$sc['numero']} : {$score} Pts</a></li>";
+            $score=number_format(round($sc['fsc_score'],2),2);
+            echo "<li><i class='fa-li fa fa-trophy'></i><a href='#' linkCompo='../api/compos.php?franchiseid={$franchiseId}&roundid={$sc['cro_id']}'>Tour {$sc['cro_numero']} (L1 journée n°{$sc['numero']}) : {$score} Pts</a></li>";
         }
     }
 ?>
