@@ -30,7 +30,7 @@
 		</div>
 		<div class='overviewItem'>
 			<p><i class='fa fa-trophy'></i> Score</p>
-			<p><span class='budgetValue'><?php echo number_format(getScoreFranchise($inscriptionId),1).' Pts' ?></span></p>
+			<p><span class='budgetValue'><?php echo number_format(getScoreFranchise($inscriptionId),2).' Pts' ?></span></p>
 		</div>
 </div>
 <div id='team_scores'>
@@ -50,7 +50,7 @@
 <div id='team_players'>
     <h2>Joueurs</h2>
 <?php
-    $contrats = getContrats($franchiseId);
+    $contrats = getContrats($inscriptionId);
 
 
     echo "<table width='100%'>
