@@ -44,7 +44,8 @@ if ($inscriptions != NULL) {
     foreach ($inscriptions as $fr) {
     // On regarde si l'utilisateur a bien pensé (ou du moins essayé) à enregistrer sa compo. S'il n'a rien fait, on recopie la compo de la journée d'avant.
         $existingCompoQ = "select count(sro_engagement_id) from km_selection_round inner join km_engagement on sro_engagement_id=eng_id inner join km_championnat_round on cro_id=sro_round_id inner join journee on journee.id=cro_journee_id where cro_journee_id={$journeeId} and eng_inscription_id={$fr['ins_id']}";
-        $compoExists = intval($db->getArray($existingCompoQ)[0][0])>0;
+        $cE = $db->getArray($existingCompoQ);
+        $compoExists = intval($cE[0][0])>0;
         if (!compoExists && $previousJourneeId>0) {
         // Recopier les engagements (valides) de la journée d'avant.
             $copyQ = "insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) select sro_engagement_id, t2.cro_id,sro_substitute from km_selection_round inner join km_engagement on eng_id=sro_engagement_id inner join km_championnat_round t1 on t1.cro_id=sro_round_id inner join journee on journee.id={$journeeId} inner join km_championnat_round t2 on journee.id=t2.cro_journee_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_inscription_id={$fr['ins_id']} and t1.cro_journee_id={$previousJourneeId}";
@@ -54,7 +55,9 @@ if ($inscriptions != NULL) {
         $possibleCompoQ = "select cro_id,joueur.poste,eng_id,sro_substitute from km_engagement inner join joueur on eng_joueur_id=joueur.id inner join km_championnat_round on cro_journee_id={$journeeId} inner join journee on cro_journee_id=journee.id left outer join km_selection_round on sro_round_id=cro_id and sro_engagement_id=eng_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_inscription_id={$fr['ins_id']} order by field(poste,'G','D','M','A'),sro_substitute,eng_salaire desc, eng_date_arrivee desc";
     // ATTENTION BUG A CORRIGER : les substitute "0" sont forcément avant les "NULL" : erreur !
         $selection=$db->getArray($possibleCompoQ);
-        adjustSelection($selection,$db);
+        if ($selection != NULL) {
+            adjustSelection($selection,$db);
+        }
     }
     
     // Update flag cro_status to PROCESSED

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../model/model_include.php");
 include("../ctrl/journeeManager.php");
 
@@ -6,6 +7,7 @@ include("../ctrl/journeeManager.php");
 //$lastJ = $db->getArray($lastJQ);
 $lastJ = getLastJournee();
 $lastJourneeId = $lastJ['id'];
+$champId = $_SESSION['myChampionnatId'];
 
 $clubsQ = "select id, nom from club order by nom asc";
 $clubs = $db->getArray($clubsQ);
@@ -13,7 +15,7 @@ $clubs = $db->getArray($clubsQ);
 $data = array();
 foreach($clubs as $currentClub) {
     $clubId = $currentClub['id'];
-    $joueursQ = "select jo.id, jo.prenom, jo.nom, jo.poste, scl_salaire, eng_id,ltr_montant from joueur jo inner join km_join_joueur_salaire on jo.id=jjs_joueur_id inner join km_const_salaire_classe on scl_id=jjs_salaire_classe_id left outer join km_engagement on eng_joueur_id=jo.id  and eng_date_depart is null left outer join km_liste_transferts on ltr_engagement_id=eng_id where jo.club_id={$clubId} and jjs_journee_id={$lastJourneeId} order by field(jo.poste,'G','D','M','A'), jo.nom";
+    $joueursQ = "select jo.id, jo.prenom, jo.nom, jo.poste, scl_salaire, eng_id,ltr_montant from joueur jo inner join km_join_joueur_salaire on jo.id=jjs_joueur_id inner join km_const_salaire_classe on scl_id=jjs_salaire_classe_id left outer join km_engagement on eng_joueur_id=jo.id  and eng_date_depart is null left outer join km_inscription on eng_inscription_id=ins_id and ins_championnat_id={$champId} left outer join km_liste_transferts on ltr_engagement_id=eng_id where jo.club_id={$clubId} and jjs_journee_id={$lastJourneeId} order by field(jo.poste,'G','D','M','A'), jo.nom";
     $joueursClub = $db->getArray($joueursQ);
     $effectifClub = array();
     if ($joueursClub != NULL) {
