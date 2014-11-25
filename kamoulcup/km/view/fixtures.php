@@ -13,7 +13,7 @@ echo "<section id='championship'>
     $indexJournee = $champ['nbPlayed'].'/'.$nbTours;
 echo "<div id='fixtures'>";
 
-if ($champ['chp_status'] == CREATED) {
+if ($champ['chp_status'] == 'CREATED') {
     echo "<p>Le championnat débutera prochainement</p>";
 } else {
 

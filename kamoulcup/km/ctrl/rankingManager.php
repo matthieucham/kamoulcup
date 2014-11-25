@@ -14,7 +14,7 @@
 
     function getRanking($champId) {
         global $db;
-        $rankQ = "select fra_id, fra_nom, sum(fsc_score) as sumScore from km_franchise inner join km_inscription on ins_franchise_id=fra_id left outer join km_franchise_score on ins_id=fsc_inscription_id where ins_championnat_id={$champId} group by fra_id order by sumScore desc";
+        $rankQ = "select fra_id, fra_nom, sum(fsc_score) as sumScore from km_franchise inner join km_inscription on ins_franchise_id=fra_id left outer join km_franchise_score on ins_id=fsc_inscription_id left outer join km_championnat_round on cro_championnat_id=ins_championnat_id and cro_status='PROCESSED' where ins_championnat_id={$champId} group by fra_id order by sumScore desc";
         return $db->getArray($rankQ);
     }
 
