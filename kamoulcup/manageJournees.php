@@ -4,6 +4,7 @@
 <div class="titre_page">Saisie des notes</div>
 <div class="sectionPage">
 	<form method="GET" action="index.php">
+        <p><b>ATTENTION : dorénavant, la plupart des journées sont déjà créées d'avance. Il n'est pas besoin, sauf oubli, d'en créer une nouvelle la plupart du temps : sélectionnez celle qui existe déjà. C'est TRES important.</b></p>
 			Journée de championnat: <select size=1 name="journee">
 				<option value=''> </option>
 				<?php
@@ -27,7 +28,6 @@
 			$storedJournee = array(array('id' => '', 'numero' => '', 'date' => ' 20:00'));
 			$nouveau = 1;
 		}
-		
 		include('./div/editJourneeDiv.php');
 		$currentJourneeId = $storedJournee[0]['id'];
 		include('./div/listMatchsJourneeDiv.php');

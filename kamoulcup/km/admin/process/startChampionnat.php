@@ -8,7 +8,7 @@
 
     // Création des rounds
     // Récupération des caracs du championnat en cours
-    $journeesQ = "select id,chp_first_journee_numero,chp_last_journee_numero from journee inner join km_championnat on chp_id={$chpId} where journee.numero in (chp_first_journee_numero,chp_last_journee_numero) group by numero";
+    $journeesQ = "select id,chp_first_journee_numero,chp_last_journee_numero from journee inner join km_championnat on chp_id={$chpId} where journee.numero>=chp_first_journee_numero and journee.numero<=chp_last_journee_numero group by numero";
     $journees = $db->getArray($journeesQ);
     if ($journees == NULL) {
         echo "Erreur : il faut creer les journees en premier";

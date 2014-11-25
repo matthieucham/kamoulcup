@@ -1,10 +1,7 @@
 <?php
 
-//echo "<script>window.location.replace('../index.php?page=identification&ErrorMsg=NON');</script>";
-//	exit();
-
 include("../includes/db.php");
-// Cette page acc�de � la session
+
 session_start();
 $utilisateur = $_POST['nom'];
 $mdp = $_POST['password'];
@@ -13,7 +10,7 @@ if (!get_magic_quotes_gpc()) {
 	$mdp = addslashes($_POST['password']);
 }
 
-$getUserQuery = "select ut.droit,ut.ekyp_id,ek.poule_id,ek.km,jec_championnat_id from utilisateur as ut left outer join ekyp as ek on ek.id = ut.ekyp_id left outer join km_join_ekyp_championnat on jec_ekyp_id=ek.id where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') limit 1";
+$getUserQuery = "select ut.droit,ut.ekyp_id,ek.poule_id from utilisateur as ut left outer join ekyp as ek on ek.id = ut.ekyp_id where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') limit 1";
 $storedUser = $db->getArray($getUserQuery);
 if ($storedUser == NULL) {
 	// Utilisateur inconnu
@@ -31,10 +28,7 @@ else {
 		$_SESSION['userrights'] = $userrights;
 		// Enregistrement de l'ekyp
 		if (isset($storedUser[0]['ekyp_id'])) {
-			$km = $storedUser[0]['km'];
 			$_SESSION['myEkypId'] = $storedUser[0]['ekyp_id'];
-			$_SESSION['km'] = $km;
-            $_SESSION['champId'] = $storedUser[0]['jec_championnat_id'];
 		}
 		if (isset($storedUser[0]['poule_id'])) {
 			$_SESSION['pouleId'] = $storedUser[0]['poule_id'];
