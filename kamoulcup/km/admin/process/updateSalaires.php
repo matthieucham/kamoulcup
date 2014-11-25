@@ -5,10 +5,32 @@ include("../../../includes/db.php");
 include('../../../process/validateForm.php');
 
 $journeeId = correctSlash($_POST['journee']);
+$global = correctSlash($_POST['global']);
 
+if ($global == 1) {
+    $listJourneesQuery = $db->getArray("select id,numero from journee where numero <= (select j2.numero from journee as j2 where j2.id={$journeeId}) order by numero asc");
+    if ($listJourneesQuery != NULL) {
+        foreach ($listJourneesQuery as $journee) {
+            updateSalaire($journee['id']);
+        }
+    }
+} else {
+    updateSalaire($journeeId);
+}
+
+
+header('Location: ../index.php');
+exit();
+
+
+
+
+function updateSalaire($journeeId) {
+    global $db;
+    
 // Principe : la moyenne des 3 journées précedentes détermine si on monte ou si on descend de classe.
-//$getJourneesId = $db->getArray("select distinct jjs_journee_id from km_join_joueur_salaire inner join journee j on j.id = jjs_journee_id where j.date <= ( select j2.date from journee j2 where j2.id={$journeeId}) order by j.date desc limit 3");
-$getJourneesId = $db->getArray("select j1.id from journee as j1 where j1.date<=(select j2.date from journee as j2 where j2.id={$journeeId}) order by j1.date desc limit 3");
+
+$getJourneesId = $db->getArray("select j1.id from journee as j1 where j1.numero<=(select j2.numero from journee as j2 where j2.id={$journeeId}) order by j1.numero desc limit 3");
 $getClasses = $db->getArray("select scl_id,scl_salaire,scl_seuil_inf,scl_seuil_sup,scl_next_down,scl_next_up from km_const_salaire_classe");
 $classesMap = array();
 foreach ($getClasses as $value) {
@@ -31,7 +53,6 @@ if ($noChange) {
 } else {
 	$salaires = $db->getArray("select * from km_const_salaire_classe");
 
-	//$joueursQuiOntJoue = "select jpe_joueur_id,jjs_salaire_classe_id from km_joueur_perf inner join km_join_joueur_salaire on jpe_joueur_id=jjs_joueur_id where jpe_match_id in (select m.id from rencontre m where m.journee_id={$journeeId}) and jjs_journee_id={$previousJ}";
 	$joueursQuiOntJoueOuPas = "select jjs_joueur_id,jjs_salaire_classe_id from km_join_joueur_salaire where jjs_journee_id={$previousJ}";
 	$joueurs = $db->getArray($joueursQuiOntJoueOuPas);
 	if ($joueurs != NULL) {
@@ -56,9 +77,7 @@ if ($noChange) {
 		}
 	}
 }
-
-header('Location: ../index.php');
-exit();
+}
 
 // Requete de vérification:
 // SELECT jjs_joueur_id,prenom,nom,jjs_salaire_classe_id,jjs_journee_id,jpe_score FROM `km_join_joueur_salaire` inner join joueur on jjs_joueur_id=id left outer join km_joueur_perf on jjs_joueur_id=jpe_joueur_id and jpe_match_id in (select re.id from rencontre re where re.journee_id=jjs_journee_id) WHERE jjs_joueur_id=917

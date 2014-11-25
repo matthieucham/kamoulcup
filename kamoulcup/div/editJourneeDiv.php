@@ -1,7 +1,6 @@
 <div class="sectionPage">
 	<div class="sous_titre">Edition des journées</div>
 			<form method="POST" action="process/saveJournee.php">
-				
 				<table class="tableau_saisie">
 					<tbody>
 						<tr>

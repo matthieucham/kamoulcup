@@ -2,6 +2,7 @@
 	include_once("../../vocabulaire.php");
     include_once("../ctrl/mercatoManager.php");
     include_once("../ctrl/journeeManager.php");
+    include_once("../ctrl/roundManager.php");
     include_once("../ctrl/compoManager.php");
 ?>
 <section id="home">
@@ -18,23 +19,25 @@
 		<ul class="fa-ul">
   			<li><i class="fa-li fa fa-info-circle"></i><a href="./index.php?kmpage=transfers"> Bilan du dernier merkato</a></li>
             <?php
-                $mercato = getCurrentMercato();
+                $mercato = getCurrentMercato($_SESSION['myChampionnatId']);
                 if ($mercato != NULL) {
                     echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=market'> Mercato en cours ! Jusqu'au {$mercato['dateFermeture']}</a></li>";
                 }
-                $journee = getLastJournee();
-                if ($journee != NULL) {
-                    echo "<li><i class='fa-li fa fa-info-circle'></i><a href='#' linkCompo='../api/compos.php?franchiseid={$_SESSION['myEkypId']}&journeeid={$journee['id']}'> Mes derniers résultats</a></li>";
-                }
-                $nextJ = getNextJournee();
-                if ($nextJ == NULL) {
-                    echo "<li><i class='fa-li fa fa-info-circle'></i>Pas de journée prochainement programmée.</li>";
+                $round = getLastProcessedRound($_SESSION['myChampionnatId']);
+                if ($round != NULL) {
+                    echo "<li><i class='fa-li fa fa-info-circle'></i><a href='#' linkCompo='../api/compos.php?franchiseid={$_SESSION['myFranchiseId']}&roundid={$round['cro_id']}'> Résultats du tour {$round['cro_numero']} (Ligue 1 journée n°{$round['numero']} du {$round['dateJournee']})</a></li>";
                 } else {
-                    $nextCompo = getCompoNoScore($_SESSION['myEkypId'],$nextJ['id'],true);
+                    echo "<li><i class='fa-li fa fa-info-circle'></i> Pas encore de résultats à afficher</li>";
+                }
+                $nextRound = getNextRoundToPlay($_SESSION['myChampionnatId']);
+                if ($nextRound == NULL) {
+                    echo "<li><i class='fa-li fa fa-info-circle'></i>Pas de tour prochainement programmé.</li>";
+                } else {
+                    $nextCompo = getCompoNoScore($_SESSION['myFranchiseId'],$nextRound['cro_id'],true);
                     if ($nextCompo == NULL) {
-                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&journeeid={$nextJ['id']}'>Faire sa compo pour la journée {$nextJ['numero']} du {$nextJ['dateJournee']}.</a></li>";
+                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Faire sa compo pour le tour {$nextRound['cro_numero']} (L1 journée n°{$nextRound['numero']} du {$nextRound['dateJournee']})</a></li>";
                     } else {
-                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&journeeid={$nextJ['id']}'>Compo pour la journée {$nextJ['numero']} du {$nextJ['dateJournee']} enregistrée.</a></li>";
+                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Compo pour le tour {$nextRound['cro_numero']} (L1 journée n°{$nextRound['numero']} du {$nextRound['dateJournee']}) enregistrée.</a></li>";
                     }
                 }
             ?>   

@@ -1,13 +1,13 @@
 <?php
     include("../model/model_include.php");
     include("../ctrl/compoManager.php");
-    include("../ctrl/journeeManager.php");
+    include("../ctrl/roundManager.php");
 
-    $journeeId = $_GET['journeeid'];
+    $roundId = $_GET['roundid'];
     $franchiseId = $_GET['franchiseid'];
 
-    $journee=getJournee($journeeId);
-    $compo = getCompo($franchiseId,$journeeId);
+    $round=getRoundInfo($roundId);
+    $compo = getCompo($franchiseId,$roundId);
     // Conversion du retour de la requête en objet JSON.
     $g=array();
     $d=array();
@@ -33,7 +33,7 @@
             }
         }
     }
-    $composition = new Compo($g,$d,$m,$a,$r,$journee['numero']);
+    $composition = new Compo($g,$d,$m,$a,$r,$round['cro_numero']);
 
     echo json_encode($composition); 
 ?>

@@ -15,6 +15,8 @@ INSERT INTO `km_const_salaire_classe` (`scl_id`, `scl_salaire`, `scl_seuil_inf`,
 INSERT INTO `km_finances` ( `fin_ekyp_id` , `fin_date` , `fin_transaction` , `fin_solde` , `fin_event` )
 SELECT id, now( ) , 100.0, 100.0, 'Creation de la franchise' FROM ekyp WHERE km =1;
 
+insert into km_join_joueur_salaire(jjs_joueur_id,jjs_salaire_classe_id,jjs_journee_id) select id,4,0 from joueur on duplicate key update jjs_salaire_classe_id=4;
+
 insert into km_join_joueur_salaire(jjs_joueur_id,jjs_salaire_classe_id,jjs_journee_id) select id,10,0 from joueur where prenom="Loïc" and nom="Perrin" on duplicate key update jjs_salaire_classe_id=10;
 
 insert into km_join_joueur_salaire(jjs_joueur_id,jjs_salaire_classe_id,jjs_journee_id) select id,10,0 from joueur where prenom="Rémy" and nom="Cabella" on duplicate key update jjs_salaire_classe_id=10;

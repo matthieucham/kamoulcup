@@ -17,6 +17,7 @@ function loadCompo(uri){
 function clearCompo() {
     $('#dayScores h2 span').text('');
     $('#compo').find('.compoPlayer').remove();
+    $('#bench').find('.benchPlayer').remove();
     $('#bench h2').text('');
 }
 

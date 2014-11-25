@@ -1,6 +1,6 @@
 <?php
-    if (isset($_SESSION['km']) && $_SESSION['km'] ) {
-        $franchiseId = $_SESSION['myEkypId'];
+    if (isset($_SESSION['myFranchiseId']) ) {
+        $franchiseId = $_SESSION['myFranchiseId'];
     } else {
         echo "Erreur, pas de franchiseId";
         die();
@@ -12,13 +12,10 @@
 // Init constants.
     $maxSalary=$KM_maxSalary;
     $maxPlayers=$KM_maxPlayers;
-    /*$nbG=0;
-    $nbD=0;
-    $nbM=0;
-    $nbA=0;*/
 
-
-    $merkato= getCurrentMercato();
+    $inscriptionId=$_SESSION['myInscriptionId'];
+    $champId=$_SESSION['myChampionnatId'];
+    $merkato= getCurrentMercato($champId);
     if ($merkato != NULL) {
         $merkatoId = $merkato['mer_id'];
     } else {
@@ -26,8 +23,8 @@
         die();
     }
 
-    $ekyp=getFranchise($franchiseId);
-    $sousContrat=getContratsFranchise($franchiseId);
+    $ekyp=getFranchise($inscriptionId);
+    $sousContrat=getContratsFranchise($inscriptionId);
     $salaires=floatval($ekyp['masseSalariale']);
 ?>
 <section id="market">
@@ -37,13 +34,13 @@
 </div>
 <div class='rightColumn'>
 <div id="budgetInfo">
-	<h2><?php echo $ekyp['nom'];?></h2>
+	<h2><?php echo $ekyp['fra_nom'];?></h2>
 	<div class='budgetInfo_line'>
 		<div class='budgetItem'><p>Contrats</p></div>
 		<div class='budgetItem'>
             <div class='budgetInfo_line'>
 			<?php /*include('fragments/franchisePositions.php');*/
-                $contractPositions = displayPositions($_SESSION['myEkypId']);
+                $contractPositions = displayPositions($inscriptionId);
             ?>
             </div>
 		</div>

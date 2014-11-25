@@ -1,13 +1,14 @@
 <?php
-    include('../ctrl/journeeManager.php');
+    include('../ctrl/roundManager.php');
     include('../ctrl/compoManager.php');
     include('../ctrl/engagementManager.php');
     
-    $franchiseId=$_SESSION['myEkypId'];
-    $journeeId=$_GET['journeeid'];
+    $franchiseId=$_SESSION['myFranchiseId'];
+    $inscriptionId=$_SESSION['myInscriptionId'];
+    $roundId=$_GET['roundid'];
 
-    $journee = getJournee($journeeId);
-    $contrats = getContrats($franchiseId);
+    $round = getRoundInfo($roundId);
+    $contrats = getContrats($inscriptionId);
 // Trier les contrats par poste:
 $joueurs=array('G'=>NULL,'D'=>NULL,'M'=>NULL,'A'=>NULL);
 
@@ -21,7 +22,7 @@ foreach ($contrats as $contrat) {
 
 
 
-$currentCompo = getCompoNoScore($franchiseId,$journeeId,true);
+$currentCompo = getCompoNoScore($franchiseId,$roundId,true);
 $compoJoueurs = array('G'=>NULL,'D'=>NULL,'M'=>NULL,'A'=>NULL);
 $toHide = array();
 if ($currentCompo != NULL) {
@@ -57,7 +58,7 @@ foreach ($currentCompo as $current) {
 ?>
 <section id="chooseTeam">
 <?php
-echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
+echo "<h1>Compo pour le tour {$round['cro_numero']} </h1>";
 ?>
 <p>Sélectionnez les titulaires par "glisser-déposer" depuis le banc de touche</p>
 <div id="pitchBench">
@@ -65,7 +66,7 @@ echo "<h1>Compo pour la journée {$journee['numero']}</h1>";
     <div id="compo">
             <?php
                 echo "<input type='hidden' name='franchiseid' value='{$franchiseId}'/>";
-                echo "<input type='hidden' name='journeeid' value='{$journeeId}'/>";
+                echo "<input type='hidden' name='roundid' value='{$roundId}'/>";
             ?>
             <div id="compoG" class="compoPlayer" position="posG">
                 <?php
