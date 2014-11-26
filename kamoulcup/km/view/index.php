@@ -20,6 +20,7 @@
 				$kmpage='home';
 			}
 			include($kmpage.'.php');
+        //echo "fra={$_SESSION['myFranchiseId']} chp={$_SESSION['myChampionnatId']} insc={$_SESSION['myInscriptionId']}"
 		?>
 		</div>
 <footer>

@@ -45,7 +45,7 @@ ALTER TABLE `km_championnat_round` ADD `cro_status` ENUM( 'CREATED', 'PLAYED', '
 
 
 ALTER TABLE `km_championnat` ADD `chp_status` ENUM( 'CREATED', 'STARTED', 'FINISHED', 'CANCELLED', 'ABORTED' ) NOT NULL DEFAULT 'CREATED';
-UPDATE `kamoulcup`.`km_championnat` SET `chp_status` = 'STARTED' WHERE `km_championnat`.`chp_first_journee_numero` =14;
+UPDATE `km_championnat` SET `chp_status` = 'STARTED' WHERE `chp_first_journee_numero` =14;
 
 CREATE TABLE IF NOT EXISTS `km_palmares` (
   `pal_franchise_id` int(11) NOT NULL,
