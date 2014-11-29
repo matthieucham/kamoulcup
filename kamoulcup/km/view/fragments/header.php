@@ -9,7 +9,7 @@ $mercato = getCurrentMercato($_SESSION['myChampionnatId']);
 <header
 	class="headerstandard headerstandard-shrink">
 <div class="headerstandard-inner">
-<h1>Kamoulcup Manager</h1>
+<h1>Fantasy Kamoulox</h1>
 <nav class="menu menustandard"> 
 	<a
 	<?php

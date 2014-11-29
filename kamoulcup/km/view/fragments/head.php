@@ -1,5 +1,5 @@
 <head>
-	<title>Kamoulcup Manager : un jeu d'avenir</title>
+	<title>Fantasy Kamoulox</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="css/default.css" type="text/css" rel="stylesheet">
 	<link href="css/themes/km/remodern.css" type="text/css" rel="stylesheet">

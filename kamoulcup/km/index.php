@@ -1,12 +1,12 @@
 <html>
 <head>
-	<title>Kamoulcup Manager : un jeu d'avenir</title>
+	<title>Fantasy Kamoulox</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="view/css/default.css" type="text/css" rel="stylesheet">
 	<link href="view/css/themes/km/remodern.css" type="text/css" rel="stylesheet">	
 </head>
 <body>
-    <h1>Kamoulcup Manager : un jeu d'avenir ?</h1>
+    <h1>Fantasy Kamoulox : un jeu d'avenir ?</h1>
 <?php
 	if (isset($_SESSION['km'])&& ($_SESSION['km']==1)) {
 		// Loggé avec accès au jeu
