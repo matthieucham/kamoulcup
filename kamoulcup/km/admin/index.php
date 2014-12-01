@@ -178,7 +178,9 @@ if ($franchises != NULL) {
 <form action="process/attachChampionnat.php" method="post">
 <p>Rattacher les franchises <select multiple name='franchises[]' size='5'>
 <?php
-if (franchises != NULL) {
+$franchisesQ = "select fra_id,fra_nom from km_franchise left outer join km_inscription on ins_franchise_id=fra_id left outer join km_championnat on ins_championnat_id=chp_id where (ins_championnat_id is null or chp_status in ('FINISHED','CANCELLED','ABORTED') )order by fra_nom asc";
+$franchises = $db->getArray($franchisesQ);
+if ($franchises != NULL) {
 foreach ($franchises as $value) {
 		$frId = $value['fra_id'];
 		$frNom = $value['fra_nom'];
