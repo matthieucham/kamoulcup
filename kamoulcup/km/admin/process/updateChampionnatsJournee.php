@@ -101,10 +101,15 @@ function adjustSelection($selection,$db) {
             $insertQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) values ({$sel['eng_id']},{$sel['cro_id']},0) on duplicate key update sro_substitute=0";
             $db->query($insertQ);
             $countPoste[$poste] = $countPoste[$poste]+1;
-        } else if ($sel['sro_substitute']==0 && $countPoste[$poste]>$minPoste[$poste]) {
+        } else if ($sel['sro_substitute']==0 && $countPoste[$poste]>=$minPoste[$poste]) {
             // Enregistrement "en trop", à supprimer !
-            $supprQ="delete from km_selection_round where sro_round_id={$sel['cro_id']} and sro_engagement_id={$sel['eng_id']}";
+            $supprQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) values ({$sel['eng_id']},{$sel['cro_id']},1) on duplicate key update sro_substitute=1";
             $db->query($supprQ);
+        } else {
+            if ($sel['sro_substitute']==0) {
+                // C'est un titulaire valide qui fait augmenter le compteur.
+                $countPoste[$poste] = $countPoste[$poste]+1;
+            }
         }
     }
 }
