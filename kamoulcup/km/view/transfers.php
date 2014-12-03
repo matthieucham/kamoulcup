@@ -16,7 +16,12 @@
                 echo "<ul class='fa-ul'>";
                 foreach ($trs as $tr) {
                     $montant = number_format($tr['off_montant'],1);
-                    echo "<li><i class='fa-li fa fa-shopping-cart bullet'></i>{$tr['prenom']} {$tr['nomJoueur']} <i class='fa fa-arrow-right'></i> {$tr['nomEkyp']} pour <b>{$montant} Ka</b></li>";
+                    $deuxieme = number_format($tr['deuxiemeOffre'],1);
+                    echo "<li><i class='fa-li fa fa-shopping-cart bullet'></i>{$tr['prenom']} {$tr['nomJoueur']} <i class='fa fa-arrow-right'></i> {$tr['nomEkyp']} pour <b>{$montant} Ka</b>";
+                    if ($deuxieme > 0) {
+                        echo " (Deuxième meilleure offre : {$deuxieme} Ka)";
+                    }
+                    echo "</li>";
                 }
                 echo "</ul>";
             }

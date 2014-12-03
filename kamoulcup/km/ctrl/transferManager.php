@@ -10,7 +10,7 @@
 
     function listMercatoTransfers($mercatoId) {
         global $db;
-        $trsQ = "select fra_nom as nomEkyp, jo.prenom, jo.nom as nomJoueur, off_montant from km_offre inner join km_inscription on ins_id=off_inscription_id inner join km_franchise on ins_franchise_id=fra_id inner join joueur as jo on off_joueur_id=jo.id where off_winner=1 and off_mercato_id={$mercatoId}";
+        $trsQ = "select fra_nom as nomEkyp, jo.prenom, jo.nom as nomJoueur, premier.off_montant,coalesce(max(deuxieme.off_montant),0) as deuxiemeOffre from km_offre as premier inner join km_inscription on ins_id=premier.off_inscription_id and premier.off_winner=1 inner join km_franchise on ins_franchise_id=fra_id inner join joueur as jo on premier.off_joueur_id=jo.id left outer join km_offre as deuxieme on deuxieme.off_mercato_id=premier.off_mercato_id and deuxieme.off_joueur_id=premier.off_joueur_id and deuxieme.off_inscription_id=(select pomme.off_inscription_id from km_offre as pomme where pomme.off_winner=0 and pomme.off_joueur_id=premier.off_joueur_id and pomme.off_mercato_id={$mercatoId} order by pomme.off_montant desc limit 1) where premier.off_mercato_id={$mercatoId} group by premier.off_joueur_id";
         $trs = $db->getArray($trsQ);
         return $trs;
     }
