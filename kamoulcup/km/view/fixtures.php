@@ -39,54 +39,22 @@ echo "<h2>Classement Général après le tour {$indexJournee}</h2>";
 	</table>
 </div>
 <?php
-    $lastR = getLastProcessedRound($champId);
-    if ($lastR != NULL ){
-        echo "<div id='lastRound'><div id='teamsRanking'>";
-        echo "<h2>Classement du dernier tour ({$lastR['cro_numero']})</h2>";
-        echo "<table width='100%'>
-	<thead>
-	<tr>
-		<th>Rang</th><th>Franchise</th><th>Score</th>
-	</tr>
-	</thead>
-    <tbody>";
-        $ranking = getRankingJournee($champId,$lastR['cro_id']);
-        $rank=1;
-        if ($ranking != NULL) {
-        foreach ($ranking as $r) {
-            $sco = number_format(round($r['fsc_score'],2),2);
-            echo "<tr><td>{$rank}</td><td><a href='#' linkCompo='../api/compos.php?franchiseid={$r['fra_id']}&roundid={$lastR['cro_id']}'>{$r['fra_nom']}</a></td><td>{$sco}</td></tr>";
-            $rank++;
+    $rounds = getLastProcessedRounds($champId);
+    //$lastR = getLastProcessedRound($champId);
+    if ($rounds != NULL ){
+        include_once('fragments/fixturesRound.php');
+        echo "<h2>Classement par tour</h2>";
+        echo "<p>";
+        foreach ($rounds as $round) {
+            echo "<a href='#' roundRanking='{$round['cro_id']}'>Tour {$round['cro_numero']}&nbsp;</a>";
         }
-        }
-        echo "</tbody>
-	</table>
-    </div>";
+        echo "</p><div id='lastRound'><div id='teamsRanking'>";
+        $lastR = $rounds[0];
+        displayTeamRanking($lastR['cro_id']);
+        echo "</div>";
         echo "<div id='playersRanking'>";
-        echo "<h2>Meilleurs joueurs</h2>";
-        echo "<table width='100%'>
-	<thead>
-	<tr>
-		<th>Rang</th><th>Nom</th><th>Salaire</th><th>Score</th><th>Franchise</th>
-	</tr>
-	</thead>
-    <tbody>";
-        $ranking = getRankingPlayersJournee($lastR['cro_id'],10);
-        $rank=1;
-        foreach ($ranking as $r) {
-            $sco = number_format(round($r['jpe_score'],2),2);
-            $sal = number_format(round($r['scl_salaire'],0),0);
-            echo "<tr><td>{$rank}</td><td>{$r['prenom']} {$r['nomJoueur']}</td><td>{$sal} Ka</td><td>{$sco} Pts</td>";
-            if ($r['nomEkyp'] == NULL) {
-                echo "<td><i>libre</i></td>";
-            } else {
-                echo "<td>{$r['nomEkyp']}</td>";
-            }
-            echo "</tr>";
-            $rank++;
-        }
-        echo "</tbody>
-	</table>
+        displayPlayerRanking($lastR['cro_id']);
+        echo "
     </div></div>";
     }
 }

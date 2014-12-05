@@ -1,5 +1,5 @@
 <?php
-    include_once("../../includes/db.php");
+    @include_once("../../includes/db.php");
 
     function getChampionnat($champId) {
         global $db;

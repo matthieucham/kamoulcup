@@ -1,5 +1,5 @@
 <?php
-include_once("../../includes/db.php");
+@include_once("../../includes/db.php");
 
 function getLastProcessedRound($chpId) {
     global $db;
@@ -12,9 +12,16 @@ function getLastProcessedRound($chpId) {
     }
 }
 
+function getLastProcessedRounds($chpId) {
+    global $db;
+    $lastRoundQ = "select cro_id,cro_numero,numero,date_format(date,'%d/%m/%Y') as dateJournee,cro_championnat_id from km_championnat_round inner join journee on cro_journee_id=id where cro_championnat_id={$chpId} and date<now() and cro_status='PROCESSED' order by cro_numero desc";
+    $lastRound = $db->getArray($lastRoundQ);
+    return $lastRound;
+}
+
 function getRoundInfo($roundId) {
     global $db;
-    $roundQ = "select cro_id,cro_numero,numero,date_format(date,'%d/%m/%Y') as dateJournee from km_championnat_round inner join journee on cro_journee_id=id where cro_id={$roundId} limit 1";
+    $roundQ = "select cro_id,cro_numero,numero,date_format(date,'%d/%m/%Y') as dateJournee,cro_championnat_id from km_championnat_round inner join journee on cro_journee_id=id where cro_id={$roundId} limit 1";
     $round = $db->getArray($roundQ);
     if ($round == NULL) {
         return NULL;
