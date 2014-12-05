@@ -1,6 +1,7 @@
 <?php
 include("../../../includes/db.php");
 include("../../ctrl/accessManager.php");
+include("../../model/KMConstants.php");
 include('../../../process/validateForm.php');
 checkAdminAccess();
 
@@ -46,7 +47,7 @@ if ($inscriptions != NULL) {
         $existingCompoQ = "select count(sro_engagement_id) from km_selection_round inner join km_engagement on sro_engagement_id=eng_id inner join km_championnat_round on cro_id=sro_round_id inner join journee on journee.id=cro_journee_id where cro_journee_id={$journeeId} and eng_inscription_id={$fr['ins_id']}";
         $cE = $db->getArray($existingCompoQ);
         $compoExists = intval($cE[0][0])>0;
-        if (!compoExists && $previousJourneeId>0) {
+        if (!$compoExists && $previousJourneeId>0) {
         // Recopier les engagements (valides) de la journée d'avant.
             $copyQ = "insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) select sro_engagement_id, t2.cro_id,sro_substitute from km_selection_round inner join km_engagement on eng_id=sro_engagement_id inner join km_championnat_round t1 on t1.cro_id=sro_round_id inner join journee on journee.id={$journeeId} inner join km_championnat_round t2 on journee.id=t2.cro_journee_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_inscription_id={$fr['ins_id']} and t1.cro_journee_id={$previousJourneeId}";
             $db->query($copyQ);
