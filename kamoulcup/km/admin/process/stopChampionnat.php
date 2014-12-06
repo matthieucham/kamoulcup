@@ -15,7 +15,15 @@
     }
 
     // Insertion du palmarès
-    // TODO !
+    // 1) Selectionner le classement final dans l'ordre
+    $classQ = "select fra_id, sum(fsc_score) as score from km_franchise inner join km_inscription on fra_id=ins_franchise_id and ins_championnat_id={$chpId} inner join km_franchise_score on fsc_inscription_id=ins_id inner join km_championnat_round on fsc_round_id=cro_id and cro_championnat_id=ins_championnat_id group by fra_id order by score desc";
+    $classement = $db->getArray($classQ);
+    $rang=0;
+    foreach ($classement as $team) {
+        $rang++;
+        $insertQ = "insert into km_palmares(pal_franchise_id,pal_championnat_id,pal_ranking,pal_score) values ({$team['fra_id']},{$chpId},{$rang},{$team['score']}) on duplicate key update pal_ranking={$rang},pal_score={$team['score']}";
+        $db->query($insertQ);
+    }
 
     // archivage des rounds
     $archiveQ = "update km_championnat_round set cro_status='ARCHIVED' where cro_championnat_id={$chpId} and cro_status='PROCESSED'";
