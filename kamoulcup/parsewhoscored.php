@@ -103,15 +103,15 @@ function displayContenuTableau($wsJoueurs, $dbJoueurs) {
 function extractNotesDiv($pageContent) {
 	// Extraire la partie de la page qui nous intéresse
 	$extraction;
-	if (preg_match('/(?:initialMatchData = )(.*);/isU', $pageContent, $matches)) {
+	if (preg_match('/(?:initialMatchDataForScrappers = )(.*);/isU', $pageContent, $matches)) {
 		$extraction = $matches[0];
 	}
 	// outputing all matches for debugging purposes
 	//var_dump($matches);
 	// Il faut retirer 'initialMatchData = ' au début et le dernier ; à la fin.
-	$longueurPrefixe = strlen('initialMatchData = ');
+	$longueurPrefixe = strlen('initialMatchDataForScrappers = ');
 	$longueurSuffixe = strlen(';');
-	$inner = substr($extraction, strlen('initialMatchData = '),strlen($extraction)-$longueurPrefixe-$longueurSuffixe);
+	$inner = substr($extraction, strlen('initialMatchDataForScrappers = '),strlen($extraction)-$longueurPrefixe-$longueurSuffixe);
 	// Remplacer les simples quotes en double, pour le JSON.
 	$inner=str_replace('\'', '"', $inner);
 	// Remplacer les doubles virgules en y insérant un valeur vide

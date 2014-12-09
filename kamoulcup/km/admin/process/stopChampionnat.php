@@ -7,7 +7,7 @@
     $chpId = correctSlash($_POST['championnat']);
 
     // Comptage des journées processées (on ne  peut pas terminer tant que tout n'est pas joué)
-    $verifQ = "select count(cro_id),chp_first_journee_numero,chp_last_journee_numero from km_championnat_round inner join km_championnat on cro_championnat_id=chp_id where chp_id={$chpId} and cro_status='PROCESSED'";
+    $verifQ = "select count(cro_id),chp_first_journee_numero,chp_last_journee_numero from km_championnat_round inner join km_championnat on cro_championnat_id=chp_id where chp_id={$chpId} and cro_status in ('PROCESSED','ARCHIVED')";
     $verif = $db->getArray($verifQ);
     if ($verif[0][0] != ($verif[0][2]-$verif[0][1] + 1)) {
         echo "Impossible de terminer le championnat : toutes les journées ne sont pas traitées.";
