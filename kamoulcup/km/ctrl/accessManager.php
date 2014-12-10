@@ -2,7 +2,7 @@
 function checkPlayerAccess() {
     session_start();
     $forbidden=false;
-    if (!isset($_SESSION['myFranchiseId'])) {
+    if (!isset($_SESSION['myChampionnatId'])) {
         $forbidden=true;
 		
 	} else if (!isset($_SESSION['username'])) {

@@ -9,6 +9,14 @@ if (!get_magic_quotes_gpc()) {
 	$mdp = addslashes($_POST['pwd']);
 }
 
+if ($utilisateur == 'guest') {
+    $_SESSION['username'] = 'guest';
+    $_SESSION['userrights'] = 0;
+    $_SESSION['myChampionnatId'] = 6;
+    header('Location: ../view/index.php?kmpage=fixtures');
+    die();
+}
+
 $getUserQuery = "select ut.droit,fra_id,ins_id,ins_championnat_id from utilisateur as ut left outer join km_franchise on fra_id = ut.franchise_id left outer join km_inscription on fra_id=ins_franchise_id where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') limit 1";
 $storedUser = $db->getArray($getUserQuery);
 if ($storedUser == NULL) {

@@ -5,12 +5,14 @@ if (isset($_GET['kmpage'])) {
 }
 include_once ('../ctrl/mercatoManager.php');
 $mercato = getCurrentMercato($_SESSION['myChampionnatId']);
+$isNotGuest = $_SESSION['userrights']>0;
 ?>
 <header
 	class="headerstandard headerstandard-shrink">
 <div class="headerstandard-inner">
 <h1>Fantasy Kamoulox</h1>
-<nav class="menu menustandard"> 
+<nav class="menu menustandard">
+<?php if ($isNotGuest) { ?>
 	<a
 	<?php
 		if ($currentPage == 'home') {
@@ -25,14 +27,7 @@ $mercato = getCurrentMercato($_SESSION['myChampionnatId']);
 		} 
 	?> 
 	href="index.php?kmpage=team" id="menu-target-team">Franchise</a> 
-	<a
-	<?php
-		if ($currentPage == 'fixtures') {
-			echo " class='current' "; 
-		} 
-	?> 
-	href="index.php?kmpage=fixtures" id="menu-target-fixtures">Classements</a>
-<?php
+    <?php
     if ($mercato != NULL) {
         echo "<a ";
 		if ($currentPage == 'market') {
@@ -41,7 +36,16 @@ $mercato = getCurrentMercato($_SESSION['myChampionnatId']);
         }
 	   echo "href='index.php?kmpage=market' id='menu-target-market'>Mercato</a>";
     }
-?>
+    ?>
+
+<?php } ?>
+	<a
+	<?php
+		if ($currentPage == 'fixtures') {
+			echo " class='current' "; 
+		} 
+	?> 
+	href="index.php?kmpage=fixtures" id="menu-target-fixtures">Classements</a>
 	<a
 	<?php
 		if ($currentPage == 'user') {

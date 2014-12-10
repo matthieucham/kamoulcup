@@ -17,7 +17,11 @@
 			if (isset($_GET['kmpage'])) {
 				$kmpage = $_GET['kmpage'];
 			} else {
-				$kmpage='home';
+                if ($_SESSION['userrights']==0) {
+                    $kmpage='fixtures';
+                } else {
+				    $kmpage='home';
+                }
 			}
 			include($kmpage.'.php');
         //echo "fra={$_SESSION['myFranchiseId']} chp={$_SESSION['myChampionnatId']} insc={$_SESSION['myInscriptionId']}"
