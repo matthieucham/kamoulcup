@@ -236,7 +236,7 @@ $( document ).ready(function() {
                 $('#pourquoi').removeClass('hide');
             } else {
                 // Check players in cart
-                if ($currentNbPlayers >= $nbMaxJoueurs) {
+                if ($currentNbPlayers > $nbMaxJoueurs) {
                     $(this).attr('disabled', 'disabled');
                     $('#pourquoi').removeClass('hide');
                 } else {
