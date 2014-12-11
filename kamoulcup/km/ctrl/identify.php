@@ -17,7 +17,7 @@ if ($utilisateur == 'guest') {
     die();
 }
 
-$getUserQuery = "select ut.droit,fra_id,ins_id,ins_championnat_id from utilisateur as ut left outer join km_franchise on fra_id = ut.franchise_id left outer join km_inscription on fra_id=ins_franchise_id where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') limit 1";
+$getUserQuery = "select ut.droit,fra_id,ins_id,ins_championnat_id from utilisateur as ut left outer join (km_franchise,km_inscription,km_championnat) on fra_id = ut.franchise_id and fra_id=ins_franchise_id and ins_championnat_id=chp_id where ut.nom= '{$utilisateur}' and ut.password=MD5('{$mdp}') and chp_status in ('STARTED','CREATED') limit 1";
 $storedUser = $db->getArray($getUserQuery);
 if ($storedUser == NULL) {
 	header('Location: ../index.php');
