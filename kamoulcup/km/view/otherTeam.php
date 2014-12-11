@@ -3,6 +3,7 @@
     include_once('../ctrl/rankingManager.php');
     include_once('../ctrl/engagementManager.php');
     include_once('../ctrl/inscriptionManager.php');
+    include_once('../ctrl/palmaresManager.php');
     include('fragments/franchisePositions.php');
 
     $franchiseId = $_GET['franchiseid'];
@@ -53,7 +54,6 @@
 <?php
     $contrats = getContrats($inscriptionId);
 
-
     echo "<table width='100%'>
 	<thead>
 	<tr>
@@ -72,5 +72,30 @@
 ?>
 </div>
 <?php include('fragments/compoPopup.php');?>
+<div id='team_palmares'>
+    <h2>Palmarès</h2>
+<?php
+    $palmares = getPalmares($franchiseId);
+    if ($palmares == NULL) {
+        echo "Néant";
+    } else {
+        echo "<ul class='fa-ul'>";
+        foreach($palmares as $titre) {
+            $iconSize = '4x';
+            $colorClass= 'gold';
+            if ($titre['pal_ranking']==2) {
+                $iconSize='3x';
+                $colorClass= 'silver';
+            }
+            if ($titre['pal_ranking']==3) {
+                $iconSize='3x';
+                $colorClass= 'bronze';
+            }
+            echo "<li><a href='index.php?kmpage=archivedChamp&champid={$titre['chp_id']}' title='{$titre['chp_nom']}'><i class='fa fa-trophy fa-{$iconSize} {$colorClass}'></i></a></li>";
+        }
+        echo "</ul>";
+    }
+?>
+</div>
 </section>
 <script src="js/custom/km-otherTeam.js"></script>

@@ -1153,3 +1153,10 @@ $INDEX 8-2 : Players list
 	padding-top:0.5em;
 	padding-bottom:0.5em;
 }
+#team_palmares ul {
+    list-style-type: none;
+}
+#team_palmares ul li {
+    display:inline-block;
+    margin-right: 5px;
+}

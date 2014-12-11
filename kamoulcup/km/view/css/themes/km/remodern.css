@@ -111,6 +111,16 @@ button:hover:enabled, button:focus:enabled{
     color:#fab7e6;
 }
 
+.gold {
+    color:#FFD700;
+}
+.silver {
+    color:#C0C0C0;
+}
+.bronze {
+    color:#CD7F32;
+}
+
 /******************************************************
 
 	$INDEX3 - MENU COMMON
