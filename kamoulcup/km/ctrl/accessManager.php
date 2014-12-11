@@ -9,7 +9,7 @@ function checkPlayerAccess() {
         $forbidden=true;
 	} 
 	if ($forbidden) {
-        header('Location: ../forbidden.php');
+        header('Location: ../index.php');
 		die();
     }
 	return;
