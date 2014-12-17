@@ -19,7 +19,7 @@ foreach($clubs as $currentClub) {
     foreach($joueursClub as $currentJoueur) {
         $trValue = 0;
         if ($currentJoueur['montant'] != NULL) {
-            $trValue = floatval($currentJoueur['ltr_montant']);
+            $trValue = floatval($currentJoueur['montant']);
         } else if ($currentJoueur['idEngagement'] != NULL) {
             $trValue = -1;
         }
