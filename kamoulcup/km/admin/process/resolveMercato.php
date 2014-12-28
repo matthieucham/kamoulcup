@@ -80,11 +80,11 @@ function registerEngagement($inscriptionId,$joueurId,$montant/*,$journee*/,$redi
 
 	if ($existing != NULL) {
 		// Le joueur était sous contrat : c'est le vendeur qui reçoit tout l'argent.
-		$inscriptionId = $existing[0]['eng_inscription_id'];
+		$previousInscriptionId = $existing[0]['eng_inscription_id'];
 		$exId=$existing[0]['eng_id'];
 		$db->query("update km_engagement set eng_date_depart=now() where eng_id={$exId}");
 		$event = "Vente du joueur {$nomJoueur}";
-		registerFinances($inscriptionId,$montant,$event);
+		registerFinances($previousInscriptionId,$montant,$event);
 	} else {
 		// Redistribution de la somme dépensée
 		$part = (float) ((float)$montant) / ((float) ($nbFranchises-1)) ;
