@@ -18,7 +18,7 @@ if ($mercato==NULL) {
 $mercatoId=$mercato['mer_id'];
 
 
-$offresCourantesQ="select jjs_journee_id,joueur.id,nom,prenom,poste,off_montant,scl_salaire,ltr_montant from joueur inner join km_offre on off_joueur_id=joueur.id and off_inscription_id={$inscriptionId} and off_mercato_id={$mercatoId} inner join km_join_joueur_salaire on jjs_joueur_id=joueur.id inner join km_const_salaire_classe on jjs_salaire_classe_id=scl_id inner join journee on jjs_journee_id=journee.id left outer join km_engagement on eng_joueur_id=joueur.id and eng_date_depart is null left outer join km_liste_transferts on ltr_engagement_id=eng_id where jjs_journee_id=(select jjs_journee_id from km_join_joueur_salaire inner join journee on journee.id=jjs_journee_id order by date desc limit 1)";
+$offresCourantesQ="select jjs_journee_id,joueur.id,nom,prenom,poste,off_montant,scl_salaire,ltr_montant from joueur inner join km_offre on off_joueur_id=joueur.id and off_inscription_id={$inscriptionId} and off_mercato_id={$mercatoId} inner join km_join_joueur_salaire on jjs_joueur_id=joueur.id inner join km_const_salaire_classe on jjs_salaire_classe_id=scl_id inner join journee on jjs_journee_id=journee.id left outer join (km_engagement,km_inscription) on eng_joueur_id=joueur.id and eng_date_depart is null and eng_inscription_id=ins_id and ins_championnat_id={$champId} left outer join km_liste_transferts on ltr_engagement_id=eng_id where jjs_journee_id=(select jjs_journee_id from km_join_joueur_salaire inner join journee on journee.id=jjs_journee_id order by date desc limit 1)";
 $offresCourantes=$db->getArray($offresCourantesQ);
 
 $offers = array();
