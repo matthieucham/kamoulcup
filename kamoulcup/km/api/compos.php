@@ -7,7 +7,7 @@
     $franchiseId = $_GET['franchiseid'];
 
     $round=getRoundInfo($roundId);
-    $compo = getCompo($franchiseId,$roundId);
+    $compo = getActualCompo($franchiseId,$roundId);
     // Conversion du retour de la requête en objet JSON.
     $g=array();
     $d=array();
@@ -18,7 +18,7 @@
         foreach ($compo as $current) {
             $sco = round($current['jpe_score'],2);
             $player = new CompoPlayer($current['idJoueur'],$current['poste'],$current['prenom'].' '.$current['nomJoueur'],$current['nomClub'],$sco);
-            if ($current['sub']==1) {
+            if ($current['sro_selected']==0) {
                 array_push($r,$player);
             } else {
                 if ($player->position=='G') {

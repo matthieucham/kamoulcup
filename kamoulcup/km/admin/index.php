@@ -159,7 +159,7 @@ if ($mercatos != NULL) {
 <form method="POST" action="process/createChampionnat.php">
 <p>Franchises : <select multiple name='franchises[]' size='20'>
 <?php
-$franchisesQ = "select fra_id,fra_nom from km_franchise left outer join km_inscription on ins_franchise_id=fra_id left outer join km_championnat on ins_championnat_id=chp_id order by fra_nom asc";
+$franchisesQ = "select fra_id,fra_nom from km_franchise order by fra_nom asc";
 $franchises = $db->getArray($franchisesQ);
 if ($franchises != NULL) {
 	foreach ($franchises as $value) {

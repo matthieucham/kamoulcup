@@ -22,7 +22,7 @@ foreach ($contrats as $contrat) {
 
 
 
-$currentCompo = getCompoNoScore($franchiseId,$roundId,true);
+$currentCompo = getSelectedCompo($franchiseId,$roundId,true);
 $compoJoueurs = array('G'=>NULL,'D'=>NULL,'M'=>NULL,'A'=>NULL);
 $toHide = array();
 if ($currentCompo != NULL) {
