@@ -27,6 +27,7 @@ $( document ).ready(function() {
     }
 
     $(".compoPlayer .actionCompoPlayer").click(removePlayerHandler);
+    $(".compoSubPlayer .actionCompoPlayer").click(removePlayerHandler);
     
     $(".benchPlayer .actionCompoPlayer").click(addPlayerHandler);
     

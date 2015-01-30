@@ -128,7 +128,16 @@ foreach ($currentCompo as $current) {
 <?php
 echo "<h1>Compo pour le tour {$round['cro_numero']} </h1>";
 ?>
-<p>Sélectionnez les titulaires par "glisser-déposer" depuis le banc de touche</p>
+<h2>Instructions</h2>
+<p>Placez les titulaires dans les cases blanches, soit par glisser-déposer, soit en cliquant sur le bouton "+"</p>
+<p>Placez les remplaçants dans les cases jaunes (facultatif), et choisissez pour chacun le temps de jeu qui va déclencher son entrée. Soit N le temps de jeu choisi :
+</p>
+    <ul>
+        <li>Si le titulaire joue strictement moins de N minutes et que le remplaçant désigné a joué N minutes ou plus, le remplaçant prend sa place</li>
+        <li>Dans tous les autres cas, le titulaire n'est pas remplacé.</li>
+    </ul>
+<p>Quand vous avez fini, enregistrez !</p>
+
 <div id="pitchBench">
     <form id="compoForm">
     <div id="compo">

@@ -1021,8 +1021,9 @@ $INDEX 8-2 : Players list
 }
 #compo{
     width:536px;
-    height:270px;
+    height:290px;
     padding:5px;
+    margin:15px;
     position:relative;
 }
 .compoPlayer{
