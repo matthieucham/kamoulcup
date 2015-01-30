@@ -1021,17 +1021,20 @@ $INDEX 8-2 : Players list
 }
 #compo{
     width:536px;
-    height:200px;
+    height:270px;
     padding:5px;
     position:relative;
 }
 .compoPlayer{
     position:absolute;
 }
-.compoPlayer,.benchPlayer {
+.subPlayer {
+    position:absolute;
+}
+.compoPlayer,.compoSubPlayer,.benchPlayer {
     min-width: 120px;
     max-width: 120px;
-    min-height: 40px;
+    min-height: 50px;
     max-height: 100px;
     padding:3px;
     margin:7px;
@@ -1040,38 +1043,54 @@ $INDEX 8-2 : Players list
     vertical-align: middle;
     cursor:pointer;
 }
-.compoPlayer p,.benchPlayer p{
+.compoPlayer p,.benchPlayer p,.subPlayer p{
     display:block;
     font-size:1.0em;
 }
 .actionCompoPlayer {
     float:right;
 }
-#compoG {
+#compoG0 {
     left:0px;
-    top:50px;
+    top:39px;
+}
+#compoSG {
+    left:0px;
+    bottom:7px;
+}
+#compoD0 {
+    left:134px;
+    top:7px;
 }
 #compoD1 {
     left:134px;
-    top:7px;
+    top:84px;
 }
-#compoD2 {
+#compoSD {
     left:134px;
     bottom:7px;
 }
-#compoM1 {
+#compoM0 {
     left:268px;
     top:7px;
 }
-#compoM2 {
+#compoM1 {
+    left:268px;
+    top:84px;
+}
+#compoSM {
     left:268px;
     bottom:7px;
 }
-#compoA1 {
+#compoA0 {
     left:402px;
     top:7px;
 }
-#compoA2 {
+#compoA1 {
+    left:402px;
+    top:84px;
+}
+#compoSA {
     left:402px;
     bottom:7px;
 }

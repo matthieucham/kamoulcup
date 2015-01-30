@@ -1,13 +1,5 @@
 $( document ).ready(function() {
     
-    // Initialiser la valeur 'sub=0' sur tous les joueurs qui sont déjà titulaires:
-    // $('#compoBench').find('#bp_'+newVal).addClass('hide').find('input[name*="sub"]').val(0);
-    
-    /*$(".compoPlayer").each(function() {
-        var titulaireId= $(this).find('input[type="hidden"]').val();
-        $('#compoBench').find('#bp_'+titulaireId).find('input[name*="sub"]').val(0);
-    });*/
-    
     function removePlayerHandler() {
         var oldVal= $(this).parent().find('input[type="hidden"]').val();
         $('#compoBench').find('#bp_'+oldVal).removeClass('hide');
@@ -23,6 +15,12 @@ $( document ).ready(function() {
         if (targetDiv.length) {
             // Mettre à jour le contenu du spot avec les données de $(this)
             addCompoPlayer(targetDiv,$(this).parent());
+        } else {
+            targetDiv = $('#compo').find('.compoSubPlayer[position="'+targetPos+'"] input[value=""]:first').parent();
+            if (targetDiv.length) {
+            // Mettre à jour le contenu du spot avec les données de $(this)
+                addCompoPlayer(targetDiv,$(this).parent());
+            }
         }
         // 
         var btnDiv = $('<div>').addClass('actionCompoPlayer').html("<i class='fa fa-minus-square'></i>").click(removePlayerHandler);
@@ -59,6 +57,31 @@ $( document ).ready(function() {
     
     $( "#compo .compoPlayer[position='posA']" ).droppable({
         hoverClass:"compoPlayerDrop",
+        accept:"#benchA .benchPlayer",
+        drop: dropCompoPlayer
+    });
+    
+    $( "#compo .compoSubPlayer[position='posG']" ).droppable({
+        hoverClass:"compoSubPlayerDrop",
+        accept:"#benchG .benchPlayer",
+        drop: dropCompoPlayer
+    });
+    
+    $( "#compo .compoSubPlayer[position='posD']" ).droppable({
+        hoverClass:"compoSubPlayerDrop",
+        accept:"#benchD .benchPlayer",
+        drop: dropCompoPlayer
+        }
+    );
+    
+    $( "#compo .compoSubPlayer[position='posM']" ).droppable({
+        hoverClass:"compoSubPlayerDrop",
+        accept:"#benchM .benchPlayer",
+        drop: dropCompoPlayer
+    });
+    
+    $( "#compo .compoSubPlayer[position='posA']" ).droppable({
+        hoverClass:"compoSubPlayerDrop",
         accept:"#benchA .benchPlayer",
         drop: dropCompoPlayer
     });

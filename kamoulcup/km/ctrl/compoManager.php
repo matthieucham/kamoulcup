@@ -23,12 +23,18 @@
         $db->query($cleanQ);
     }
 
-    function saveCompo($franchiseId,$roundId,$playerIds,$sub,$subtime=0) {
+    function saveCompo($franchiseId,$roundId,$playerIds,$sub) {
         global $db;
         //$ids=implode(",",$playerIds);
         foreach($playerIds as $playerId) {
-        $compoQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_sub_time) select eng_id,{$roundId},{$sub},{$subtime} from km_engagement inner join km_inscription on ins_id=eng_inscription_id inner join km_championnat_round on cro_championnat_id=ins_championnat_id where eng_date_depart is null and ins_franchise_id={$franchiseId} and eng_joueur_id={$playerId} on duplicate key update sro_substitute={$sub}, sro_sub_time={$subtime}";
+        $compoQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) select eng_id,{$roundId},{$sub} from km_engagement inner join km_inscription on ins_id=eng_inscription_id inner join km_championnat_round on cro_championnat_id=ins_championnat_id where eng_date_depart is null and ins_franchise_id={$franchiseId} and eng_joueur_id={$playerId} on duplicate key update sro_substitute={$sub}";
         $db->query($compoQ);
         }
+    }
+
+    function saveReserve($franchiseId,$roundId,$playerId,$subtime) {
+        global $db;
+        $compoQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_sub_time) select eng_id,{$roundId},1,{$subtime} from km_engagement inner join km_inscription on ins_id=eng_inscription_id inner join km_championnat_round on cro_championnat_id=ins_championnat_id where eng_date_depart is null and ins_franchise_id={$franchiseId} and eng_joueur_id={$playerId} on duplicate key update sro_substitute=1, sro_sub_time={$subtime}";
+        $db->query($compoQ);
     }
 ?>

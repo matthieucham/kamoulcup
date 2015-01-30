@@ -27,25 +27,25 @@ function fillCompo(data) {
 	$('#dayScores h2 span:last').text(data.score.toFixed(2));
     // Titulaires
     if (data.gardiens.length>0) {
-        $('#compo').append(buildCompoPlayerDiv(data.gardiens[0],'G'));
+        $('#compo').append(buildCompoPlayerDiv(data.gardiens[0],'G0'));
     }
     if (data.defenseurs.length>0) {
-        $('#compo').append(buildCompoPlayerDiv(data.defenseurs[0],'D1'));
+        $('#compo').append(buildCompoPlayerDiv(data.defenseurs[0],'D0'));
     }
     if (data.defenseurs.length>1) {
-        $('#compo').append(buildCompoPlayerDiv(data.defenseurs[1],'D2'));
+        $('#compo').append(buildCompoPlayerDiv(data.defenseurs[1],'D1'));
     }
     if (data.milieux.length>0) {
-        $('#compo').append(buildCompoPlayerDiv(data.milieux[0],'M1'));
+        $('#compo').append(buildCompoPlayerDiv(data.milieux[0],'M0'));
     }
     if (data.milieux.length>1) {
-        $('#compo').append(buildCompoPlayerDiv(data.milieux[1],'M2'));
+        $('#compo').append(buildCompoPlayerDiv(data.milieux[1],'M1'));
     }
     if (data.attaquants.length>0) {
-        $('#compo').append(buildCompoPlayerDiv(data.attaquants[0],'A1'));
+        $('#compo').append(buildCompoPlayerDiv(data.attaquants[0],'A0'));
     }
     if (data.attaquants.length>1) {
-        $('#compo').append(buildCompoPlayerDiv(data.attaquants[1],'A2'));
+        $('#compo').append(buildCompoPlayerDiv(data.attaquants[1],'A1'));
     }
     // Banc
     if (data.remplacants.length>0) {

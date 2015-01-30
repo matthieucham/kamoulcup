@@ -9,6 +9,8 @@
     checkPlayerAccess();
     
     $players = $_POST['player'];
+    $reserve = $_POST['reserve'];
+    $reserveTime = $_POST['reservetime'];
     $roundId = $_POST['roundid'];
     $franchiseId = $_POST['franchiseid'];
     $subs = $_POST['sub'];
@@ -37,7 +39,6 @@
             }
         }
         saveCompo($franchiseId,$roundId,$validIds,0);
-     echo json_encode(new Resultat(true));   
     }
     if (isset($subs)) {
         $subIds = array();
@@ -52,8 +53,22 @@
         }
         saveCompo($franchiseId,$roundId,$subIds,1);
     }
+    if (isset($reserve)) {
+        $i=0;
+        foreach($reserve as $playerId) {
+            if ($playerId != NULL) {
+                if (! hasContratWithFranchise($playerId,$inscription['ins_id'])) {
+                    echo fail("Un joueur n'est plus sous contrat avec cette franchise");
+                    die();
+                }
+                $time = $reserveTime[$i];
+                saveReserve($franchiseId,$roundId,$playerId,$time);
+            }
+            $i++;
+        }
+    }
+    echo json_encode(new Resultat(true));   
 
-    
     function fail($msg) {
         $res = new Resultat(false,$msg);
         return json_encode($res);
