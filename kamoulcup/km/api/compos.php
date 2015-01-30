@@ -17,7 +17,7 @@
     if ($compo != NULL) {
         foreach ($compo as $current) {
             $sco = round($current['jpe_score'],2);
-            $player = new CompoPlayer($current['idJoueur'],$current['poste'],$current['prenom'].' '.$current['nomJoueur'],$current['nomClub'],$sco);
+            $player = new CompoPlayer($current['idJoueur'],$current['poste'],$current['prenom'].' '.$current['nomJoueur'],$current['nomClub'],$sco,$current['sro_selected']==1 && $current['sro_substitute']==1,$current['sro_selected']==0 && $current['sro_substitute']==0,$current['sro_sub_time']);
             if ($current['sro_selected']==0) {
                 array_push($r,$player);
             } else {

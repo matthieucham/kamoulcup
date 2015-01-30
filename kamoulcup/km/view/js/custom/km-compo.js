@@ -58,9 +58,18 @@ function fillCompo(data) {
 }
 
 function buildCompoPlayerDiv($player,$targetSpot) {
-    return '<div id="compo'+$targetSpot+'" class="compoPlayer"><p>'+$player.nom+'</p><p><i class="fa fa-trophy"></i> '+$player.score.toFixed(2)+' Pts</p></div>';
+    $div = '<div id="compo'+$targetSpot+'" class="compoPlayer">';
+    if ($player.swappedIn === true) {
+        $div = $div+'<div class="actionCompoPlayer"><i class="fa fa-level-up fa-2x"></i>'+$player.swaptime+'\'</div>'
+    }
+    $div=$div+'<p>'+$player.nom+'</p><p><i class="fa fa-trophy"></i> '+$player.score.toFixed(2)+' Pts</p></div>';
+    return $div;
 }
 
 function buildBenchPlayerLi($player) {
-    return '<li class="benchPlayer"><p>'+$player.nom+'</p><p><i class="fa fa-trophy"></i> '+$player.score.toFixed(2)+' Pts</p></li>';
+    $li = '<li class="benchPlayer">';
+    if ($player.swappedOut === true) {
+        $li = $li+'<div class="actionCompoPlayer"><i class="fa fa-level-down"></i></div>'
+    }
+    return $li+'<p>'+$player.nom+'</p><p><i class="fa fa-trophy"></i> '+$player.score.toFixed(2)+' Pts</p></li>';
 }
