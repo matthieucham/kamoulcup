@@ -49,14 +49,15 @@ if ($inscriptions != NULL) {
         $compoExists = intval($cE[0][0])>0;
         if (!$compoExists && $previousJourneeId>0) {
         // Recopier les engagements (valides) de la journée d'avant.
-            $copyQ = "insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) select sro_engagement_id, t2.cro_id,sro_substitute from km_selection_round inner join km_engagement on eng_id=sro_engagement_id inner join km_championnat_round t1 on t1.cro_id=sro_round_id inner join journee on journee.id={$journeeId} inner join km_championnat_round t2 on journee.id=t2.cro_journee_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_inscription_id={$fr['ins_id']} and t1.cro_journee_id={$previousJourneeId}";
+            $copyQ = "insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_sub_time) select sro_engagement_id, t2.cro_id,sro_substitute,sro_sub_time from km_selection_round inner join km_engagement on eng_id=sro_engagement_id inner join km_championnat_round t1 on t1.cro_id=sro_round_id inner join journee on journee.id={$journeeId} inner join km_championnat_round t2 on journee.id=t2.cro_journee_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_inscription_id={$fr['ins_id']} and t1.cro_journee_id={$previousJourneeId}";
             $db->query($copyQ);
         }
     
-        $possibleCompoQ = "select cro_id,joueur.poste,eng_id,coalesce(sro_substitute,1) as sub from km_engagement inner join joueur on eng_joueur_id=joueur.id inner join km_championnat_round on cro_journee_id={$journeeId} inner join journee on cro_journee_id=journee.id left outer join km_selection_round on sro_round_id=cro_id and sro_engagement_id=eng_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_inscription_id={$fr['ins_id']} order by field(poste,'G','D','M','A'),sub,eng_salaire desc, eng_date_arrivee desc";
+        $possibleCompoQ = "select cro_id,joueur.poste,coalesce(minutes,0) as tpsDeJeu,eng_id,coalesce(sro_substitute,1) as sub,sro_sub_time from km_engagement inner join joueur on eng_joueur_id=joueur.id inner join km_championnat_round on cro_journee_id={$journeeId} inner join journee on cro_journee_id=journee.id left outer join km_selection_round on sro_round_id=cro_id and sro_engagement_id=eng_id left outer join (prestation,rencontre) on joueur_id=eng_joueur_id and match_id=rencontre.id and rencontre.journee_id=cro_journee_id where (date>=eng_date_arrivee) and (date<eng_date_depart or eng_date_depart IS NULL) and eng_inscription_id={$fr['ins_id']} order by field(poste,'G','D','M','A'),sub,eng_salaire desc, eng_date_arrivee desc";
+            
         $selection=$db->getArray($possibleCompoQ);
         if ($selection != NULL) {
-            adjustSelection($selection,$db);
+            adjustSelectionWithMinutes($selection,$db);
         }
     }
     
@@ -74,7 +75,7 @@ if ($inscriptions != NULL) {
 
 
 // calculer les points marqués par chaque ekyp de chaque championnat concerné par la journée passée en param.
-    $franchiseScoreQ = "select eng_inscription_id,cro_id,sum(jpe_score) as score FROM km_joueur_perf inner join km_engagement on eng_joueur_id=jpe_joueur_id inner join km_selection_round on sro_engagement_id=eng_id inner join rencontre on jpe_match_id=rencontre.id inner join journee on rencontre.journee_id=journee.id inner join km_championnat_round on journee.id=cro_journee_id and cro_id=sro_round_id inner join km_inscription on ins_id=eng_inscription_id where journee.id={$journeeId} and sro_substitute=0 and cro_status='PROCESSED' group by eng_inscription_id,cro_id";
+    $franchiseScoreQ = "select eng_inscription_id,cro_id,sum(jpe_score) as score FROM km_joueur_perf inner join km_engagement on eng_joueur_id=jpe_joueur_id inner join km_selection_round on sro_engagement_id=eng_id inner join rencontre on jpe_match_id=rencontre.id inner join journee on rencontre.journee_id=journee.id inner join km_championnat_round on journee.id=cro_journee_id and cro_id=sro_round_id inner join km_inscription on ins_id=eng_inscription_id where journee.id={$journeeId} and sro_selected=1 and cro_status='PROCESSED' group by eng_inscription_id,cro_id";
 
 $updateScoreQ = "insert into km_franchise_score(fsc_inscription_id,fsc_round_id,fsc_score) {$franchiseScoreQ} on duplicate key update fsc_score=values(fsc_score)";
 
@@ -86,34 +87,68 @@ $db->query($updateScoreQ);
 	exit();
 
 
-
-function adjustSelection($selection,$db) {
+function adjustSelectionWithMinutes($selection,$db) {
     global $KM_minG;
     global $KM_minD;
     global $KM_minM;
     global $KM_minA;
     $countPoste=array('G'=>0,'D'=>0,'M'=>0,'A'=>0);
     $minPoste=array('G'=>$KM_minG,'D'=>$KM_minD,'M'=>$KM_minM,'A'=>$KM_minA);
+    $titusPoste=array('G'=>array(),'D'=>array(),'M'=>array(),'A'=>array());
     foreach ($selection as $sel) {
         $poste = $sel['poste'];
-        if ($sel['sub']==1 && $countPoste[$poste]<$minPoste[$poste]) {
-            // Insérer cette nouvelle ligne de selection
-            $insertQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) values ({$sel['eng_id']},{$sel['cro_id']},0) on duplicate key update sro_substitute=0";
-            $db->query($insertQ);
-            $countPoste[$poste] = $countPoste[$poste]+1;
-        } else if ($sel['sub']==0 && $countPoste[$poste]>=$minPoste[$poste]) {
-            // Enregistrement "en trop", à supprimer !
-            $supprQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) values ({$sel['eng_id']},{$sel['cro_id']},1) on duplicate key update sro_substitute=1";
-            $db->query($supprQ);
-        } else {
-            if ($sel['sub']==0) {
-                // C'est un titulaire valide qui fait augmenter le compteur.
-                $countPoste[$poste] = $countPoste[$poste]+1;
+        if ($sel['sub']==1) {
+            // sub == 1
+            
+            // Ce joueur a été désigné comme remplaçant
+            // Peut il rentrer en jeu ?
+            if (($sel['sro_sub_time'] > 0) && ($sel['tpsDeJeu'] >= $sel['sro_sub_time'])) {
+                // oui, si les titulaires ont joué moins que la limite indiquée
+                $tituIdx = 0;
+                $subbed = FALSE;
+                while ($tituIdx < count($titusPoste[$poste]) && !$subbed) {
+                    $tituTps = $titusPoste[$poste][$tituIdx]['tpsDeJeu'];
+                    if ($tituTps < $sel['sro_sub_time']) {
+                        // faire le swap
+                        $oldEngId = $titusPoste[$poste][$tituIdx]['eng_id'];
+                        $oldRoundId = $titusPoste[$poste][$tituIdx]['cro_id'];
+                        $titusPoste[$poste][$tituIdx]=$sel;
+                        $updQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_selected) values ({$sel['eng_id']},{$sel['cro_id']},1,1) on duplicate key update sro_selected=1";
+                        $db->query($updQ);
+                        $updQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_selected) values ({$oldEngId},{$oldRoundId},0,0) on duplicate key update sro_selected=0";
+                        $db->query($updQ);
+                        $subbed = TRUE;
+                    }
+                    $tituIdx++;
+                }
+                
             } else {
-                // Ce joueur doit apparaître en tant que sub dans la sélection
-                $insertQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute) values ({$sel['eng_id']},{$sel['cro_id']},1) on duplicate key update sro_substitute=1";
-            $db->query($insertQ);
+                // Plus de remplacement basés sur le temps de jeu
+                // Mais on peut toujours remplir les trous de la compo avec les remplaçants choisis sur les critères arbitraires : salaire, date d'arrivée
+                if ($countPoste[$poste]<$minPoste[$poste]) {
+                    // Insérer cette nouvelle ligne de selection
+                    $insertQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_selected) values ({$sel['eng_id']},{$sel['cro_id']},1,1) on duplicate key update sro_selected=1";
+                    $db->query($insertQ);
+                    $countPoste[$poste] = $countPoste[$poste]+1;
+                } else {
+                        // Ce joueur doit apparaître en tant que sub dans la sélection
+                        $insertQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_selected) values ({$sel['eng_id']},{$sel['cro_id']},0,0) on duplicate key update sro_selected=0";
+                        $db->query($insertQ);
+                    }
             }
+        } else {
+            // sub == 0
+            if ($countPoste[$poste]>=$minPoste[$poste]) {       
+                // Enregistrement "en trop", à supprimer !
+                $supprQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_selected) values ({$sel['eng_id']},{$sel['cro_id']},0,0) on duplicate key update sro_selected=0";
+                $db->query($supprQ);
+            } else {
+                // C'est un titulaire valide qui fait augmenter le compteur.
+                $insertQ="insert into km_selection_round(sro_engagement_id,sro_round_id,sro_substitute,sro_selected) values ({$sel['eng_id']},{$sel['cro_id']},0,1) on duplicate key update sro_selected=1";
+                 $db->query($insertQ);
+                 $countPoste[$poste] = $countPoste[$poste]+1;
+                 array_push($titusPoste[$poste],$sel);
+            } 
         }
     }
 }

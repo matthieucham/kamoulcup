@@ -22,8 +22,9 @@ foreach ($contrats as $contrat) {
 
 
 
-$currentCompo = getCompoNoScore($franchiseId,$roundId,true);
+$currentCompo = getSelectedCompo($franchiseId,$roundId,true);
 $compoJoueurs = array('G'=>NULL,'D'=>NULL,'M'=>NULL,'A'=>NULL);
+$subTimeJoueurs = array('G'=>NULL,'D'=>NULL,'M'=>NULL,'A'=>NULL);
 $toHide = array();
 if ($currentCompo != NULL) {
 foreach ($currentCompo as $current) {
@@ -31,9 +32,15 @@ foreach ($currentCompo as $current) {
     if ($compoJoueurs[$currPoste] == NULL) {
         $compoJoueurs[$currPoste] = array();
     }
+    if ($subTimeJoueurs[$currPoste] == NULL) {
+        $subTimeJoueurs[$currPoste] = array();
+    }
     //echo $current['nomJoueur'].' '.$current['sub'].'<br/>';
     if ($current['sub']==0) {
         array_push($compoJoueurs[$currPoste],$current);
+        array_push($toHide,$current['idJoueur']);
+    } else if ($current['sro_sub_time']>0) {
+        array_push($subTimeJoueurs[$currPoste],$current);
         array_push($toHide,$current['idJoueur']);
     }
 }    
@@ -55,135 +62,112 @@ foreach ($currentCompo as $current) {
         echo "<input type='hidden' name='player[{$index}]' value='{$idVal}'/>";
         echo "<p>{$nom}</p>";
     }
+
+    function buildReservePlayer($j,$index) {
+        $idVal=$j['idJoueur'];
+        $nom=$j['prenom'].' '.$j['nomJoueur'].' ('.$j['nomClub'].')';
+        echo "<div class='actionCompoPlayer'><i class='fa fa-minus-square'></i></div>";
+        echo "<input type='hidden' name='reserve[{$index}]' value='{$idVal}'/>";
+        echo "<p>{$nom}</p>";
+    }
+
+
+    function buildTituSlot($targetPos, $slotIndex, $index) {
+        global $compoJoueurs;
+        echo "<div id='compo{$targetPos}{$slotIndex}' class='compoPlayer' position='pos{$targetPos}'>";
+        if ($compoJoueurs[$targetPos] != NULL && sizeof($compoJoueurs[$targetPos])>$slotIndex) {
+            echo buildCompoPlayer($compoJoueurs[$targetPos][$slotIndex],$index);
+        } else {
+            echo "<input type='hidden' name='player[{$index}]' value=''/>";
+        }  
+        echo "</div>";
+    }
+
+    function buildReserveSlot($targetPos, $index) {
+        global $subTimeJoueurs;
+        echo "<div id='compoS{$targetPos}' class='subPlayer'>
+                    <div class='compoSubPlayer' position='pos{$targetPos}'>";
+            $selTime=0;
+            if ($subTimeJoueurs[$targetPos] != NULL && sizeof($subTimeJoueurs[$targetPos])>0) {
+                echo buildReservePlayer($subTimeJoueurs[$targetPos][0],$index);
+                $selTime = $subTimeJoueurs[$targetPos][0]['sro_sub_time'];
+            } else {
+                 echo "<input type='hidden' name='reserve[{$index}]' value=''/>";
+            }  
+            echo "</div>
+                <div class='subTime' title='Jouera si le titulaire joue moins de ... minutes'>";
+            echo "<label for='selTime{$targetPos}'>Tps </label>
+                <select id='selTime{$targetPos}' name='reservetime[$index]'>";
+            $times = array(15,30,45,60);
+            foreach($times as $t) {
+                echo "<option value='{$t}' ";
+                if ($t == $selTime) {
+                    echo "selected";
+                }
+                echo ">{$t} min</option>";
+            }
+            echo "</select></div></div>";
+    }
+    
+    function buildSubColumn($targetPos,$colName) {
+        global $joueurs;
+        global $toHide;
+        echo "<div id='bench{$targetPos}' class='compoBenchPos'>
+                <h3>{$colName}</h3>
+                <ul>";
+        if ($joueurs[$targetPos] != NULL) {
+            foreach ($joueurs[$targetPos] as $j) {
+                echo buildBenchPlayer($j,in_array($j['id'],$toHide));
+            }
+        }
+        echo "</ul></div>";
+    }
+
 ?>
 <section id="chooseTeam">
 <?php
 echo "<h1>Compo pour le tour {$round['cro_numero']} </h1>";
 ?>
-<p>Sélectionnez les titulaires par "glisser-déposer" depuis le banc de touche</p>
+<h2>Instructions</h2>
+<p>Placez les titulaires dans les cases blanches, soit par glisser-déposer, soit en cliquant sur le bouton "+"</p>
+<p>Placez les remplaçants dans les cases jaunes (facultatif), et choisissez pour chacun le temps de jeu qui va déclencher son entrée. Soit N le temps de jeu choisi :
+</p>
+    <ul>
+        <li>Si le titulaire joue strictement moins de N minutes et que le remplaçant désigné a joué N minutes ou plus, le remplaçant prend sa place</li>
+        <li>Dans tous les autres cas, le titulaire n'est pas remplacé.</li>
+    </ul>
+<p>Quand vous avez fini, enregistrez !</p>
+
 <div id="pitchBench">
     <form id="compoForm">
     <div id="compo">
             <?php
                 echo "<input type='hidden' name='franchiseid' value='{$franchiseId}'/>";
                 echo "<input type='hidden' name='roundid' value='{$roundId}'/>";
-            ?>
-            <div id="compoG" class="compoPlayer" position="posG">
-                <?php
-                    if ($compoJoueurs['G'] != NULL && sizeof($compoJoueurs['G'])>0) {
-                        echo buildCompoPlayer($compoJoueurs['G'][0],0);
-                    } else {
-                        echo "<input type='hidden' name='player[0]' value=''/>";
-                    }  
-                ?>
-            </div>
-            <div id="compoD1" class="compoPlayer" position="posD">
-                <?php
-                    if ($compoJoueurs['D'] != NULL && sizeof($compoJoueurs['D'])>0) {
-                        echo buildCompoPlayer($compoJoueurs['D'][0],1);
-                    } else {
-                        echo "<input type='hidden' name='player[1]' value=''/>";
-                    }  
-                ?>
-            </div>
-            <div id="compoD2" class="compoPlayer" position="posD">
-                <?php
-                    if ($compoJoueurs['D'] != NULL && sizeof($compoJoueurs['D'])>1) {
-                        echo buildCompoPlayer($compoJoueurs['D'][1],2);
-                    } else {
-                        echo "<input type='hidden' name='player[2]' value=''/>";
-                    }  
-                ?>
-            </div>
-            <div id="compoM1" class="compoPlayer" position="posM">
-                <?php
-                    if ($compoJoueurs['M'] != NULL && sizeof($compoJoueurs['M'])>0) {
-                        echo buildCompoPlayer($compoJoueurs['M'][0],3);
-                    } else {
-                        echo "<input type='hidden' name='player[3]' value=''/>";
-                    }  
-                ?>                
-            </div>
-            <div id="compoM2" class="compoPlayer" position="posM">
-                <?php
-                    if ($compoJoueurs['M'] != NULL && sizeof($compoJoueurs['M'])>1) {
-                        echo buildCompoPlayer($compoJoueurs['M'][1],4);
-                    } else {
-                        echo "<input type='hidden' name='player[4]' value=''/>";
-                    }  
-                ?>  
-            </div>
-            <div id="compoA1" class="compoPlayer" position="posA">
-                <?php
-                    if ($compoJoueurs['A'] != NULL && sizeof($compoJoueurs['A'])>0) {
-                        echo buildCompoPlayer($compoJoueurs['A'][0],5);
-                    } else {
-                        echo "<input type='hidden' name='player[5]' value=''/>";
-                    }  
-                ?>                  
-            </div>
-            <div id="compoA2" class="compoPlayer" position="posA">
-                <?php
-                    if ($compoJoueurs['A'] != NULL && sizeof($compoJoueurs['A'])>1) {
-                        echo buildCompoPlayer($compoJoueurs['A'][1],6);
-                    } else {
-                        echo "<input type='hidden' name='player[6]' value=''/>";
-                    }  
-                ?>                  
-            </div>
+                buildTituSlot('G',0,0);
+                buildTituSlot('D',0,1);
+                buildTituSlot('D',1,2);
+                buildTituSlot('M',0,3);
+                buildTituSlot('M',1,4);
+                buildTituSlot('A',0,5);
+                buildTituSlot('A',1,6);
+
+            buildReserveSlot('G',0);
+            buildReserveSlot('D',1);
+            buildReserveSlot('M',2);
+            buildReserveSlot('A',3);
+        ?>
     </div>
     <h2>Banc de touche</h2>
     <div id="compoBench">
-            <div id='benchG' class="compoBenchPos">
-                <h3>Gardiens</h3>
-                <ul>
-<?php
-    if ($joueurs['G'] != NULL) {
-        foreach ($joueurs['G'] as $j) {
-            echo buildBenchPlayer($j,in_array($j['id'],$toHide));
-        }
-    }
-?>
-                </ul>
-            </div>
-            <div id='benchD' class="compoBenchPos">
-                <h3>Défenseurs</h3>
-                <ul>
- <?php
-    if ($joueurs['D'] != NULL) {
-        foreach ($joueurs['D'] as $j) {
-            echo buildBenchPlayer($j,in_array($j['id'],$toHide));
-        }
-    }
-?>
-                </ul>
-            </div>
-            <div id='benchM' class="compoBenchPos">
-                <h3>Milieux</h3>
-                <ul>
-<?php
-    if ($joueurs['M'] != NULL) {
-        foreach ($joueurs['M'] as $j) {
-            echo buildBenchPlayer($j,in_array($j['id'],$toHide));
-        }
-    }
-?>
-                </ul>
-            </div>
-            <div id='benchA' class="compoBenchPos">
-                <h3>Attaquants</h3>
-                <ul>
-<?php
-    if ($joueurs['A'] != NULL) {
-        foreach ($joueurs['A'] as $j) {
-            echo buildBenchPlayer($j,in_array($j['id'],$toHide));
-        }
-    }
-?>
-                </ul>
-            </div>
-        </form>
-    </div>
+        <?php
+            buildSubColumn('G','Gardiens');
+            buildSubColumn('D','Défenseurs');
+            buildSubColumn('M','Milieux');
+            buildSubColumn('A','Attaquants');
+        ?>
+        </div>
+    </form>
 </div>
 <div id="actions">
     <button id="registerBtn">Enregistrer</button>

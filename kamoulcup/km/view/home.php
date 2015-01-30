@@ -33,7 +33,7 @@
                 if ($nextRound == NULL) {
                     echo "<li><i class='fa-li fa fa-info-circle'></i>Pas de tour prochainement programmé.</li>";
                 } else {
-                    $nextCompo = getCompoNoScore($_SESSION['myFranchiseId'],$nextRound['cro_id'],true);
+                    $nextCompo = getSelectedCompo($_SESSION['myFranchiseId'],$nextRound['cro_id'],true);
                     if ($nextCompo == NULL) {
                         echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Faire sa compo pour le tour {$nextRound['cro_numero']} (L1 journée n°{$nextRound['numero']} du {$nextRound['dateJournee']})</a></li>";
                     } else {
