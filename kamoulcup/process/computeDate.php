@@ -12,43 +12,43 @@ function calculDateFinEnchere($dateDebut,$nbHeures){
 
 	if ($skipWE==0) {
 		if ($startDateDay == 0) {
-			// Début d'enchères un Dimanche : on se replace à 12h le lendemain même.
+			// DÃ©but d'enchÃ¨res un Dimanche : on se replace Ã  12h le lendemain mÃªme.
 			$endTime -= ($startDateH*3600 + $startDateM*60 + $startDateS);
 			$endTime += 35*3600;
 		}
 		if ($startDateDay == 6) {
-			// Début d'enchères un Samedi : on se replace à 12h le surlendemain
+			// DÃ©but d'enchÃ¨res un Samedi : on se replace Ã  12h le surlendemain
 			$endTime -= ($startDateH*3600 + $startDateM*60 + $startDateS);
 			$endTime += 59*3600;
 		}
 	}
 
-	// Ajout du délai syndical
+	// Ajout du dÃ©lai syndical
 	$endTime+=(3600*$nbHeures);
 	$endDateDay = date('w',$endTime);
 
 	if ($skipWE==0) {
 		if ($endDateDay == 0 || $endDateDay == 6) {
-			// Fin d'enchères un Dimanche ou un samedi: on rajoute 47h
-			$endTime += 47*3600;
+			// Fin d'enchÃ¨res un Dimanche ou un samedi: on rajoute 48h
+			$endTime += 48*3600;
 		}
 	}
 
-	// On ajuste l'heure de fin à midi ou 19h le jour prévu.
+	// On ajuste l'heure de fin Ã  midi ou 19h le jour prï¿½vu.
 	$endDateH = date('G',$endTime);
 	$endDateM = date('i',$endTime);
 	$endDateS = date('s',$endTime);
 
 	if ($endDateH < 12) {
-		// avant midi : on déplace la fin à midi
+		// avant midi : on dÃ©place la fin Ã  midi
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
 		$endTime += 12*3600;
 	} else if ($endDateH < 19) {
-		// avant 19h : on déplace la fin à 19h
+		// avant 19h : on dÃ©place la fin Ã  19h
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
 		$endTime += 19*3600;
 	} else {
-		// après 19h : on déplace la fin à 12h le lendemain
+		// aprÃ¨s 19h : on dÃ©place la fin Ã  12h le lendemain
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
 		$endTime += 36*3600;
 	}

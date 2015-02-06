@@ -27,9 +27,10 @@
         //echo "fra={$_SESSION['myFranchiseId']} chp={$_SESSION['myChampionnatId']} insc={$_SESSION['myInscriptionId']}"
 		?>
 		</div>
-<footer>
+<!--<footer>
 	<div class="footerstandard">Footer.</div>
 </footer>
+-->
 		
 	</div>
 </div>
