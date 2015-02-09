@@ -39,7 +39,7 @@ function getScoresHistorique($inscriptionId) {
 
     function getStatsFranchiseJoueur($inscriptionId,$joueurId) {
         global $db;
-        $statsQ = "SELECT sum( jpe_score ) , count( cro_id ) FROM km_joueur_perf INNER JOIN km_engagement ON jpe_joueur_id = eng_joueur_id INNER JOIN km_selection_round ON sro_engagement_id = eng_id inner join km_championnat_round on sro_round_id=cro_id inner join km_inscription on ins_id={$inscriptionId} INNER JOIN rencontre ON jpe_match_id = rencontre.id INNER JOIN journee ON journee.id = rencontre.journee_id and cro_journee_id=rencontre.journee_id WHERE sro_substitute =0 AND eng_inscription_id ={$inscriptionId} and eng_joueur_id={$joueurId} and journee.date>=eng_date_arrivee and (journee.date<eng_date_depart or eng_date_depart IS NULL) and cro_status='PROCESSED'";
+        $statsQ = "SELECT sum( jpe_score ) , count( cro_id ) FROM km_joueur_perf INNER JOIN km_engagement ON jpe_joueur_id = eng_joueur_id INNER JOIN km_selection_round ON sro_engagement_id = eng_id inner join km_championnat_round on sro_round_id=cro_id inner join km_inscription on ins_id={$inscriptionId} INNER JOIN rencontre ON jpe_match_id = rencontre.id INNER JOIN journee ON journee.id = rencontre.journee_id and cro_journee_id=rencontre.journee_id WHERE sro_selected=1 AND eng_inscription_id ={$inscriptionId} and eng_joueur_id={$joueurId} and journee.date>=eng_date_arrivee and (journee.date<eng_date_depart or eng_date_depart IS NULL) and cro_status='PROCESSED'";
         $stats = $db->getArray($statsQ);
         return $stats[0];
     }

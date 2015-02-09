@@ -46,7 +46,7 @@ if ($encheresMax != NULL) {
 		// Recup des tops encheres sur ce joueur
 		$joueurId = $joueursEgalite[$i];
 		$vainqueursPotentielsQ="SELECT off_inscription_id,off_montant FROM `km_offre` WHERE off_joueur_id={$joueurId} AND off_montant =
-			(SELECT max( off_montant ) FROM km_offre WHERE off_joueur_id={$joueurId} ) AND off_mercato_id={$mercatoId} ";
+			(SELECT max( off_montant ) FROM km_offre WHERE off_joueur_id={$joueurId} AND off_mercato_id={$mercatoId} ) AND off_mercato_id={$mercatoId} ";
 		$vainqueursPotentiels = $db->getArray($vainqueursPotentielsQ);
 		$nbVP = sizeof($vainqueursPotentiels);
 		// Tirage aléatoire
