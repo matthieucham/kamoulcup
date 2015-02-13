@@ -29,15 +29,17 @@
                 } else {
                     echo "<li><i class='fa-li fa fa-info-circle'></i> Pas encore de résultats à afficher</li>";
                 }
-                $nextRound = getNextRoundToPlay($_SESSION['myChampionnatId']);
+                $nextRound = getNextRoundsToPlay($_SESSION['myChampionnatId']);
                 if ($nextRound == NULL) {
                     echo "<li><i class='fa-li fa fa-info-circle'></i>Pas de tour prochainement programmé.</li>";
                 } else {
-                    $nextCompo = getSelectedCompo($_SESSION['myFranchiseId'],$nextRound['cro_id'],true);
+                    foreach($nextRound as $rd) {
+                    $nextCompo = getSelectedCompo($_SESSION['myFranchiseId'],$rd['cro_id'],true);
                     if ($nextCompo == NULL) {
-                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Faire sa compo pour le tour {$nextRound['cro_numero']} (L1 journée n°{$nextRound['numero']} du {$nextRound['dateJournee']})</a></li>";
+                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$rd['cro_id']}'>Faire sa compo pour le tour {$rd['cro_numero']} (L1 journée n°{$rd['numero']} du {$rd['dateJournee']})</a></li>";
                     } else {
-                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$nextRound['cro_id']}'>Compo pour le tour {$nextRound['cro_numero']} (L1 journée n°{$nextRound['numero']} du {$nextRound['dateJournee']}) enregistrée.</a></li>";
+                        echo "<li><i class='fa-li fa fa-info-circle'></i><a href='./index.php?kmpage=chooseTeam&roundid={$rd['cro_id']}'>Compo pour le tour {$rd['cro_numero']} (L1 journée n°{$rd['numero']} du {$rd['dateJournee']}) enregistrée.</a></li>";
+                    }
                     }
                 }
             ?>   

@@ -30,14 +30,14 @@ function getRoundInfo($roundId) {
     }
 }
 
-function getNextRoundToPlay($chpId) {
+function getNextRoundsToPlay($chpId) {
     global $db;
-    $nextRoundQ = "select cro_id,cro_numero,numero,date_format(date,'%d/%m/%Y') as dateJournee from km_championnat_round inner join journee on cro_journee_id=id where cro_championnat_id={$chpId} and cro_status='CREATED' and date>now() order by cro_numero asc limit 1";
-    $nextRound = $db->getArray($nextRoundQ);
-    if ($nextRound == NULL) {
+    $nextRoundQ = "select cro_id,cro_numero,numero,date_format(date,'%d/%m/%Y') as dateJournee from km_championnat_round inner join journee on cro_journee_id=id where cro_championnat_id={$chpId} and cro_status='CREATED' and date>now() order by cro_numero asc";
+    $nextRounds = $db->getArray($nextRoundQ);
+    if ($nextRounds == NULL) {
         return NULL;
     } else {
-        return $nextRound[0];
+        return $nextRounds;
     }
 }
 
