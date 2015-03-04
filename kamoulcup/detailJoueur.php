@@ -17,7 +17,7 @@ $listPerformancesQuery = $db->getArray("select pr.score,pr.but_marque,pr.passe_d
 $listTransfertsQuery = $db->getArray("select po.nom as nomPoule, ek.id, ek.nom as nomEkyp, date_format(tr.transfert_date,'%d/%m') as trdate, tr.anciennete, tr.prix_achat, tr.coeff_bonus_achat, tr.draft, tr.choix_draft from transfert as tr,poule as po, ekyp as ek where tr.joueur_id={$joueurId} and tr.poule_id=po.id and tr.ekyp_id=ek.id");
 $extraBonusQuery = $db->getArray("select sum(valeur) as total from bonus_joueur where joueur_id={$joueurId}");
 
-$notesQuery = $db->getArray("select count(id), avg(score) from prestation where joueur_id={$joueurId} and minutes>{$SCO_minTps} and score>0 limit {$SCO_nbperfs}");
+$notesQuery = $db->getArray("select count(id), avg(score) from prestation where joueur_id={$joueurId} and minutes>={$SCO_minTps} and score>0 limit {$SCO_nbperfs}");
 $entreesCourtesQuery = $db->getArray("select count(id) from prestation where joueur_id={$joueurId} and minutes<{$SCO_tpsEntreeCourte} limit {$SCO_nbperfs}");
 $entreesLonguesQuery = $db->getArray("select count(id) from prestation where joueur_id={$joueurId} and ( (minutes>={$SCO_tpsEntreeCourte} and (minutes<{$SCO_minTps}) ) or ((minutes>={$SCO_minTps}) and score=0) ) limit {$SCO_nbperfs}");
 
