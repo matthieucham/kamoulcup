@@ -1,6 +1,7 @@
 <?php
 include("../../../includes/db.php");
 include("../../ctrl/accessManager.php");
+include("../../ctrl/franchiseManager.php");
 include("../../model/KMConstants.php");
 include('../../../process/validateForm.php');
 checkAdminAccess();
@@ -59,6 +60,21 @@ if ($inscriptions != NULL) {
         if ($selection != NULL) {
             adjustSelectionWithMinutes($selection,$db);
         }
+        
+        // Calculer le solde de masse salariale à redistribuer à chaque franchise.
+        // Si ce n'a pas déjà été fait !
+        $wageDoneQ = "select count(km_finances.*) from km_finances inner join journee on fin_date=date where journee.id={$journeeId} and fin_inscription_id={$fr['ins_id']} and fin_code='WAGE'";
+        $wq = $db->getArray($wageDoneQ);
+        if ($wq[0][0] == 0) {
+            $ms = getMasseSalarialeAtJournee($fr['ins_id'],$journeeId);
+            $benef = $KM_maxSalary - $ms;
+            $ancienSoldeQ = "select fin_solde from km_finances where fin_inscription_id={$fr['ins_id']} order by fin_date desc, fin_id desc limit 1";
+            $ancienSolde = $db->getArray($ancienSoldeQ);
+            $solde = round(floatval($ancienSolde[0][0]),1)+$benef;
+            $financesQ = "insert into km_finances(fin_inscription_id,fin_date,fin_transaction,fin_solde,fin_event, fin_code) select ${fr['ins_id']}, journee.date, {$benef}, {$solde},'Solde de masse salariale','WAGE' from journee where id={$journeeId}";
+            $db->query($financesQ);
+        }
+        
     }
     
     // Update flag cro_status to PROCESSED

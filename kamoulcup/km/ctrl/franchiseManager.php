@@ -19,6 +19,13 @@
         return $sousContrat;
     }
 
+    function getMasseSalarialeAtJournee($inscriptionId, $journeeId) {
+        global $db;
+        $sousContratQ="select sum(eng_salaire) from km_engagement inner join journee where eng_inscription_id={$inscriptionId} and journee.id={$journeeId} and eng_date_arrivee <= journee.date and (eng_date_depart is null or eng_date_depart > journee.date)";
+        $sousContrat = $db->getArray($sousContratQ);
+        return round(floatval($sousContrat[0][0]),1);
+    }
+
     function getScoreFranchise($inscriptionId) {
         global $db;
         $scoreQ = "select sum(fsc_score) from km_franchise_score where fsc_inscription_id={$inscriptionId}";
