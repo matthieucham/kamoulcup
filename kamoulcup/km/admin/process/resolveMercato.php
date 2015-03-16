@@ -59,12 +59,12 @@ if ($encheresMax != NULL) {
 // Mercato traité : on ferme
 $db->query("update km_mercato set mer_processed=1 where mer_id={$mercatoId}");
 
-// Redistribution
-foreach($redistribution as $ekyp => $prime) {
-	if ($prime > 0) {
-		registerFinances($ekyp,(float) $prime,'Prime de redistribution');
-	}
-}
+//// Redistribution
+//foreach($redistribution as $ekyp => $prime) {
+//	if ($prime > 0) {
+//		registerFinances($ekyp,(float) $prime,'Prime de redistribution');
+//	}
+//}
 
 function registerEngagement($inscriptionId,$joueurId,$montant/*,$journee*/,$redistrib, $nbFranchises, $mercatoId){
 	global $db;
@@ -84,31 +84,31 @@ function registerEngagement($inscriptionId,$joueurId,$montant/*,$journee*/,$redi
 		$exId=$existing[0]['eng_id'];
 		$db->query("update km_engagement set eng_date_depart=now() where eng_id={$exId}");
 		$event = "Vente du joueur {$nomJoueur}";
-		registerFinances($previousInscriptionId,$montant,$event);
+		registerFinances($previousInscriptionId,$montant,$event,'SELL');
 	} else {
-		// Redistribution de la somme dépensée
-		$part = (float) ((float)$montant) / ((float) ($nbFranchises-1)) ;
-		foreach($redistrib as $key => $value) {
-			if ($key != $inscriptionId) {
-				$redistrib[$key] = ((float) $value) + ((float) $part);
-			}
-		}
+//		// Redistribution de la somme dépensée
+//		$part = (float) ((float)$montant) / ((float) ($nbFranchises-1)) ;
+//		foreach($redistrib as $key => $value) {
+//			if ($key != $inscriptionId) {
+//				$redistrib[$key] = ((float) $value) + ((float) $part);
+//			}
+//		}
 	}
 	// Enregistrement de l'engagement avec l'acheteur
 	$db->query("insert into km_engagement(eng_inscription_id,eng_joueur_id,eng_salaire,eng_date_arrivee,eng_montant) values ({$inscriptionId},{$joueurId},(select scl_salaire from km_const_salaire_classe inner join km_join_joueur_salaire on scl_id=jjs_salaire_classe_id where jjs_journee_id=(select jjs_journee_id from km_join_joueur_salaire inner join journee on journee.id=jjs_journee_id order by date desc limit 1) and jjs_joueur_id={$joueurId}), now(), {$montant})");
 	// Finances
 	$event = "Achat du joueur {$nomJoueur}";
-	registerFinances($inscriptionId,-$montant,$event);
+	registerFinances($inscriptionId,-$montant,$event,'BUY');
 	return $redistrib;
 }
 
-function registerFinances($inscriptionId,$montant,$event) {
+function registerFinances($inscriptionId,$montant,$event,$code) {
 	global $db;
 	// Récup du solde actuel de la franchise
 	$soldeQ = "select fin_solde from km_finances where fin_inscription_id={$inscriptionId} order by fin_date desc, fin_id desc limit 1";
 	$solde = $db->getArray($soldeQ);
 	$nouveauSolde = round(floatval($solde[0][0]) + ((float) $montant),1); // montant positif ou negatif
-	$db->query("insert into km_finances(fin_inscription_id,fin_date,fin_transaction,fin_solde,fin_event) values ({$inscriptionId},now(),{$montant},{$nouveauSolde},'{$event}')");
+	$db->query("insert into km_finances(fin_inscription_id,fin_date,fin_transaction,fin_solde,fin_event,fin_code) values ({$inscriptionId},now(),{$montant},{$nouveauSolde},'{$event}','{$code}')");
 }
 
 header('Location: ../index.php');
