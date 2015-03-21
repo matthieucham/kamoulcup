@@ -30,7 +30,7 @@
 
     function getLastReleases($championnatId, $limit) {
         global $db;
-        $trQ = "select jo.id, jo.prenom, jo.nom, jo.poste, date_format(eng_date_depart,'%d/%m/%Y') as dateDepart, fra_nom from km_engagement inner join km_inscription on eng_inscription_id=ins_id inner join km_franchise on fra_id=ins_franchise_id inner join joueur as jo on jo.id=eng_joueur_id where ins_championnat_id={$championnatId} order by eng_date_depart desc limit {$limit}";
+        $trQ = "select jo.id, jo.prenom, jo.nom, jo.poste, date_format(eng_date_depart,'%d/%m/%Y') as dateDepart, fra_nom from km_engagement inner join km_inscription on eng_inscription_id=ins_id inner join km_franchise on fra_id=ins_franchise_id inner join joueur as jo on jo.id=eng_joueur_id where ins_championnat_id={$championnatId} and eng_date_depart IS NOT NULL order by eng_date_depart desc limit {$limit}";
         $tr = $db->getArray($trQ);
         return $tr;
     }
