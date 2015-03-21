@@ -1,6 +1,7 @@
 <?php
 	include_once("../../vocabulaire.php");
     include_once("../ctrl/mercatoManager.php");
+    include_once("../ctrl/transferManager.php");
     include_once("../ctrl/journeeManager.php");
     include_once("../ctrl/roundManager.php");
     include_once("../ctrl/compoManager.php");
@@ -17,7 +18,6 @@
 	<div id="news">
 		<h2><i class="fa fa-inbox"></i> Dernières infos</h2>
 		<ul class="fa-ul">
-  			<li><i class="fa-li fa fa-info-circle"></i><a href="./index.php?kmpage=transfers"> Bilan du dernier merkato</a></li>
             <?php
                 $mercato = getCurrentMercato($_SESSION['myChampionnatId']);
                 if ($mercato != NULL) {
@@ -45,6 +45,19 @@
             ?>   
   			
   		</ul>
+        <h2><i class="fa fa-inbox"></i> Journal des transferts</h2>
+            <li><i class="fa-li fa fa-info-circle"></i><a href="./index.php?kmpage=transfers"> Historique des transferts</a></li>
+            <li><i class="fa-li fa fa-info-circle"></i>Les dernier joueurs libérés</li>
+            <?php
+                $lastR = getLastReleases($_SESSION['myChampionnatId'],6);
+                if ($lastR != NULL) {
+                    echo "<ul>";
+                    foreach ($lastR as $rel) {
+                        echo "<li><a href='./index.php?kmpage=home&page=detailJoueur&joueurid={$rel['id']}'>{$rel['prenom']} {$rel['nom']}</a> libéré par {$rel['fra_nom']} le {$rel['dateDepart']}</li>";
+                    }
+                    echo "</ul>";
+                }
+            ?>
 	</div>
 	<div id="kmWrapper">
 	<?php	
