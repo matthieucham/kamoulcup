@@ -98,7 +98,7 @@ foreach ($currentCompo as $current) {
                 <div class='subTime' title='Jouera si le titulaire joue moins de ... minutes'>";
             echo "<label for='selTime{$targetPos}'>Tps </label>
                 <select id='selTime{$targetPos}' name='reservetime[$index]'>";
-            $times = array(15,30,45,60);
+            $times = array(1,15,30,45,60);
             foreach($times as $t) {
                 echo "<option value='{$t}' ";
                 if ($t == $selTime) {
