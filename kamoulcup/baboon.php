@@ -13,7 +13,8 @@
 		echo "<div class='sectionPage'>";
 		echo "<div class='sous_titre'>Notation</div>";
 		echo "<div class='sectionContent'>";
-		echo "<ul><li><a href='index.php?page=manageJournees'>Saisir les notes</a></li></ul>";
+		echo "<ul><li><a href='process/initImport.php'>Importer les résultats</a></li></ul>";
+		//echo "<ul><li><a href='index.php?page=manageJournees'>Saisir les notes</a></li></ul>";
 		echo "</div>";
 		echo "</div>";
 	}
@@ -55,13 +56,13 @@
 		echo "<ul>";
 		echo "<li><a href='index.php?page=managePoules'>Gérer les poules</a></li>";
 		echo "<li><a href='index.php?page=manageEkyps'>Gérer les ékyps</a></li>";
+		echo "<li><a href='index.php?page=manageJournees'>Tweaker les notes</a></li>";
 		echo "<li><a href='process/calculScores.php'>Recalculer les scores</a></li>";
 		echo "<li><a href='process/updatePrestations.php'>Mettre à jour les prestations</a></li>";
 		echo "<li><a href='index.php?page=asEkyp'>Prendre le contrôle temporaire d'une ékyp</a></li>";
 		echo "<li><a href='process/generateFeeds.php'>Genérer tous les feeds de résolution</a></li>";
 		echo "<li><a href='mobilecom/getResolutionsFeed.php'>GET Feeds</a></li>";
 		echo "<li><a href='km/admin/index.php'>KAMOUL MANAGER ADMIN</a></li>";
-		echo "<li><a href='process/initImport.php'>Importer les résultats</a></li>";
 		echo "</ul>";
 		echo "</div>";
 		echo "</div>";

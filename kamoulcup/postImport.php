@@ -6,7 +6,7 @@ checkAccess(2);
 <form method="POST" action="process/setJoueursPostes.php"><?php
 $sansPoste = $db->getArray("select jo.id as joid, jo.prenom, jo.nom as jonom, cl.nom as clnom from joueur jo inner join club cl on cl.id=jo.club_id where poste is null");
 if ($sansPoste == NULL) {
-	echo "<p>R.A.S.</p>";
+	echo "<p><a href='process/calculScores.php'>Recalculer les scores</a></p>";
 } else {
 	echo "<p>Il faut attribuer un poste au(x) joueur(s) suivant(s) issu(s) de l'import:</p>";
 	echo "<p>Il faut respecter la nomenclature donnée par les sites officiels des clubs.</p>";
@@ -23,7 +23,7 @@ if ($sansPoste == NULL) {
 		echo "</select></td></tr>";
 	}
 	echo "</table>";
-	echo "<input type='submit' value='Enregistrer'/>";
+	echo "<input type='submit' value='Enregistrer et recalculer les scores'/>";
 }
 ?></form>
 </div>
