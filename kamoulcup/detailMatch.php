@@ -1,6 +1,7 @@
 <?php
 include_once('process/validateForm.php');
 include_once('process/formatStyle.php');
+include_once('process/conversion.php');
 
 if (! isset($_GET['rencontreid'])) {
 	echo '<p class=\"error\">Pas de rencontreId !</p>';
@@ -195,7 +196,10 @@ if ($listPerformancesDomQuery != NULL) {
 		if ($highlight) {
 			echo "</b>";
 		}
-		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$perf['note_ff']}</td><td>{$perf['note_sp']}</td>";
+		$noteWS = $perf['note_ff'];
+		$noteWSConv = convertNoteWS($noteWS);
+		$showNoteWS = $noteWSConv.'<span class="miniNote">&nbsp;['.$noteWS.']</span>';
+		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$perf['note_sp']}</td>";
 		//<td>{$perf['note_d']}</td>";
 		/*<td>{$perf['note_e']}</td>"*/;
 		if ($perf['poste'] == 'G') {
@@ -230,7 +234,10 @@ if ($listPerformancesExtQuery != NULL) {
 		if ($highlight) {
 			echo "</b>";
 		}
-		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$perf['note_ff']}</td><td>{$perf['note_sp']}</td>";
+		$noteWS = $perf['note_ff'];
+		$noteWSConv = convertNoteWS($noteWS);
+		$showNoteWS = $noteWSConv.'<span class="miniNote">&nbsp;['.$noteWS.']</span>';
+		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$perf['note_sp']}</td>";
 		//<td>{$perf['note_d']}</td>";
 		/*<td>{$perf['note_e']}</td>"*/;
 		if ($perf['poste'] == 'G') {

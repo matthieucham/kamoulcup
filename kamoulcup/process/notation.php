@@ -1,8 +1,9 @@
 <?php
 include ('params/notationParams.php');
+include ('conversion.php');
 
 /**
- * Calcule le score d'un joueur selon une nouvelle méthode : score journée par journée
+ * Calcule le score d'un joueur selon une nouvelle mï¿½thode : score journï¿½e par journï¿½e
  * Enter description here ...
  * @param $joueurId
  */
@@ -56,12 +57,12 @@ function calculScoreJoueur2($db,$joueurId){
 			{
 				//Une nouvelle note
 				$prestaNote = floatval($presta['score']);
-				// Si on n'en avait pas déjà assez, on l'ajoute de toute façon
+				// Si on n'en avait pas dï¿½jï¿½ assez, on l'ajoute de toute faï¿½on
 				if(count($bestNotes) < $SCO_nbperfs) {
 					$bestNotes[]=$prestaNote;
 					sort($bestNotes);
 				} else {
-					// on a déjà le nombre voulu de notes : si c'est une note supérieure au minimum, on la compte, sinon non.
+					// on a dï¿½jï¿½ le nombre voulu de notes : si c'est une note supï¿½rieure au minimum, on la compte, sinon non.
 					$minNote = $bestNotes[0];
 					if ($minNote < $prestaNote) {
 						$bestNotes[0] = $prestaNote;
@@ -74,7 +75,7 @@ function calculScoreJoueur2($db,$joueurId){
 						$bestNotes1[]=$prestaNote;
 						sort($bestNotes1);
 					} else {
-						// on a déjà le nombre voulu de notes : si c'est une note supérieure au minimum, on la compte, sinon non.
+						// on a dï¿½jï¿½ le nombre voulu de notes : si c'est une note supï¿½rieure au minimum, on la compte, sinon non.
 						$minNote = $bestNotes1[0];
 						if ($minNote < $prestaNote) {
 							$bestNotes1[0] = $prestaNote;
@@ -87,7 +88,7 @@ function calculScoreJoueur2($db,$joueurId){
 						$bestNotes2[]=$prestaNote;
 						sort($bestNotes2);
 					} else {
-						// on a déjà le nombre voulu de notes : si c'est une note supérieure au minimum, on la compte, sinon non.
+						// on a dï¿½jï¿½ le nombre voulu de notes : si c'est une note supï¿½rieure au minimum, on la compte, sinon non.
 						$minNote = $bestNotes2[0];
 						if ($minNote < $prestaNote) {
 							$bestNotes2[0] = $prestaNote;
@@ -110,7 +111,7 @@ function calculScoreJoueur2($db,$joueurId){
 					$nbEntreesLongues2++;
 				}
 			}
-			// on calcule ici la partie du score dépendante des notes.
+			// on calcule ici la partie du score dï¿½pendante des notes.
 			$partieNotes=array_sum($bestNotes);
 			$partieNotes1=array_sum($bestNotes1);
 			$partieNotes2=array_sum($bestNotes2);
@@ -183,7 +184,7 @@ function calculScoreJoueur2($db,$joueurId){
 			$bonusSoFar += $partieBonus;
 			$bonusSoFar1 += $partieBonus1;
 			$bonusSoFar2 += $partieBonus2;
-			// Empile par ordre de numéro
+			// Empile par ordre de numï¿½ro
 			$journeesIdsWithPresta[] = $presta['idJournee'];
 		}
 	}
@@ -206,7 +207,7 @@ function calculScoreJoueur2($db,$joueurId){
 		}
 	}
 
-	// bonus spéciaux
+	// bonus spï¿½ciaux
 	if ($exceptionnelQuery != NULL) {
 		$scoreSoFar += $exceptionnelQuery[0][0];
 	}
@@ -231,9 +232,10 @@ function calculScorePrestation($db,$prestationId) {
 	}
 	if ($noteFF != NULL) {
 		$compteurNote++;
-		// noteFF est une note "à l'allemande": il faut la convertir.
+		// noteFF est une note "ï¿½ l'allemande": il faut la convertir.
 		//$noteConvertie = (1-(floatval($noteFF)/8))*10;
 		//$note += $noteConvertie;
+		$noteFF = convertNoteWS($noteFF);
 		$note += $noteFF;
 	}
 	if ($noteSP != NULL) {

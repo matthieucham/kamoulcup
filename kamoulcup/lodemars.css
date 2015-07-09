@@ -430,3 +430,8 @@ a:hover
 	font-size: 1.2em;
 	color:black;
 }
+
+.miniNote {
+	font-size: 0.8em;
+	color: #888;
+}

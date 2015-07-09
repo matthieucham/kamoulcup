@@ -25,6 +25,5 @@
 	
 	$SCO_journeePivot=20;
 	$SCO_nbperfs1=13;
-	$SCO_nbperfs2=13;
-	
+	$SCO_nbperfs2=13;	
 ?>
