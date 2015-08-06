@@ -114,11 +114,11 @@ function importPrestations($token, $uuid_meeting, $journeeId) {
 		if ($getJoueur == NULL) {
 			// Création du joueur.
 			if (property_exists($current->player, 'first_name')) {
-				$fn = $current->player->first_name;
+				$fn = $ln = htmlspecialchars(correctSlash($current->player->first_name, ENT_COMPAT, 'UTF-8'));
 			} else {
 				$fn = NULL;
 			}
-			$ln = $current->player->last_name;
+			$ln = htmlspecialchars(correctSlash($current->player->last_name, ENT_COMPAT, 'UTF-8'));
 			$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id) select '{$fn}', '{$ln}', '{$uuid}', id from club where uuid='{$current->played_for}'";
 			$db->query($createJoueurQ);
 			$getJoueur = $db->getArray("select id,poste from joueur where uuid='{$uuid}'");
