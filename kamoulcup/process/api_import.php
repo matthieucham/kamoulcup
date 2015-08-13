@@ -100,9 +100,11 @@ function importPrestations($token, $uuid_meeting, $journeeId) {
 	}
 	$countPeno = array ('home' => 0, 'away' => 0);
 	// Le match existe déjà forcément en bd
-	$getMatchQ = "select rencontre.id from rencontre inner join club as clDom on clDom.id=club_dom_id inner join club as clExt on clExt.id=club_ext_id where journee_id={$journeeId} and clDom.uuid='{$homeuuid}' and clExt.uuid='{$awayuuid}' limit 1";
+	$getMatchQ = "select rencontre.id, clDom.id, clExt.id from rencontre inner join club as clDom on clDom.id=club_dom_id inner join club as clExt on clExt.id=club_ext_id where journee_id={$journeeId} and clDom.uuid='{$homeuuid}' and clExt.uuid='{$awayuuid}' limit 1";
 	$getMatch = $db->getArray($getMatchQ);
 	$matchId = $getMatch[0][0];
+	$domId = $getMatch[0][1];
+	$extId = $getMatch[0][2];
 	$maxNote = array('home' => array('D' => 0.0, 'M' => 0.0), 'away' => array('D' => 0.0, 'M' => 0.0));
 	$maxJoueurId = array('home' => array('D' => array(), 'M' => array()), 'away' => array('D' => array(), 'M' => array()));
 
@@ -110,18 +112,28 @@ function importPrestations($token, $uuid_meeting, $journeeId) {
 		$current = $json->roster[$i];
 		$uuid = $current->player->uuid;
 		// Récupération du joueur ou création s'il n'existe pas:
-		$getJoueur = $db->getArray("select id, poste from joueur where uuid='{$uuid}'");
+		$getClubQ = "select id from club where uuid='{$current->played_for}'";
+		$getClub = $db->getArray($getClubQ);
+		$cl = $getClub[0][0];
+		$getJoueur = $db->getArray("select id, poste, club_id from joueur where uuid='{$uuid}'");
 		if ($getJoueur == NULL) {
 			// Création du joueur.
 			if (property_exists($current->player, 'first_name')) {
-				$fn = $ln = htmlspecialchars(correctSlash($current->player->first_name, ENT_COMPAT, 'UTF-8'));
+				$fn = $ln = htmlspecialchars($current->player->first_name, ENT_COMPAT, 'UTF-8');
 			} else {
 				$fn = NULL;
 			}
-			$ln = htmlspecialchars(correctSlash($current->player->last_name, ENT_COMPAT, 'UTF-8'));
-			$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id) select '{$fn}', '{$ln}', '{$uuid}', id from club where uuid='{$current->played_for}'";
+			$ln = htmlspecialchars($current->player->last_name, ENT_COMPAT, 'UTF-8');
+			$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id) values ('{$fn}', '{$ln}', '{$uuid}',{$cl}";
 			$db->query($createJoueurQ);
 			$getJoueur = $db->getArray("select id,poste from joueur where uuid='{$uuid}'");
+		} else {
+			// Update club_id si club différent
+			$oldcl = $getJoueur[0][2];
+			if ($oldcl != $cl) {
+				$updateJoueurQ = "update joueur set club_id={$cl} where uuid='{$uuid}'";
+				$db->query($updateJoueurQ);
+			}
 		}
 		$joueurId = $getJoueur[0][0];
 		$joueurPoste = $getJoueur[0][1];

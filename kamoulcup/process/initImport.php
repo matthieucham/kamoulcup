@@ -22,7 +22,7 @@ for($i=0; $i < count($steps->steps); $i++) {
 	$getJourneeQ = "select id from journee where numero={$numero}";
 	$getJournee = $db->getArray($getJourneeQ);
 	if ($getJournee == NULL) {
-		$newJourneeQ = "insert into journee(numero, uuid, date, sync_me) value ({$num},'{$uuid_journee}', now(), 1)";
+		$newJourneeQ = "insert into journee(numero, uuid, date, sync_me) values ({$numero},'{$uuid_journee}', now(), 1)";
 		$db->query($newJourneeQ);
 	} else {
 		$syncMeQ = "update journee set sync_me=1, uuid='{$uuid_journee}' where numero={$numero} and (last_sync<'{$dbDate}' or last_sync is null)";
