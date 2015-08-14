@@ -152,7 +152,7 @@ function importPrestations($token, $uuid_meeting, $journeeId) {
 			}
 			if ($current->ratings[$j]->source == $SN_src_WS) {
 				$noteWS = 0.0 + $current->ratings[$j]->rating;
-				$sommeNotes += $noteWS;
+				$sommeNotes += convertNoteWS($noteWS);
 			}
 			if ($current->ratings[$j]->source == $SN_src_SP) {
 				$noteSP = 0.0 + $current->ratings[$j]->rating;
