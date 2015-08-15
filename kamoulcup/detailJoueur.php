@@ -43,12 +43,12 @@ $pictoDemiBonusOff = '<img src=\''.picto('3BP').'\' title=\'3 buts marqués dont
 
 <div class="colgauche_container">
 <div class="colgauche_gauche"><?php
-echo '<img src="'.getURLPhotoJoueur($getJoueurQuery[0]['idJoueur']).'" alt="photo '.$getJoueurQuery[0]['nomJoueur'].'"/><br/>';
+//echo '<img src="'.getURLPhotoJoueur($getJoueurQuery[0]['idJoueur']).'" alt="photo '.$getJoueurQuery[0]['nomJoueur'].'"/><br/>';
 echo "{$getJoueurQuery[0]['prenom']} {$getJoueurQuery[0]['nomJoueur']}<br/>";
 echo traduire($getJoueurQuery[0]['poste']).'<br/>';
 if ($getClubQuery != NULL) {
 	echo '<a href=\'index.php?page=detailClub&clubid='.$getClubQuery[0]['id'].'\'>'.$getClubQuery[0]['nom'].'</a><br/>';
-	echo '<img src="'.getURLLogoClub($getClubQuery[0]['id_lequipe']).'" alt="Logo '.$getClubQuery[0]['nom'].'"/>';
+	//echo '<img src="'.getURLLogoClub($getClubQuery[0]['id_lequipe']).'" alt="Logo '.$getClubQuery[0]['nom'].'"/>';
 }
 if ($monJoueur) {
 	// Aff de la partie spécifique à ses propres joueurs
@@ -85,7 +85,7 @@ if ($monJoueur) {
 ?></div>
 <div class="colgauche_droite">
 <div class="sectionPage"><?php
-echo '<p>» <a href="'.getURLFicheJoueur($getJoueurQuery[0]['idJoueur']).'">Consulter sa fiche sur lequipe.fr</a></p><br/>';
+//echo '<p>» <a href="'.getURLFicheJoueur($getJoueurQuery[0]['idJoueur']).'">Consulter sa fiche sur lequipe.fr</a></p><br/>';
 ?>
 <div class="sous_titre">Transferts</div>
 <?php

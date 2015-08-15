@@ -21,7 +21,7 @@
 <div class="colgauche_container">
 	<div class="colgauche_gauche">
 		<?php
-		echo '<img src="'.getURLLogoClub($getClubQuery[0]['id_lequipe']).'" alt="logo '.$getClubQuery[0]['nom'].'"/><br/>';
+		//echo '<img src="'.getURLLogoClub($getClubQuery[0]['id_lequipe']).'" alt="logo '.$getClubQuery[0]['nom'].'"/><br/>';
 		?>
 	</div>
 	<div class="colgauche_droite">

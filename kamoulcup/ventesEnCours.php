@@ -101,7 +101,7 @@ if ($listEnAttenteQuery != NULL)  {
 				}
 			}
 		}
-		echo '<br/><img src="'.getURLPhotoJoueur($vente['id_lequipe']).'" alt="photo '.$vente['nomJoueur'].'\"/>';
+		//echo '<br/><img src="'.getURLPhotoJoueur($vente['id_lequipe']).'" alt="photo '.$vente['nomJoueur'].'\"/>';
 		echo "<br/>Enchères fermées depuis le <b>{$vente['finDate']}</b>";
 		echo "</div>";
 	}

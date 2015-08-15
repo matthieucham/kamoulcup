@@ -7,9 +7,9 @@
 			echo "<p>Journée {$resultatsJournee[0]['numero']} du {$resultatsJournee[0]['dateJournee']}</p>";
 			echo "<table class='tableau_horizon' width='100%'>";
 			foreach ($resultatsJournee as $resultat) {
-				$domLogo = '<img src=\''.getURLLogoClubSmall($resultat['clDomEq']).'\'/>';
-				$extLogo = '<img src=\''.getURLLogoClubSmall($resultat['clExtEq']).'\'/>';
-				echo "<tr><td>{$domLogo}</td><td align='right'><a href='index.php?page=detailClub&clubid={$resultat['clDomId']}'>{$resultat['clDomNom']}</a></td><td align='center'><a href='index.php?page=detailMatch&rencontreid={$resultat['matchId']}'>{$resultat['buts_club_dom']} - {$resultat['buts_club_ext']}</a></td><td align='left'><a href='index.php?page=detailClub&clubid={$resultat['clExtId']}'>{$resultat['clExtNom']}</a></td><td>{$extLogo}</td></tr>";
+				//$domLogo = '<img src=\''.getURLLogoClubSmall($resultat['clDomEq']).'\'/>';
+				//$extLogo = '<img src=\''.getURLLogoClubSmall($resultat['clExtEq']).'\'/>';
+				echo "<tr><td align='right'><a href='index.php?page=detailClub&clubid={$resultat['clDomId']}'>{$resultat['clDomNom']}</a></td><td align='center'><a href='index.php?page=detailMatch&rencontreid={$resultat['matchId']}'>{$resultat['buts_club_dom']} - {$resultat['buts_club_ext']}</a></td><td align='left'><a href='index.php?page=detailClub&clubid={$resultat['clExtId']}'>{$resultat['clExtNom']}</a></td></tr>";
 			}
 			echo "</table>";
 			//echo "</div>";

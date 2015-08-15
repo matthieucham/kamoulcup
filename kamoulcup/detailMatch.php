@@ -72,18 +72,18 @@ $pictoPenoObt = '<img src=\''.picto('PO').'\' title=\'Penalty obtenu\'/>';
 <div class="titre_page">Compte-rendu de match</div>
 <div class='section_page'>
 <div id="matchSummary"><?php
-$logoDom = getURLLogoClubSmall($getMatchQuery[0]['clDomEq']);
-$logoExt = getURLLogoClubSmall($getMatchQuery[0]['clExtEq']);
-$domLogo = '<img src=\''.$logoDom.'\'/>';
-$extLogo = '<img src=\''.$logoExt.'\'/>';
+//$logoDom = getURLLogoClubSmall($getMatchQuery[0]['clDomEq']);
+//$logoExt = getURLLogoClubSmall($getMatchQuery[0]['clExtEq']);
+//$domLogo = '<img src=\''.$logoDom.'\'/>';
+//$extLogo = '<img src=\''.$logoExt.'\'/>';
 echo $getMatchQuery[0]['dateMatch'].'<br/>';
 if ($getMatchQuery[0]['elimination'] > 0) {
 	echo "Match à élimination directe";
 }
 echo "<table class='tableau_horizon_match' width='100%'>";
-echo "<tr><th width='6%'>{$domLogo}</th><th align='right' width='41%'><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clDomId']}'>{$getMatchQuery[0]['clDomNom']}</a></th><th align='center' width='6%'>-</th><th align='left' width='41%'><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clExtId']}'>{$getMatchQuery[0]['clExtNom']}</a></th><th width='6%'>{$extLogo}</th></tr>";
-echo "<tr><th></th><th align='right'>{$getMatchQuery[0]['buts_club_dom']}</th><th></th><th align='left'>{$getMatchQuery[0]['buts_club_ext']}</th><th></th></tr>";
-echo "<tr><td></td><td align='right'>";
+echo "<tr><th align='right' width='41%'><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clDomId']}'>{$getMatchQuery[0]['clDomNom']}</a></th><th align='center' width='6%'>-</th><th align='left' width='41%'><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clExtId']}'>{$getMatchQuery[0]['clExtNom']}</a></th></tr>";
+echo "<tr><th align='right'>{$getMatchQuery[0]['buts_club_dom']}</th><th></th><th align='left'>{$getMatchQuery[0]['buts_club_ext']}</th></tr>";
+echo "<tr><td align='right'>";
 if (count($buteurs['dom'])>1) {
 	echo "<p>{$pictoBut} <b>Buts</b></p>";
 	foreach ($buteurs['dom'] as $jid=>$but) {
@@ -166,7 +166,7 @@ if (count($penaltys_obtenus['ext'])>1) {
 		echo "</a></p>";
 	}
 }
-echo "</td><td></td></tr>";
+echo "</td></tr>";
 echo "</table>";
 ?></div>
 </div>

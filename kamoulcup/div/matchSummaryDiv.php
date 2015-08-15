@@ -4,9 +4,9 @@
 <div class="sectionPage">
 	<div id="matchSummary">
 	<?php
-	$imgUrl = getURLLogoClubSmall($getMatchQuery[0][1]);
-	$imgUrl2 = getURLLogoClubSmall($getMatchQuery[0][3]);
-	echo "<img src=\"{$imgUrl}\"/> {$getMatchQuery[0][0]} {$getMatchQuery[0][4]} - {$getMatchQuery[0][5]} {$getMatchQuery[0][2]} <img src=\"{$imgUrl2}\"/>";
+	//$imgUrl = getURLLogoClubSmall($getMatchQuery[0][1]);
+	//$imgUrl2 = getURLLogoClubSmall($getMatchQuery[0][3]);
+	echo "{$getMatchQuery[0][0]} {$getMatchQuery[0][4]} - {$getMatchQuery[0][5]} {$getMatchQuery[0][2]}";
 	?>
 	</div>
 </div>

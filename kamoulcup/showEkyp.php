@@ -22,8 +22,8 @@
 	$getTactiqueQuery = $db->getArray("select description,nb_g, nb_d, nb_m, nb_a from tactique where id='{$getEkypQuery[0]['tactique_id']}'");
 	
 	function displayJoueur($joueur) {
-		$photo = getURLPhotoJoueur($joueur['id_lequipe']);
-		echo "<img src=\"{$photo}\"/><br/>";
+		//$photo = getURLPhotoJoueur($joueur['id_lequipe']);
+		//echo "<img src=\"{$photo}\"/><br/>";
 		$scoreFl = number_format(round($joueur['score'],2),2);
 		echo "<a href='index.php?page=detailJoueur&joueurid={$joueur['id']}'>{$joueur['prenom']} {$joueur['nom']}</a>: {$scoreFl}";
 	}

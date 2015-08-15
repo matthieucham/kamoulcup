@@ -31,7 +31,7 @@
 		echo "<div class=\"cadreVente\">";
 		$position = traduire($getJoueurQuery[0]['poste']);
 		echo "<b>PA de l'ekyp <a href=\"index.php?page=showEkyp&ekypid={$_SESSION['myEkypId']}\">{$getEkypQuery[0]['nom']}</a> sur <a href=\"index.php?page=detailJoueur&joueurid={$joueurId}\">{$prenom} {$nom}</a> ({$position}, {$club}): {$montantArrondi} Ka.</b>";
-		echo '<br/><img src="'.getURLPhotoJoueur($getJoueurQuery[0]['id_lequipe']).'" alt="photo '.$nom.'"/>';
+		//echo '<br/><img src="'.getURLPhotoJoueur($getJoueurQuery[0]['id_lequipe']).'" alt="photo '.$nom.'"/>';
 		echo "<br/>Enchères du <b>{$dateDebut}</b> au <b>{$dateFin}</b>";
 		echo "</div>";
 		echo "<br/><p><i>Les dates de début et fin d'enchère sont données à titre indicatif, seul l'horaire visible par tous sur la page du marché des joueurs fait foi.</i></p><br/>";

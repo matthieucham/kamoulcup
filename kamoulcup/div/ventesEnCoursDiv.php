@@ -19,7 +19,7 @@ if ($listVentesQuery != NULL) {
 				}
 			}
 		}
-		echo '<br/><img src="'.getURLPhotoJoueur($vente['id_lequipe']).'" alt="photo '.$vente['nomJoueur'].'\"/>';
+		//echo '<br/><img src="'.getURLPhotoJoueur($vente['id_lequipe']).'" alt="photo '.$vente['nomJoueur'].'\"/>';
 		echo "<br/>Enchères jusqu'au <b>{$vente['finDate']}</b>";
 		echo "</div>";
 	}

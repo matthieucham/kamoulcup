@@ -8,3 +8,5 @@ kamoulcup/.settings/org.eclipse.php.core.prefs
 main/.settings/org.eclipse.php.core.prefs
 main/.project
 main/.buildpath
+kamoulcup/includes/dbConfig.php.kdf
+kamoulcup/includes/dbConfig.php.local
