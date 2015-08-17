@@ -118,13 +118,18 @@ function importPrestations($token, $uuid_meeting, $journeeId) {
 		$getJoueur = $db->getArray("select id, poste, club_id from joueur where uuid='{$uuid}'");
 		if ($getJoueur == NULL) {
 			// Création du joueur.
-			if (property_exists($current->player, 'first_name')) {
-				$fn = $ln = htmlspecialchars($current->player->first_name, ENT_COMPAT, 'UTF-8');
-			} else {
+			if (property_exists($current->player, 'usual_name') && strlen($current->player->usual_name)>0) {
 				$fn = NULL;
+				$ln =  htmlspecialchars($current->player->usual_name, ENT_COMPAT, 'UTF-8');
+			} else {
+				if (property_exists($current->player, 'first_name')) {
+					$fn = htmlspecialchars($current->player->first_name, ENT_COMPAT, 'UTF-8');
+				} else {
+					$fn = NULL;
+				}
+				$ln =  htmlspecialchars($current->player->last_name, ENT_COMPAT, 'UTF-8');
 			}
-			$ln = htmlspecialchars($current->player->last_name, ENT_COMPAT, 'UTF-8');
-			$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id) values ('{$fn}', '{$ln}', '{$uuid}',{$cl}";
+			$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id) select '{$fn}', '{$ln}', '{$uuid}', id from club where uuid='{$current->played_for}'";
 			$db->query($createJoueurQ);
 			$getJoueur = $db->getArray("select id,poste from joueur where uuid='{$uuid}'");
 		} else {
@@ -201,35 +206,36 @@ function importPrestations($token, $uuid_meeting, $journeeId) {
 		$bonusQ = "update prestation inner join club on club_id=club.id set defense_unpenalty=1 where match_id={$matchId} and club.uuid='{$homeuuid}' and minutes>={$SCO_minTpsCollectif}";
 		$db->query($bonusQ);
 	}
-	if ($team_bonus['home']['cs'] == True) {
+	elseif ($team_bonus['home']['cs'] == True) {
 		$bonusQ = "update prestation inner join club on club_id=club.id set defense_vierge=1 where match_id={$matchId} and club.uuid='{$homeuuid}' and minutes>={$SCO_minTpsCollectif}";
-		$db->query($bonusQ);
-	}
-	if ($team_bonus['home']['offensif'] == True) {
-		$bonusQ = "update prestation inner join club on club_id=club.id set troisbuts=1 where match_id={$matchId} and club.uuid='{$homeuuid}' and minutes>={$SCO_minTpsCollectif}";
 		$db->query($bonusQ);
 	}
 	if ($team_bonus['home']['offensif_demi'] == True) {
 		$bonusQ = "update prestation inner join club on club_id=club.id set troisbuts_unpenalty=1 where match_id={$matchId} and club.uuid='{$homeuuid}' and minutes>={$SCO_minTpsCollectif}";
 		$db->query($bonusQ);
 	}
+	elseif ($team_bonus['home']['offensif'] == True) {
+		$bonusQ = "update prestation inner join club on club_id=club.id set troisbuts=1 where match_id={$matchId} and club.uuid='{$homeuuid}' and minutes>={$SCO_minTpsCollectif}";
+		$db->query($bonusQ);
+	}
+
 
 	if ($team_bonus['away']['cs_demi'] == True) {
 		$bonusQ = "update prestation inner join club on club_id=club.id set defense_unpenalty=1 where match_id={$matchId} and club.uuid='{$awayuuid}' and minutes>={$SCO_minTpsCollectif}";
 		$db->query($bonusQ);
 	}
-	if ($team_bonus['away']['cs'] == True) {
+	elseif ($team_bonus['away']['cs'] == True) {
 		$bonusQ = "update prestation inner join club on club_id=club.id set defense_vierge=1 where match_id={$matchId} and club.uuid='{$awayuuid}' and minutes>={$SCO_minTpsCollectif}";
-		$db->query($bonusQ);
-	}
-	if ($team_bonus['away']['offensif'] == True) {
-		$bonusQ = "update prestation inner join club on club_id=club.id set troisbuts=1 where match_id={$matchId} and club.uuid='{$awayuuid}' and minutes>={$SCO_minTpsCollectif}";
 		$db->query($bonusQ);
 	}
 	if ($team_bonus['away']['offensif_demi'] == True) {
 		$bonusQ = "update prestation inner join club on club_id=club.id set troisbuts_unpenalty=1 where match_id={$matchId} and club.uuid='{$awayuuid}' and minutes>={$SCO_minTpsCollectif}";
 		$db->query($bonusQ);
+	} elseif ($team_bonus['away']['offensif'] == True) {
+		$bonusQ = "update prestation inner join club on club_id=club.id set troisbuts=1 where match_id={$matchId} and club.uuid='{$awayuuid}' and minutes>={$SCO_minTpsCollectif}";
+		$db->query($bonusQ);
 	}
+
 
 	// Mise à jour des bonus de meilleur joueur
 	// D'abord : mise à zéro
