@@ -3,12 +3,12 @@
 		<!--<table width='300px' border=0 class='tableau_class liencolonne' cellpading='0' cellspacing='0'>-->
 		<table>
 		<?php
-				$meilleursJoueursQuery = $db->getArray("select id,nom,prenom,score,score1,poste from joueur order by score desc limit 10");
+				$meilleursJoueursQuery = $db->getArray("select id,nom,prenom,score,score1,poste from joueur order by score1 desc limit 10");
 				$i=0;
 				$lastScore = -1;
 				foreach($meilleursJoueursQuery as $joueur) {
 					$i++;
-					$scoreFl = number_format(round(floatval($joueur['score']),2),2);
+					$scoreFl = number_format(round(floatval($joueur['score1']),2),2);
 					$rang = $i;
 					if ($scoreFl == $lastScore) {
 						$rang = '-';

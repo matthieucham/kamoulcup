@@ -42,8 +42,8 @@ function generateClassement($nomClassement, $scoreField) {
 	echo "</div>";
 }
 
-//generateClassement("Apertura", "score1");
+generateClassement("Apertura", "score1");
 
-generateClassement("Saison", "score");
-generateClassement("Clausura", "score2");
+//generateClassement("Saison", "score");
+//generateClassement("Clausura", "score2");
 ?>
