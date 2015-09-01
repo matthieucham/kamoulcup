@@ -21,15 +21,18 @@
 <?php
 	if (isset($_GET['club'])) {
 		$clubId=$_GET['club'];
-		$loadClubQuery = "select id,nom,id_lequipe from club where id='{$clubId}' limit 1";
+		$loadClubQuery = "select id,nom,id_lequipe,uuid from club where id='{$clubId}' limit 1";
 		$storedClub = $db->getArray($loadClubQuery);
 		$nouveau = 0;
 		if ($storedClub == NULL) {
-			$storedClub = array(array('id' => '', 'nom' => '', 'id_lequipe' => ''));
+			$storedClub = array(array('id' => '', 'nom' => '', 'id_lequipe' => '', 'uuid' => ''));
 			$nouveau = 1;
 		}
 		include('./div/editClubDiv.php');
 		include('./div/listJoueursClubDiv.php');
+		$clubUuid = $storedClub[0]['uuid'];
+		$clubId = $storedClub[0]['id'];
+		echo "<form method='POST' action='process/importClub.php'><input type='hidden' name='clubid' value='{$clubId}'/><input type='hidden' name='clubuuid' value='{$clubUuid}'/><input type='submit' value='Importer effectif'/></form>";
 	}
 	if (isset($_GET['ErrorMsg'])){
 		$err =htmlspecialchars($_GET['ErrorMsg'], ENT_COMPAT, 'UTF-8');

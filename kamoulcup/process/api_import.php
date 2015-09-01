@@ -268,7 +268,6 @@ function listJournees($token, $uuid_instance) {
 	return _getProtectedUrl($token, $journeesUrl);
 }
 
-
 function getAccessToken() {
 	global $SN_host;
 	global $SN_client_id;
@@ -295,6 +294,12 @@ function getAccessToken() {
 	$token_type = $auth_data->token_type;
 	$token_value = $auth_data->access_token;
 	return $token_type.' '.$token_value;
+}
+
+function getClubWithMembers($token, $uuidClub) {
+	global $SN_host;
+	$plUrl = 'http://'.$SN_host.'/rest/football_teams/'.$uuidClub.'/?expand=members';
+	return _getProtectedUrl($token, $plUrl);
 }
 
 
