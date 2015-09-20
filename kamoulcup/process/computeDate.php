@@ -14,12 +14,12 @@ function calculDateFinEnchere($dateDebut,$nbHeures){
 		if ($startDateDay == 0) {
 			// Début d'enchères un Dimanche : on se replace à 12h le lendemain même.
 			$endTime -= ($startDateH*3600 + $startDateM*60 + $startDateS);
-			$endTime += 35*3600;
+			$endTime += 36*3600;
 		}
 		if ($startDateDay == 6) {
 			// Début d'enchères un Samedi : on se replace à 12h le surlendemain
 			$endTime -= ($startDateH*3600 + $startDateM*60 + $startDateS);
-			$endTime += 59*3600;
+			$endTime += 60*3600;
 		}
 	}
 
@@ -51,6 +51,13 @@ function calculDateFinEnchere($dateDebut,$nbHeures){
 		// après 19h : on déplace la fin à 12h le lendemain
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
 		$endTime += 36*3600;
+		if ($skipWE == 0) {
+			// Si ça nous fait tomber à samedi midi, déplacer au lundi midi.
+			$endDateDay = date('w',$endTime);
+			if ($endDateDay == 6) {
+				$endTime += 48*3600;
+			}
+		}
 	}
 	return $endTime;
 }
