@@ -303,8 +303,8 @@ function updatePrestationCollective($db,$matchId)
 	global $SCO_minTpsCollectif;
 	$getMatchData=$db->getArray("select club_dom_id, club_ext_id, buts_club_dom, buts_club_ext from rencontre where id={$matchId} limit 1");
 	// Domicile
-	$defense = getDefensePrestation('EXT',$matchId,$getMatchData[0]['buts_club_ext'],$db);
-	$attaque = getAttaquePrestation('DOM',$matchId,$getMatchData[0]['buts_club_dom'],$db);
+	$defense = getDefensePrestation($matchId,$getMatchData[0]['club_ext_id'],$getMatchData[0]['buts_club_ext'],$db);
+	$attaque = getAttaquePrestation($matchId,$getMatchData[0]['club_dom_id'],$getMatchData[0]['buts_club_dom'],$db);
 	// Pour toutes les prestations � domicile de ce match, mettre � jour:
 	$listPrestationsId=$db->getArray("select pr.id, pr.minutes from prestation as pr where pr.match_id={$matchId} and pr.club_id={$getMatchData[0]['club_dom_id']}");
 	if ($listPrestationsId != NULL)
@@ -325,8 +325,8 @@ function updatePrestationCollective($db,$matchId)
 		}
 	}
 	// Exterieur
-	$defense = getDefensePrestation('DOM',$matchId,$getMatchData[0]['buts_club_dom'],$db);
-	$attaque = getAttaquePrestation('EXT',$matchId,$getMatchData[0]['buts_club_ext'],$db);
+	$defense = getDefensePrestation($matchId,$getMatchData[0]['buts_club_dom'],$db);
+	$attaque = getAttaquePrestation($matchId,$getMatchData[0]['buts_club_ext'],$db);
 	// Pour toutes les prestations � l'ext�rieur de ce match, mettre � jour:
 	$listPrestationsId=$db->getArray("select pr.id, pr.minutes from prestation as pr where pr.match_id={$matchId} and pr.club_id={$getMatchData[0]['club_ext_id']}");
 	if ($listPrestationsId != NULL)

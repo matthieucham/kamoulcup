@@ -58,7 +58,7 @@
 		$query = $db->query("update prestation set joueur_id='{$joueurId}', match_id='{$matchId}', note_lequipe={$noteLequipe}, note_ff={$noteFF}, note_sp={$noteSP}, note_d={$noteD}, note_e={$noteE}, but_marque=0, passe_dec=0, penalty_marque=0, club_id='{$clubId}', penalty_obtenu='{$penaltyObtenu}', minutes={$minutes}, double_bonus={$double}, arrets={$arr}, encaisses={$det} where id='{$id}'") or die ('Error, update query failed');
 	}
 	
-	function getDefensePrestation($domExt,$match,$butsEncaisses,$db) {
+	function getDefensePrestation($match,$club,$butsEncaisses,$db) {
 		$defensePrestation = array('vierge' => 0, 'unpeno' => 0, 'unbut' => 0);
 		if ($butsEncaisses > 1) {
 			return $defensePrestation;
@@ -70,7 +70,9 @@
 			return $defensePrestation;
 		}
 		if ($butsEncaisses == 1) {
-			$query = $db->getArray("select penalty,prolongation from buteurs where rencontre_id={$match} and dom_ext='{$domExt}'");
+			//$query = $db->getArray("select penalty,prolongation from buteurs where rencontre_id={$match} and dom_ext='{$domExt}'");
+			// TODO prolongation
+			$query = $db->getArray("select penalty_marque from prestation where match_id={$match} and club_id={$club}");
 			$penos = 0;
 			if ($query != NULL) {
 				foreach($query as $peno){
@@ -90,7 +92,7 @@
 		}
 	}
 	
-	function getAttaquePrestation($domExt,$match,$butsMarques,$db) {
+	function getAttaquePrestation($match, $club, $butsMarques, $db) {
 		$attaquePrestation = array('troisbuts' => 0, 'unpeno' => 0);
 		if ($butsMarques < 3) {
 			return $attaquePrestation;
@@ -99,8 +101,7 @@
 			$attaquePrestation['troisbuts'] = 1;
 			return $attaquePrestation;
 		}
-		$query = $db->getArray("select penalty,prolongation from buteurs where rencontre_id={$match} and dom_ext='{$domExt}'");
-		//$query = $db->getArray("select penalty_marque from prestation where match_id='{$match}' and club_id='{$clubId}'");
+		$query = $db->getArray("select penalty_marque from prestation where match_id='{$match}' and club_id='{$club}'");
 		$penos = 0;
 		if ($query != NULL) {
 			foreach($query as $peno){
@@ -163,7 +164,7 @@
 				if ($bRow['buteur_id'] == $bRow['joueur_id']) {
 					$cptPeno++;
 				}
-				// Le penalty est le seul cas de figure où l'on peut se faire une passe décisive à soit meme, donc pas de 'else' ici.
+				// Le penalty est le seul cas de figure oï¿½ l'on peut se faire une passe dï¿½cisive ï¿½ soit meme, donc pas de 'else' ici.
 				if ($bRow['passeur_id'] == $bRow['joueur_id']){
 					$cptPenoObt++;
 				}
@@ -179,7 +180,7 @@
 		$db->query("update prestation set but_marque={$cptBut}, passe_dec={$cptPasse}, penalty_marque={$cptPeno},penalty_obtenu={$cptPenoObt} where id={$prestationId}");
 	}
 	
-	// Met à jour le flag "leader" de la talbe prestation pour enregistrer les leaders de chaque ligne du match concerné.
+	// Met ï¿½ jour le flag "leader" de la talbe prestation pour enregistrer les leaders de chaque ligne du match concernï¿½.
 	function calculLeadersRencontre($db,$rencontreId) {
 		// il faut connaitre le club dom et le club ext.
 		$clubsQuery = $db->getArray("select club_dom_id, club_ext_id from rencontre where id={$rencontreId}");
@@ -188,7 +189,7 @@
 		// les gardiens
 		//$gardiensQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='G' and pr.score>0");
 		//setLeader($db,$gardiensQuery);
-		// défenseurs (tous)
+		// dï¿½fenseurs (tous)
 		//$defQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='D' and pr.score>0");
 		//setLeader($db,$defQuery);
 		// milieux (tous)
@@ -197,30 +198,30 @@
 		// attaquants (tous)
 		//$attQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='A' and pr.score>0");
 		//setLeader($db,$attQuery);
-		// les defenseurs à domicile
+		// les defenseurs ï¿½ domicile
 		$defDomQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='D' and jo.club_id={$clubDomId} and pr.score>0");
 		setLeader($db,$defDomQuery);
-		// les defenseurs à l'extérieur
+		// les defenseurs ï¿½ l'extï¿½rieur
 		$defExtQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='D' and jo.club_id={$clubExtId} and pr.score>0");
 		setLeader($db,$defExtQuery);
-		// les milieux à domicile
+		// les milieux ï¿½ domicile
 		$milDomQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='M' and jo.club_id={$clubDomId} and pr.score>0");
 		setLeader($db,$milDomQuery);
-		// les milieux à l'extérieur
+		// les milieux ï¿½ l'extï¿½rieur
 		$milExtQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='M' and jo.club_id={$clubExtId} and pr.score>0");
 		setLeader($db,$milExtQuery);
-		// les attaquants à domicile
+		// les attaquants ï¿½ domicile
 		//$attDomQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='A' and jo.club_id={$clubDomId} and pr.score>0");
 		//setLeader($db,$attDomQuery);
-		// les attaquants à l'extérieur
+		// les attaquants ï¿½ l'extï¿½rieur
 		//$attExtQuery = $db->getArray("select pr.id, pr.score, pr.minutes from prestation pr, joueur jo where pr.match_id={$rencontreId} and pr.joueur_id=jo.id and jo.poste='A' and jo.club_id={$clubExtId} and pr.score>0 and pr.minutes>={$SCO_minTps}");
 		//setLeader($db,$attExtQuery);
 	}
 	
-	// Met à 1 le flag leader de la meilleure (ou des meilleures) prestation en param, et remet les autres à 0
+	// Met ï¿½ 1 le flag leader de la meilleure (ou des meilleures) prestation en param, et remet les autres ï¿½ 0
 	function setLeader($db,$prestationsArray) {
 		global $SCO_minTps;
-	// repérer la prestation la plus haute et mettre à jour son flag.
+	// repï¿½rer la prestation la plus haute et mettre ï¿½ jour son flag.
 		if ($prestationsArray != NULL) {
 			$bestIds = Array();
 			$bestScore=0;
@@ -239,9 +240,9 @@
 					array_push($bestIds,$prest[0]);
 				}
 			}
-				// si score inférieur, on ne fait rien
+				// si score infï¿½rieur, on ne fait rien
 			}
-			// Puis on met les flag leader à 1
+			// Puis on met les flag leader ï¿½ 1
 			foreach($bestIds as $best) {
 				$db->query("update prestation set leader=1 where id={$best}");
 			}
