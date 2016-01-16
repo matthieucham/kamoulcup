@@ -43,7 +43,6 @@ function generateClassement($nomClassement, $scoreField) {
 }
 
 generateClassement("Apertura", "score1");
-
-//generateClassement("Saison", "score");
-//generateClassement("Clausura", "score2");
+generateClassement("Saison", "score");
+generateClassement("Clausura", "score2");
 ?>

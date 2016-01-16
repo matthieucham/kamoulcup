@@ -1,14 +1,6 @@
 <?php
 	// Nombre max de joueurs par �kyp, rempla�ants inclus.
-	$EKY_nbmaxjoueurs = 9;
-	// Nombre de gardiens pris en compte pour le calcul du score de l'ekyp
-	$EKY_nbg = 1;
-	// Nombre de d�fenseurs pris en compte pour le calcul du score de l'ekyp
-	$EKY_nbd = 2;
-	// Nombre de milieux pris en compte pour le calcul du score de l'ekyp
-	$EKY_nbm = 2;
-	// Nombre d'attaquants pris en compte pour le calcul du score de l'ekyp
-	$EKY_nba = 2;
+	$EKY_nbmaxjoueurs = 14;
 	// Nombre de PA autoris�es par session
 	$EKY_nbPA = 1;
 	// Nombre de MV autoris�es par session
