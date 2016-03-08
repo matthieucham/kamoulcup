@@ -150,23 +150,27 @@ function importPrestations($token, $uuid_meeting, $journeeId) {
 		$noteWS = 'NULL';
 		$noteSP = 'NULL';
 		$sommeNotes = 0;
+		$nbNotes = 0;
 		for ($j=0; $j<count($current->ratings); $j++) {
 			if ($current->ratings[$j]->source == $SN_src_EQ) {
 				$noteEQ = 0.0 + $current->ratings[$j]->rating;
 				$sommeNotes += $noteEQ;
+				$nbNotes++;
 			}
 			if ($current->ratings[$j]->source == $SN_src_WS) {
 				$noteWS = 0.0 + $current->ratings[$j]->rating;
 				$sommeNotes += convertNoteWS($noteWS);
+				$nbNotes++;
 			}
 			if ($current->ratings[$j]->source == $SN_src_SP) {
 				$noteSP = 0.0 + $current->ratings[$j]->rating;
 				$sommeNotes += $noteSP;
+				$nbNotes++;
 			}
 		}
 		if ($current->stats->playtime >= $SCO_minTps) {
-			if ($sommeNotes > 0 && ($joueurPoste == 'D' || $joueurPoste == 'M') ) {
-				$moy = $sommeNotes / count($current->ratings);
+			if ($nbNotes > 0 && ($joueurPoste == 'D' || $joueurPoste == 'M') ) {
+				$moy = $sommeNotes / $nbNotes;
 				if ($moy > $maxNote[$affectation[$current->played_for]][$joueurPoste]) {
 					$maxJoueurId[$affectation[$current->played_for]][$joueurPoste] = array($joueurId);
 					$maxNote[$affectation[$current->played_for]][$joueurPoste] = $moy;
