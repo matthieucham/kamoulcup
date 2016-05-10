@@ -39,7 +39,7 @@ include( 'tools/GoogChart.class.php' );
 		href="http://www.kamouloxdufoot.com/kdf/viewtopic.php?t=3771&start=0"><img
 		src="images/forum.png" /></a></li>
 	<li><a href="http://www.kamoulcup.com/l1/archives/"><img src="images/palmares.png" /></a></li>
-	<li><a href="regles.php"><img src="images/regles.png" /></a></li>
+	<li><a href="regles2.php"><img src="images/regles.png" /></a></li>
 	<?php
 	if (isset($_SESSION['myEkypId'])) {
 		echo "<li><a href='index.php?page=myEkyp'><img src='images/myekyp.png' /></a></li>  ";

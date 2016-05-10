@@ -164,16 +164,14 @@ L'argent transite immédiatement vers les caisses de l'ékyp.</p>
 <p>Le joueur redevient libre et peut faire l'objet d'une nouvelle PA.</p>
 <p>Un joueur qui se blesse avant le 11 Juin et ne peut disputer le Mondial est racheté par la Banque à <b>85% de son prix d'achat</b>.</p>
 <br/>
-<p><b><u>7. Résolution des enchères</b></u></p>
-<p>Les enchères dont le délai est écoulé sont résolues automatiquement. Le déclenchement de la résolution à lieu à 13h puis à 20h chaque jour.
-<p>Le moteur du jeu se met alors en branle pour attribuer les joueurs aux plus offrant en respectant les critères de validité des offres décrits plus haut.</p>
+<p><b><u>7. Résolution des enchères</u></b></p>
+<p>Les enchères dont le délai est écoulé sont résolues automatiquement. Le déclenchement de la résolution à lieu à 12h05 puis à 19h05 chaque jour.
+</p><p>Le moteur du jeu se met alors en branle pour attribuer les joueurs aux plus offrant en respectant les critères de validité des offres décrits plus haut.</p>
 <p>Le site indique finalement le résultat de cet arbitrage, et les transferts (de joueurs comme de fonds) sont réalisés immédiatement</p>
 <br/>
-<p>Dans le cas où la meilleure offre pour un joueur serait partagée par plusieurs ékyps, ces ékyps sont dites "en ballotage". Il leur est proposé de surenchérir pour se départager. Dans ce cas une notification est visible en tête de la colonne de droite lorsque les ékyps concernées se connectent</p>
-<p>Les ékyps concernées peuvent si elle souhaite formuler une nouvelle offre supérieure pour ce joueur. Attention : il y a un délai (égal au délai d'enchères écoulé) pour répondre.</p>
-<p>Lorsque toutes les ékyps concernées ont surenchéri ou que le délai est écoulé, le joueur est attribué au plus offrant. <b>Si deux ékyps ou plus sont à nouveau à égalité, le gagnant est alors tiré au sort.</b></p>
-<p>En résumé:</p>
-<img src="images/resolution.png"/>
+<p>Lorsque les résolutions des ventes de plusieurs joueurs se produisent lors de la même session, ces résolutions se produisent <b>DANS L’ORDRE CHRONOLOGIQUE DE POSTAGE DES PA ET DES MV</b>. Si par exemple le 20 septembre à 12h05 viennent à échéance 1) la PA sur Dupont 2) la MV sur Durand, l’ékyp ayant vendu Durand reçoit son argent APRES la résolution de la PA sur Dupont : elle ne peut donc pas utiliser tout ou partie des Ka obtenus de la vente de Durand pour acheter Dupont.</p>
+<br/>
+<p>Dans le cas où la meilleure offre pour un joueur serait partagée par plusieurs ékyps, ces ékyps sont dites "en ballotage". Il est alors immédiatement procédé à un tirage au sort, et le joueur est attribué au vainqueur de ce tirage au sort, au prix du ballottage.</p>
 <br/>
 <p><b><u>8. FAQ-Explications</b></u></p>
 <p><i>-Un participant peut-il annuler sa PA ?</i></p>
@@ -212,7 +210,7 @@ Accessoirement ces transactions pourraient nuire à la concurrence loyale (libre
 <p>Les médias retenus seront A DETERMINER</p>
 <p></p>
 <br/>
-<p>A la fin de la Coupe du monde, chaque joueur aura donc une note moyenne sur 10 (ex 6/10).</p>
+<p>A la fin de la compétition, chaque joueur aura donc une note moyenne sur 10 (ex 6/10).</p>
 <br/>
 <p>Pour les joueurs ayant été notés dans trois matches et plus, cette note moyenne sera créditée trois fois (total 18 dans l'exemple)</p>
 <p>Pour les joueurs ayant été notés dans deux matches seulement, il sera crédité "deux fois la note moyenne plus 4" ( 16 dans l'exemple)</p>
@@ -220,33 +218,83 @@ Accessoirement ces transactions pourraient nuire à la concurrence loyale (libre
 <p>Un joueur sans aucune note du fait d'un temps de jeu insuffisant, mais ayant participé, sera crédité d'1 point par entrée, plus 3 points par entrée de plus de 10 minutes, le tout plafonné à 12.</p>
 </p>
 <br/>
-<p><b><u>2. Bonus</u></b></p>
-<table class='tableau_saisie'>
-<tr><th colspan='3'>Pas de but encaissé</th></tr>
-<tr><th>Position du joueur</th><th>Bonus en poule + 3e place</th><th>Bonus en match éliminatoire</th></tr>
-<tr><td>gardien</td><td align='right'>1</td><td align='right'>2</td></tr>
-<tr><td>défenseur</td><td align='right'>0.75</td><td align='right'>1.5</td></tr>
-<tr><td>milieu</td><td align='right'>0.25</td><td align='right'>0.5</td></tr>
-</table>
-<p>1 seul but encaissé et celui-ci l'a été sur pénalty et/ou durant les prolongations: la moitié des bonus accordés ci-dessus</p>
+<p><b><u>2. Bonus collectifs</u></b></p>
+<p>Les bonus collectifs ne sont accordés qu'aux joueurs ayant passé au moins 45 minutes sur le terrain.</p>
+<table class="tableau_saisie">
+<tbody><tr><th colspan="2">Pas de but encaissé</th></tr>
+<tr><th>Position du joueur</th><th>Bonus</th></tr>
+<tr><td>gardien</td><td align="right">1.0</td></tr>
+<tr><td>défenseur</td><td align="right">0.75</td></tr>
+<tr><td>milieu</td><td align="right">0.25</td></tr>
+</tbody></table>
 <br/>
-<table class='tableau_saisie'>
-<tr><th colspan='3'>Autres bonus</th></tr>
-<tr><th>Performance</th><th>Bonus en poule + 3e place</th><th>Bonus en match éliminatoire</th></tr>
-<tr><td>Par but marqué</td><td align='right'>0.75</td><td align='right'>1.5</td></tr>
-<tr><td>Par pénalty marqué</td><td align='right'>0.375</td><td align='right'>0.75</td></tr>
-<tr><td>Par passe décisive</td><td align='right'>0.5</td><td align='right'>1</td></tr>
-<tr><td>Par pénaly obtenu</td><td align='right'>0.25</td><td align='right'>0.5</td></tr>
-<tr><td>joueur  retenu dans la présélection Fifa All Star short list</td><td align='right' colspan='2'>+1</td></tr>
-<tr><td>joueur retenu dans la Fifa All Star Team définitive</td><td align='right' colspan='2'>+1</td></tr>
-</table>
+<table class="tableau_saisie">
+<tbody><tr><th colspan="2">1 seul but encaissé et celui-ci l'a été sur pénalty</th></tr>
+<tr><th>Position du joueur</th><th>Bonus</th></tr>
+<tr><td>gardien</td><td align="right">0.5</td></tr>
+<tr><td>défenseur</td><td align="right">0.375</td></tr>
+<tr><td>milieu</td><td align="right">0.125</td></tr>
+</tbody></table>
 <br/>
-<p>Exemple d'un défenseur ayant disputé 2 matches de poule (dont 1 sans but encaissé) et deux matches à élimination directe (2-1,1-2, un but marqué), note moyenne de 7/10 sur les 4 matches, pré-sélectionné all star</p>
+<table class="tableau_saisie">
+<tbody><tr><th colspan="2">Exactement trois buts marqués (tous dans le jeu) ou au moins 4 buts marqués  </th></tr>
+<tr><th>Position du joueur</th><th>Bonus</th></tr>
+<tr><td>milieu</td><td align="right">0.1</td></tr>
+<tr><td>attaquant</td><td align="right">0.25</td></tr>
+</tbody></table>
+<br/>
+<table class="tableau_saisie">
+<tbody><tr><th colspan="2">Exactement 3 buts marqué dont un et un seul sur pénalty </th></tr>
+<tr><th>Position du joueur</th><th>Bonus</th></tr>
+<tr><td>milieu</td><td align="right">0.05</td></tr>
+<tr><td>attaquant</td><td align="right">0.125</td></tr>
+</tbody></table>
+<br/>
+<p><b><u>3. Bonus individuels</u></b></p>
+<p>Ils sont attribués à chaque match à tous les joueurs concernés sans limite de temps de jeu</p>
+<br/>
+<table class="tableau_saisie">
+<tbody><tr><th colspan="2">Meilleure note moyenne de la presse</th></tr>
+<tr><th>Position du joueur</th><th>Bonus</th></tr>
+<tr><td>défenseur</td><td align="right">0.3</td></tr>
+<tr><td>milieu</td><td align="right">0.15</td></tr>
+</tbody></table>
+<i>Le bonus est attribué sans division à tous les joueurs les mieux notés s'il y a égalité</i>
+<br/>
+<br/>
+<br/>
+
+<table class="tableau_saisie">
+<tbody><tr><th colspan="2">Bonus/Malus spécial gardiens</th></tr>
+<tr><th>Performance</th><th>Bonus</th></tr>
+<tr><td>Par arrêt ou parade</td><td align="right">+0.075</td></tr>
+<tr><td>Par but encaissé</td><td align="right">-0.3</td></tr>
+</tbody></table>
+<i>Ce bonus ne concerne que les joueurs ayant été enregistrés avec le poste "Gardien". Un joueur de champ que les circonstances amènent à occuper le poste de gardien n'aura ni bonus ni malus liés à ce poste.</i>
+<br/>
+<br/>
+<br/>
+
+<table class="tableau_saisie">
+<tbody><tr><th colspan="2">Autres bonus</th></tr>
+<tr><th>Performance</th><th>Bonus</th></tr>
+<tr><td>Par but marqué</td><td align="right">0.75</td></tr>
+<tr><td>Par pénalty marqué</td><td align="right">0.375</td></tr>
+<tr><td>Par passe décisive</td><td align="right">0.5</td></tr>
+<tr><td>Par pénaly obtenu</td><td align="right">0.25</td></tr>
+<tr><td>Si retenu dans la sélection officielle "L'équipe du tournoi"</td><td align='right' colspan='2'>+1</td></tr>
+<tr><td>Si désigné "Joueur du tournoi"</td><td align='right' colspan='2'>+1</td></tr>
+</tbody></table>
+<br/>
+
+<p><b>Au cours de la phase éliminatoire, tous ces bonus (collectifs et individuels) ont une valeur doublée</b></p>
+<br/>
+<p>Exemple d'un défenseur ayant disputé 2 matches de poule (dont 1 sans but encaissé) et deux matches à élimination directe (2-1,1-2, un but marqué), note moyenne de 7/10 sur les 4 matches, sélectionné all star</p>
 <p>Score=</p>
 <p>3 X 7 (3 fois la note moyenne)</p>
 <p>+0,5 (match de poule sans but encaissé)</p>
 <p>+1,5 (1 but marqué en match élimination directe)</p>
-<p>+1 (présélectionné all star)</p>
+<p>+1 (sélectionné all star)</p>
 <p><b>= 24 points</b></p>
 <br/>
 <p>une Sélection cumule l'ensemble des points des 7 joueurs titulaires qui la composent quelle que soit leur date d'acquisition.</p>
