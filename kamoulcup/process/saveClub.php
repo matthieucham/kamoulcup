@@ -6,12 +6,12 @@
 	
 	$clubName = htmlspecialchars(correctSlash($_POST['nom']), ENT_COMPAT, 'UTF-8');
 	valideString($clubName,'Nom','manageClubs');
-	$idLequipe = correctSlash($_POST['idLEquipe']);
+	$uuid = correctSlash($_POST['uuid']);
 
 	if ($_POST['nouveau']) {
-		$saveClubQuery = "insert into club(nom,id_lequipe) values('{$clubName}','{$idLequipe}')";
+		$saveClubQuery = "insert into club(nom,uuid) values('{$clubName}','{$uuid}')";
 	} else {
-		$saveClubQuery = "update club set nom='{$clubName}', id_lequipe='{$idLequipe}' where id='{$_POST['id']}'";
+		$saveClubQuery = "update club set nom='{$clubName}', uuid='{$uuid}' where id='{$_POST['id']}'";
 	}
 	$db->query($saveClubQuery) or die('Error, insert query failed, see log');
 	

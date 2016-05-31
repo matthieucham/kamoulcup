@@ -2,11 +2,11 @@
 
   Class dbConfig
   {
-    public $config = array(
+    var $config = array(
     'db_server'    => 'localhost',
-    'db_name'      => 'kamoulcup',
-    'db_username'  => 'kamoulcup',
-    'db_password'  => 'kakamou'
+    'db_name'      => 'kcupeuro2012',
+    'db_username'  => 'kcupeuro2012',
+    'db_password'  => 'k++cup--'
     );
   } 
  ?>
