@@ -34,7 +34,7 @@ function calculDateFinEnchere($dateDebut,$nbHeures){
 		}
 	}
 
-	// On ajuste l'heure de fin à midi ou 19h le jour pr�vu.
+	// On ajuste l'heure de fin à midi ou 21h le jour pr�vu.
 	$endDateH = date('G',$endTime);
 	$endDateM = date('i',$endTime);
 	$endDateS = date('s',$endTime);
@@ -43,10 +43,10 @@ function calculDateFinEnchere($dateDebut,$nbHeures){
 		// avant midi : on déplace la fin à midi
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
 		$endTime += 12*3600;
-	} else if ($endDateH < 19) {
-		// avant 19h : on déplace la fin à 19h
+	} else if ($endDateH < 21) {
+		// avant 21h : on déplace la fin à 21h
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
-		$endTime += 19*3600;
+		$endTime += 21*3600;
 	} else {
 		// après 19h : on déplace la fin à 12h le lendemain
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
