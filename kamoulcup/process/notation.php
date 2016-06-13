@@ -244,7 +244,7 @@ function calculScorePrestation($db,$prestationId) {
 	}
 	if ($noteD != NULL) {
 		$compteurNote++;
-		$note += $noteD;
+		$note += convertNoteKicker($noteD);
 	}
 	if ($noteE != NULL) {
 		$compteurNote++;
