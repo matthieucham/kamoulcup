@@ -179,7 +179,7 @@ echo "</table>";
 echo "<b><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clDomId']}'>{$getMatchQuery[0]['clDomNom']}</a></b>";
 if ($listPerformancesDomQuery != NULL) {
 	echo "<table class='tableau_liste_centre'>";
-	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.lequipe.fr/'>L'Eq</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.kicker.de'>KI</th>";
+	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.francefootball.fr/'>FF</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.kicker.de'>KI</th>";
 	//<th title='http://www.datasport.it/europei_2012/'>DS</th>";
 	/*<th title='Pas utilisé'>-</th>*/
 	echo "<th title='Arrêts ou parades (Gardien seulement)'>Arr.</th><th title='Buts encaissés (Gardien seulement)'>Enc.</th>";
@@ -200,8 +200,12 @@ if ($listPerformancesDomQuery != NULL) {
 		$noteWSConv = convertNoteWS($noteWS);
 		$showNoteWS = $noteWSConv.'<span class="miniNote">&nbsp;['.$noteWS.']</span>';
 		$noteKi = $perf['note_d'];
-		$noteKiConv = convertNoteKicker($noteKi);
-		$showNoteKi = $noteKiConv.'<span class="miniNote">&nbsp;['.$noteKi.']</span>';
+		if ($noteKi > 0) {
+			$noteKiConv = convertNoteKicker($noteKi);
+			$showNoteKi = $noteKiConv.'<span class="miniNote">&nbsp;['.$noteKi.']</span>';
+		} else {
+			$showNoteKi = '';
+		}
 		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$showNoteKi}</td>";
 		//<td>{$perf['note_d']}</td>";
 		/*<td>{$perf['note_e']}</td>"*/;
@@ -220,7 +224,7 @@ if ($listPerformancesDomQuery != NULL) {
 echo "<b><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clExtId']}'>{$getMatchQuery[0]['clExtNom']}</a></b>";
 if ($listPerformancesExtQuery != NULL) {
 	echo "<table class='tableau_liste_centre'>";
-	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.lequipe.fr/'>L'Eq</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.kicker.de'>KI</th>";
+	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.francefootball.fr/'>FF</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.kicker.de'>KI</th>";
 	//<th title='http://www.datasport.it/europei_2012/'>DS</th>";
 	/*<th title='Pas utilisé'>-</th>*/
 	echo "<th title='Arrêts ou parades (Gardien seulement)'>Arr.</th><th title='Buts encaissés (Gardien seulement)'>Enc.</th>";
@@ -241,8 +245,12 @@ if ($listPerformancesExtQuery != NULL) {
 		$noteWSConv = convertNoteWS($noteWS);
 		$showNoteWS = $noteWSConv.'<span class="miniNote">&nbsp;['.$noteWS.']</span>';
 		$noteKi = $perf['note_d'];
-		$noteKiConv = convertNoteKicker($noteKi);
-		$showNoteKi = $noteKiConv.'<span class="miniNote">&nbsp;['.$noteKi.']</span>';
+		if ($noteKi > 0) {
+			$noteKiConv = convertNoteKicker($noteKi);
+			$showNoteKi = $noteKiConv.'<span class="miniNote">&nbsp;['.$noteKi.']</span>';
+		} else {
+			$showNoteKi = '';
+		}
 		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$showNoteKi}</td>";
 		//<td>{$perf['note_d']}</td>";
 		/*<td>{$perf['note_e']}</td>"*/;
