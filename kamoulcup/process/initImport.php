@@ -14,18 +14,18 @@ $steps = listJournees($token, $SN_instance);
 // - en se basant sur le numero de journée
 for($i=0; $i < count($steps->steps); $i++) {
 	$current = $steps->steps[$i];
-	$numero = (int) $current->name;
+	$numero = $current->name;
 	$syncdate = $current->updated_at;
 	$uuid_journee = $current->uuid;
 	$ts = strtotime($syncdate);
 	$dbDate = date('c', $ts);
-	$getJourneeQ = "select id from journee where numero={$numero}";
+	$getJourneeQ = "select id from journee where uuid='{$uuid_journee}'";
 	$getJournee = $db->getArray($getJourneeQ);
 	if ($getJournee == NULL) {
-		$newJourneeQ = "insert into journee(numero, uuid, date, sync_me) values ({$numero},'{$uuid_journee}', now(), 1)";
+		$newJourneeQ = "insert into journee(numero, uuid, date, sync_me) values ('{$numero}','{$uuid_journee}', now(), 1)";
 		$db->query($newJourneeQ);
 	} else {
-		$syncMeQ = "update journee set sync_me=1, uuid='{$uuid_journee}' where numero={$numero} and (last_sync<'{$dbDate}' or last_sync is null)";
+		$syncMeQ = "update journee set sync_me=1,numero='{$numero}' where uuid='{$uuid_journee}' and (last_sync<'{$dbDate}' or last_sync is null)";
 		$db->query($syncMeQ);
 	}
 }

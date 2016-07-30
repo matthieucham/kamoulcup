@@ -7,7 +7,7 @@ function importRencontres($token, $uuid_journee) {
 	$json = _getProtectedUrl($token, $resultatsJourneeUrl);
 	// Création de la nouvelle journée
 	// Ou récupération de l'existante si elle existe.
-	$getJourneeQ = "select id from journee where uuid='{$uuid_journee}'";
+	$getJourneeQ = "select id,eliminatoire from journee where uuid='{$uuid_journee}'";
 	$getJournee = $db->getArray($getJourneeQ);
 	if ($getJournee == NULL) {
 		$dateJournee = $json->meetings[0]->date;
@@ -18,6 +18,7 @@ function importRencontres($token, $uuid_journee) {
 		$getJournee = $db->getArray($getJourneeQ);
 	}
 	$journeeId = $getJournee[0][0];
+	$dbl = $getJournee[0][1];
 	// insertion des rencontres
 	// On ne s'occupe pas des prestations à cet endroit
 	for($i=0; $i < count($json->meetings); $i++) {
@@ -31,13 +32,13 @@ function importRencontres($token, $uuid_journee) {
 	// mise à jour des prestations
 	for($i=0; $i < count($json->meetings); $i++) {
 		$meetinguuid = $json->meetings[$i]->uuid;
-		importPrestations($token, $meetinguuid, $journeeId);
+		importPrestations($token, $meetinguuid, $journeeId, $dbl);
 	}
 
 	$db->query("update journee set last_sync=now(), sync_me=0 where uuid='{$uuid_journee}'");
 }
 
-function importPrestations($token, $uuid_meeting, $journeeId) {
+function importPrestations($token, $uuid_meeting, $journeeId, $dbl_bonus) {
 	global $SN_host;
 	global $SN_src_WS;
 	global $SN_src_EQ;
@@ -179,7 +180,7 @@ function importPrestations($token, $uuid_meeting, $journeeId) {
 				}
 			}
 		}
-		$insertPrestaQ = "insert into prestation(joueur_id, match_id, club_id, note_lequipe, note_ff, note_sp, but_marque, passe_dec, penalty_marque, penalty_obtenu, minutes, arrets, encaisses) select {$joueurId}, {$matchId}, club_id, {$noteEQ}, {$noteWS}, {$noteSP}, {$current->stats->goals_scored}, {$current->stats->goals_assists}, {$current->stats->penalties_scored}, {$current->stats->penalties_awarded}, {$current->stats->playtime}, {$current->stats->goals_saved}, {$current->stats->goals_conceded} from joueur where id={$joueurId} on duplicate key update note_lequipe={$noteEQ}, note_ff={$noteWS}, note_sp={$noteSP}, but_marque={$current->stats->goals_scored}, passe_dec={$current->stats->goals_assists}, penalty_marque={$current->stats->penalties_scored}, penalty_obtenu={$current->stats->penalties_awarded}, minutes={$current->stats->playtime}, arrets={$current->stats->goals_saved}, encaisses={$current->stats->goals_conceded}";
+		$insertPrestaQ = "insert into prestation(joueur_id, match_id, club_id, note_lequipe, note_ff, note_sp, note_d, but_marque, passe_dec, penalty_marque, penalty_obtenu, minutes, arrets, encaisses, double_bonus) select {$joueurId}, {$matchId}, club_id, {$noteEQ}, {$noteWS}, {$noteSP}, {$noteKI}, {$current->stats->goals_scored}, {$current->stats->goals_assists}, {$current->stats->penalties_scored}, {$current->stats->penalties_awarded}, {$current->stats->playtime}, {$current->stats->goals_saved}, {$current->stats->goals_conceded}, {$dbl_bonus} from joueur where id={$joueurId} on duplicate key update note_lequipe={$noteEQ}, note_ff={$noteWS}, note_sp={$noteSP}, note_d={$noteKI}, but_marque={$current->stats->goals_scored}, passe_dec={$current->stats->goals_assists}, penalty_marque={$current->stats->penalties_scored}, penalty_obtenu={$current->stats->penalties_awarded}, minutes={$current->stats->playtime}, arrets={$current->stats->goals_saved}, encaisses={$current->stats->goals_conceded}, double_bonus={$dbl_bonus}";
 		$db->query($insertPrestaQ);
 
 		// Bonus collectifs
