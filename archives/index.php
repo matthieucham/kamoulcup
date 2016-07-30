@@ -3,10 +3,9 @@ include("includes/db.php");
 ?>
 <html>
 
-<!-- Mirrored from localhost/kamoulcup2010/ by HTTrack Website Copier/3.x [XR&CO'2010], Mon, 23 Jul 2012 18:21:38 GMT -->
 <head>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<title>Kamoulcup : Pour l'éternité</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Kamoulcup : Pour l'Ã©ternitÃ©</title>
 <style type="text/css" media="all">
 @import "archives.css";
 </style>
@@ -35,7 +34,7 @@ include("div/palmaresDiv.php");
 <!--fin footer-->
 <div id="frisebottom">
 <div id="credits">Programmation: Charlie Brown - Graphismes: Lo de
-Mars - Idée originale: Peterelephanto.</div>
+Mars - IdÃ©e originale: Peterelephanto.</div>
 </div>
 <!-- frise bottom -->
 
