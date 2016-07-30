@@ -1,5 +1,5 @@
 <?php
-$SN_instance = 'b144e399-1395-40ee-bd81-e089257d4914';
+$SN_instance = '19082ad6-bba0-11e4-aabd-e33b7dc31113';
 $SN_host = 'statnuts-kcup.rhcloud.com';
 $SN_client_id = 'ddjfezzejfggelzlkehsgazehd';
 $SN_client_secret = 'hazhgygdcsksdjhqmFEFREzadkezaappppzeRz';

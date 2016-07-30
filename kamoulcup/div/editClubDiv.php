@@ -8,8 +8,8 @@
 							<td><input type="text" size="32" name="nom" value="<?php echo ($storedClub[0]['nom']); ?>"/></td>
 						</tr>
 						<tr>
-							<th>Id L'Equipe: </th>
-							<td><input type="text" size="10" name="idLEquipe" value="<?php echo ($storedClub[0]['id_lequipe']); ?>"/></td>
+							<th>Uuid: </th>
+							<td><input type="text" size="40" name="uuid" value="<?php echo ($storedClub[0]['uuid']); ?>"/></td>
 						</tr>
 					</tbody>
 				</table>
