@@ -150,6 +150,7 @@ function importPrestations($token, $uuid_meeting, $journeeId, $dbl_bonus) {
 		$noteEQ = 'NULL';
 		$noteWS = 'NULL';
 		$noteSP = 'NULL';
+		$noteKI = 'NULL';
 		$sommeNotes = 0;
 		$nbNotes = 0;
 		for ($j=0; $j<count($current->ratings); $j++) {
