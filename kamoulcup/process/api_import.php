@@ -41,7 +41,7 @@ function importRencontres($token, $uuid_journee) {
 function importPrestations($token, $uuid_meeting, $journeeId, $dbl_bonus) {
 	global $SN_host;
 	global $SN_src_WS;
-	global $SN_src_EQ;
+	global $SN_src_OS;
 	global $SN_src_SP;
 	global $SCO_minTpsCollectif;
 	global $SCO_minTps;
@@ -154,7 +154,7 @@ function importPrestations($token, $uuid_meeting, $journeeId, $dbl_bonus) {
 		$sommeNotes = 0;
 		$nbNotes = 0;
 		for ($j=0; $j<count($current->ratings); $j++) {
-			if ($current->ratings[$j]->source == $SN_src_EQ) {
+			if ($current->ratings[$j]->source == $SN_src_OS) {
 				$noteEQ = 0.0 + $current->ratings[$j]->rating;
 				$sommeNotes += $noteEQ;
 				$nbNotes++;

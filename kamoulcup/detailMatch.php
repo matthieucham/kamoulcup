@@ -179,7 +179,7 @@ echo "</table>";
 echo "<b><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clDomId']}'>{$getMatchQuery[0]['clDomNom']}</a></b>";
 if ($listPerformancesDomQuery != NULL) {
 	echo "<table class='tableau_liste_centre'>";
-	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.lequipe.fr/'>L'Eq</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.sports.fr'>SP</th>";
+	echo "<tr><th>Joueur</th><th>Tps</th><th title='Orange Sports'>OS</th><th title='Whoscored'>WS</th><th title='Sports.fr'>SP</th>";
 	//<th title='http://www.datasport.it/europei_2012/'>DS</th>";
 	/*<th title='Pas utilisé'>-</th>*/
 	echo "<th title='Arrêts ou parades (Gardien seulement)'>Arr.</th><th title='Buts encaissés (Gardien seulement)'>Enc.</th>";
@@ -199,7 +199,9 @@ if ($listPerformancesDomQuery != NULL) {
 		$noteWS = $perf['note_ff'];
 		$noteWSConv = convertNoteWS($noteWS);
 		$showNoteWS = $noteWSConv.'<span class="miniNote">&nbsp;['.$noteWS.']</span>';
-		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$perf['note_sp']}</td>";
+		$noteEQ = formatNote($perf['note_lequipe']);
+		$noteSP = formatNote($perf['note_sp']);
+		echo "</td><td>{$perf['minutes']}'</td><td>{$noteEQ}</td><td>{$showNoteWS}</td><td>{$noteSP}</td>";
 		//<td>{$perf['note_d']}</td>";
 		/*<td>{$perf['note_e']}</td>"*/;
 		if ($perf['poste'] == 'G') {
@@ -217,7 +219,7 @@ if ($listPerformancesDomQuery != NULL) {
 echo "<b><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clExtId']}'>{$getMatchQuery[0]['clExtNom']}</a></b>";
 if ($listPerformancesExtQuery != NULL) {
 	echo "<table class='tableau_liste_centre'>";
-	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.lequipe.fr/'>L'Eq</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.sports.fr'>SP</th>";
+	echo "<tr><th>Joueur</th><th>Tps</th><th title='Orange Sports'>OS</th><th title='Whoscored'>WS</th><th title='Sports.fr'>SP</th>";
 	//<th title='http://www.datasport.it/europei_2012/'>DS</th>";
 	/*<th title='Pas utilisé'>-</th>*/
 	echo "<th title='Arrêts ou parades (Gardien seulement)'>Arr.</th><th title='Buts encaissés (Gardien seulement)'>Enc.</th>";
@@ -237,7 +239,9 @@ if ($listPerformancesExtQuery != NULL) {
 		$noteWS = $perf['note_ff'];
 		$noteWSConv = convertNoteWS($noteWS);
 		$showNoteWS = $noteWSConv.'<span class="miniNote">&nbsp;['.$noteWS.']</span>';
-		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$perf['note_sp']}</td>";
+		$noteEQ = formatNote($perf['note_lequipe']);
+		$noteSP = formatNote($perf['note_sp']);
+		echo "</td><td>{$perf['minutes']}'</td><td>{$noteEQ}</td><td>{$showNoteWS}</td><td>{$noteSP}</td>";
 		//<td>{$perf['note_d']}</td>";
 		/*<td>{$perf['note_e']}</td>"*/;
 		if ($perf['poste'] == 'G') {

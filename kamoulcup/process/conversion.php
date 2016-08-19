@@ -17,4 +17,12 @@ function convertNoteWS($note) {
 	return $y;
 }
 
+function formatNote($note) {
+	$f = round($note,1);
+	if ($f > 0){
+		return ''.$f;
+	}
+	return '';
+}
+
 ?>
