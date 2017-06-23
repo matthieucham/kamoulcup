@@ -48,8 +48,7 @@
 		global $NOT_defvierge;
 		global $NOT_defunpenalty;
 		global $NOT_defunbut;
-		global $NOT_arret;
-		global $NOT_encaisse;
+		global $NOT_arrets;
 		global $NOT_troisbuts;
 		global $NOT_troisbutsunpenalty;
 		global $NOT_but;
@@ -84,8 +83,9 @@
 		}
 		
 		// Bonus individuels
-		/*$bonus += (intval($presta['arrets'])*$NOT_arret[$poste]);
-		$bonus += (intval($presta['encaisses'])*$NOT_encaisse[$poste]);*/
+		if (intval($presta['arrets'])> 3) {
+			$bonus += $NOT_arrets[$poste];
+		}
 		$bonus += (intval($presta['but_marque'])*$NOT_but);
 		$bonus += (intval($presta['passe_dec'])*$NOT_passedec);
 		$bonus += (intval($presta['penalty_marque'])*$NOT_penalty);

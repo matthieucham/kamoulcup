@@ -26,8 +26,7 @@ function calculScoreJoueur2($db,$joueurId){
 	global $SCO_nbperfs1;
 	global $SCO_nbperfs2;
 	global $NOT_leader;
-	global $NOT_arret;
-	global $NOT_encaisse;
+	global $NOT_arrets;
 
 	$bestNotes = Array();
 	$bestNotes1 = Array();
@@ -162,8 +161,9 @@ function calculScoreJoueur2($db,$joueurId){
 			$partieBonus+=$NOT_troisbuts[$joueurPoste]*intval($presta['troisbuts']);
 			$partieBonus+=$NOT_troisbutsunpenalty[$joueurPoste]*intval($presta['troisbuts_unpenalty']);
 			$partieBonus+=$NOT_leader[$joueurPoste]*intval($presta['leader']);
-			$partieBonus+=$NOT_arret[$joueurPoste]*intval($presta['arrets']);
-			$partieBonus+=$NOT_encaisse[$joueurPoste]*intval($presta['encaisses']);
+			if (intval($presta['arrets']) > 3) {
+				$partieBonus+=$NOT_arrets[$joueurPoste];
+			}
 
 			if (intval($presta['double_bonus'])){
 				$partieBonus *= 2;

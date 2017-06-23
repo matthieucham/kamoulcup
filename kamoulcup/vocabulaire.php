@@ -111,5 +111,11 @@
 		if ($cle == '3BP') {
 			return "images/medal_bronze_1.png";
 		}
+		if ($cle == '3ST') {
+			return "images/shield.png";
+		}
+		if ($cle == 'PEST') {
+			return "images/hand.png";
+		}
 	}
 ?>
