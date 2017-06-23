@@ -21,7 +21,7 @@
 	$SCO_minTpsCollectif =45;
 	$SCO_tpsEntreeCourte =15;
 	$SCO_noteEC =1;
-	$SCO_noteEL =3;
+	$SCO_noteEL =2;
 	
 	$SCO_journeePivot=20;
 	$SCO_nbperfs1=13;
