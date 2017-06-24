@@ -336,12 +336,11 @@ Accessoirement ces transactions pourraient nuire à la concurrence loyale (libre
 <br/>
 
 <table class="tableau_saisie">
-<tbody><tr><th colspan="2">Bonus/Malus spécial gardiens</th></tr>
+<tbody><tr><th colspan="2">Bonus spécial gardiens</th></tr>
 <tr><th>Performance</th><th>Bonus</th></tr>
-<tr><td>Par arrêt ou parade</td><td align="right">+0.4</td></tr>
-<tr><td>Par but encaissé</td><td align="right">-1.2</td></tr>
+<tr><td>Plus de 3 arrêts dans le même match</td><td align="right">0.9</td></tr>
 </tbody></table>
-<i>Ce bonus ne concerne que les joueurs ayant été enregistrés avec le poste "Gardien". Un joueur de champ que les circonstances amènent à occuper le poste de gardien n'aura ni bonus ni malus liés à ce poste.</i>
+<i>Ce bonus ne concerne que les joueurs ayant été enregistrés avec le poste "Gardien". Un joueur de champ que les circonstances amènent à occuper le poste de gardien n'aura pas ce bonus lié à ce poste.</i>
 <br/>
 <br/>
 <br/>
@@ -353,6 +352,7 @@ Accessoirement ces transactions pourraient nuire à la concurrence loyale (libre
 <tr><td>Par pénalty marqué</td><td align="right">1.5</td></tr>
 <tr><td>Par passe décisive</td><td align="right">2</td></tr>
 <tr><td>Par pénaly obtenu</td><td align="right">1</td></tr>
+<tr><td>Par pénaly arrêté ou détourné</td><td align="right">3</td></tr>
 <tr><td>Nommé dans l'équipe type de la saison (Trophée UNFP)</td><td align="right" colspan="2">1.5</td></tr>
 <tr><td>Désigné meilleur joueur, meilleur gardien ou meilleur espoir (Trophée UNFP)	</td><td align="right" colspan="2">3</td></tr>
 </tbody></table>
