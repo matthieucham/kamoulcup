@@ -12,8 +12,8 @@ $joueurId = correctSlash($_GET['joueurid']);
 $getJoueurQuery = $db->getArray("select jo.nom as nomJoueur,jo.prenom,jo.poste,jo.id_lequipe as idJoueur,jo.score,jo.score1,jo.score2 from joueur as jo where jo.id='{$joueurId}' limit 1");
 $getClubQuery = $db->getArray("select cl.id, cl.nom, cl.id_lequipe from club as cl, joueur as jo where jo.club_id = cl.id and jo.id='{$joueurId}' limit 1");
 
-$listPerfBonusQuery = $db->getArray("select sum(pr.but_marque) as nbButs, sum(pr.passe_dec) as nbPasses, sum(pr.penalty_marque) as nbPenaltys, sum(pr.penalty_obtenu) as nbPenObtenus, sum(pr.defense_vierge) as nbDefVierge, sum(pr.defense_unpenalty) as nbDefPeno, sum(pr.defense_unbut) as nbDefUnBut, sum(pr.troisbuts) as nbTroisButs, sum(pr.troisbuts_unpenalty) as nbTroisButsPeno, sum(pr.leader) as nbLeader from prestation as pr where pr.joueur_id='{$joueurId}'");
-$listPerformancesQuery = $db->getArray("select pr.score,pr.but_marque,pr.passe_dec,pr.penalty_marque,pr.penalty_obtenu,pr.defense_vierge,pr.defense_unpenalty, clDom.id as clubDomId, clDom.nom as clubDom, clDom.id_lequipe as idDom, clExt.id as clubExtId, clExt.nom as clubExt, clExt.id_lequipe as idExt, re.buts_club_dom, re.buts_club_ext, re.id as rencontreId,pr.score,date_format(jo.date,'%d/%m') as dateMatch, pr.minutes, re.elimination,pr.defense_unbut,pr.troisbuts,pr.troisbuts_unpenalty,pr.leader,pr.arrets from prestation as pr, rencontre as re, club as clDom, club as clExt,journee as jo where pr.joueur_id='{$joueurId}' and pr.match_id=re.id and re.club_dom_id=clDom.id and re.club_ext_id=clExt.id and re.journee_id=jo.id order by jo.date asc");
+$listPerfBonusQuery = $db->getArray("select sum(pr.but_marque) as nbButs, sum(pr.passe_dec) as nbPasses, sum(pr.penalty_marque) as nbPenaltys, sum(pr.penalty_obtenu) as nbPenObtenus, sum(pr.defense_vierge) as nbDefVierge, sum(pr.defense_unpenalty) as nbDefPeno, sum(pr.defense_unbut) as nbDefUnBut, sum(pr.troisbuts) as nbTroisButs, sum(pr.troisbuts_unpenalty) as nbTroisButsPeno, sum(pr.leader) as nbLeader, sum(pr.penalty_arrete) as nbPenoStop from prestation as pr where pr.joueur_id='{$joueurId}'");
+$listPerformancesQuery = $db->getArray("select pr.score,pr.but_marque,pr.passe_dec,pr.penalty_marque,pr.penalty_obtenu,pr.defense_vierge,pr.defense_unpenalty, clDom.id as clubDomId, clDom.nom as clubDom, clDom.id_lequipe as idDom, clExt.id as clubExtId, clExt.nom as clubExt, clExt.id_lequipe as idExt, re.buts_club_dom, re.buts_club_ext, re.id as rencontreId,pr.score,date_format(jo.date,'%d/%m') as dateMatch, pr.minutes, re.elimination,pr.defense_unbut,pr.troisbuts,pr.troisbuts_unpenalty,pr.leader,pr.arrets,pr.penalty_arrete from prestation as pr, rencontre as re, club as clDom, club as clExt,journee as jo where pr.joueur_id='{$joueurId}' and pr.match_id=re.id and re.club_dom_id=clDom.id and re.club_ext_id=clExt.id and re.journee_id=jo.id order by jo.date asc");
 $listTransfertsQuery = $db->getArray("select po.nom as nomPoule, ek.id, ek.nom as nomEkyp, date_format(tr.transfert_date,'%d/%m') as trdate, tr.anciennete, tr.prix_achat, tr.coeff_bonus_achat, tr.draft, tr.choix_draft from transfert as tr,poule as po, ekyp as ek where tr.joueur_id={$joueurId} and tr.poule_id=po.id and tr.ekyp_id=ek.id");
 $extraBonusQuery = $db->getArray("select sum(valeur) as total from bonus_joueur where joueur_id={$joueurId}");
 
@@ -142,6 +142,9 @@ echo "<tr><th>{$pictoBut} Buts marqués (hors pénaltys)</th><td width='50px' al
 echo "<tr><th>{$pictoPasse} Passes décisives</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbPasses']}</td></tr>";
 echo "<tr><th>{$pictoPenalty} Pénaltys marqués</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbPenaltys']}</td></tr>";
 echo "<tr><th>{$pictoPenoObt} Pénaltys obtenus</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbPenObtenus']}</td></tr>";
+if ($getJoueurQuery[0]['poste'] == 'G') {
+	echo "<tr><th>{$pictoPenoStop} Pénaltys arrêtés</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbPenoStop']}</td></tr>";
+}
 if ($getJoueurQuery[0]['poste'] != 'A') {
 	echo "<tr><th>{$pictoBonusDef} Matchs sans buts encaissés</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbDefVierge']}</td></tr>";
 	echo "<tr><th>{$pictoDemiBonus} Matchs avec un seul but encaissé sur pénalty</th><td width='50px' align='right'>{$listPerfBonusQuery[0]['nbDefPeno']}</td></tr>";
@@ -234,6 +237,14 @@ if (! $isJoueurLibre){
 				$arrets = $perf['arrets'];
 				if ($arrets > 3) {
 					$bonus .= $pictoTroisArrets;
+					$bonus .= ' ';
+				}
+				$penoStop = $perf['penalty_arrete'];
+				if ($penoStop > 0) {
+					$bonus .= $pictoPenoStop;
+					if ($penoStop > 1) {
+						$bonus .= 'x'.$penoStop;
+					}
 					$bonus .= ' ';
 				}
 			}

@@ -3,12 +3,13 @@
 	$NOT_defvierge = Array('G' => 3.4,'D' => 2.5, 'M' => 1, 'A' => 0);
 	$NOT_defunpenalty = Array('G' => 1.7,'D' => 1.25, 'M' => 0.5, 'A' => 0);
 	$NOT_defunbut = Array('G' => 0,'D' => 0, 'M' => 0, 'A' => 0);
-	$NOT_arrets = Array('G' => 1,'D' => 0, 'M' => 0, 'A' => 0);
+	$NOT_arrets = Array('G' => 0.9,'D' => 0, 'M' => 0, 'A' => 0);
 	
 	$NOT_troisbuts = Array('G' => 0,'D' => 0, 'M' => 0.4, 'A' => 1);
 	$NOT_troisbutsunpenalty = Array('G' => 0,'D' => 0, 'M' => 0.2, 'A' => 0.5);
 	$NOT_but = 3;
 	$NOT_penalty = 1.5;
+	$NOT_penaltyarrete = 3;
 	$NOT_passedec = 2;
 	$NOT_penaltyobtenu = 1;
 	
