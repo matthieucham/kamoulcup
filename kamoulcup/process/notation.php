@@ -26,8 +26,8 @@ function calculScoreJoueur2($db,$joueurId){
 	global $SCO_nbperfs1;
 	global $SCO_nbperfs2;
 	global $NOT_leader;
-	global $NOT_arret;
-	global $NOT_encaisse;
+	global $NOT_arrets;
+	global $NOT_penaltyarrete;
 
 	$bestNotes = Array();
 	$bestNotes1 = Array();
@@ -39,7 +39,7 @@ function calculScoreJoueur2($db,$joueurId){
 	$nbEntreesCourtes2=0;
 	$nbEntreesLongues2=0;
 
-	$query="select jo.numero,jo.id as idJournee,j.poste,p.score,p.minutes,p.but_marque,p.passe_dec,p.penalty_marque,p.penalty_obtenu,p.defense_vierge,p.defense_unpenalty,p.defense_unbut,p.troisbuts,p.troisbuts_unpenalty,p.double_bonus,p.leader,p.arrets,p.encaisses from prestation as p, journee as jo, rencontre as re, joueur as j where p.joueur_id={$joueurId} and p.match_id=re.id and re.journee_id=jo.id and p.joueur_id=j.id order by jo.numero asc";
+	$query="select jo.numero,jo.id as idJournee,j.poste,p.score,p.minutes,p.but_marque,p.passe_dec,p.penalty_marque,p.penalty_obtenu,p.defense_vierge,p.defense_unpenalty,p.defense_unbut,p.troisbuts,p.troisbuts_unpenalty,p.double_bonus,p.leader,p.arrets,p.encaisses,p.penalty_arrete from prestation as p, journee as jo, rencontre as re, joueur as j where p.joueur_id={$joueurId} and p.match_id=re.id and re.journee_id=jo.id and p.joueur_id=j.id order by jo.numero asc";
 	$prestations = $db->getArray($query);
 	$exceptionnelQuery = $db->getArray("select sum(valeur) as total from bonus_joueur where joueur_id={$joueurId}");
 	$bonusSoFar = 0;
@@ -162,8 +162,10 @@ function calculScoreJoueur2($db,$joueurId){
 			$partieBonus+=$NOT_troisbuts[$joueurPoste]*intval($presta['troisbuts']);
 			$partieBonus+=$NOT_troisbutsunpenalty[$joueurPoste]*intval($presta['troisbuts_unpenalty']);
 			$partieBonus+=$NOT_leader[$joueurPoste]*intval($presta['leader']);
-			$partieBonus+=$NOT_arret[$joueurPoste]*intval($presta['arrets']);
-			$partieBonus+=$NOT_encaisse[$joueurPoste]*intval($presta['encaisses']);
+			$partieBonus+=$NOT_penaltyarrete*intval($presta['penalty_arrete']);
+			if (intval($presta['arrets']) > 3) {
+				$partieBonus+=$NOT_arrets[$joueurPoste];
+			}
 
 			if (intval($presta['double_bonus'])){
 				$partieBonus *= 2;

@@ -117,6 +117,7 @@ function importPrestations($token, $uuid_meeting, $journeeId, $dbl_bonus) {
 		$getClub = $db->getArray($getClubQ);
 		$cl = $getClub[0][0];
 		$getJoueur = $db->getArray("select id, poste, club_id from joueur where uuid='{$uuid}'");
+		$joueurPoste = $getJoueur[0][1];
 		if ($getJoueur == NULL) {
 			// Création du joueur.
 			if (property_exists($current->player, 'usual_name') && strlen($current->player->usual_name)>0) {
@@ -130,9 +131,13 @@ function importPrestations($token, $uuid_meeting, $journeeId, $dbl_bonus) {
 				}
 				$ln =  htmlspecialchars($current->player->last_name, ENT_COMPAT, 'UTF-8');
 			}
-			$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id) select '{$fn}', '{$ln}', '{$uuid}', id from club where uuid='{$current->played_for}'";
+			$fn = mysql_escape_string($fn);
+			$ln = mysql_escape_string($ln);
+			$pos = $current->player->position;
+			$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id,poste) select '{$fn}', '{$ln}', '{$uuid}', id, '{$pos}' from club where uuid='{$current->played_for}'";
 			$db->query($createJoueurQ);
 			$getJoueur = $db->getArray("select id,poste from joueur where uuid='{$uuid}'");
+			$joueurPoste = $pos;
 		} else {
 			// Update club_id si club différent
 			$oldcl = $getJoueur[0][2];
@@ -140,9 +145,15 @@ function importPrestations($token, $uuid_meeting, $journeeId, $dbl_bonus) {
 				$updateJoueurQ = "update joueur set club_id={$cl} where uuid='{$uuid}'";
 				$db->query($updateJoueurQ);
 			}
+			$oldPos = $getJoueur[0][1];
+			$pos = $current->player->position;
+			if ($oldPos != $pos) {
+				$updateJoueurQ = "update joueur set poste={$pos} where uuid='{$uuid}'";
+				$db->query($updateJoueurQ);
+				$joueurPoste = $pos;
+			}
 		}
 		$joueurId = $getJoueur[0][0];
-		$joueurPoste = $getJoueur[0][1];
 
 		$countPeno[$affectation[($current->played_for)]] += $current->stats->penalties_scored;
 		// On peut insérer les stats individuelles dans la boucle,
@@ -181,7 +192,7 @@ function importPrestations($token, $uuid_meeting, $journeeId, $dbl_bonus) {
 				}
 			}
 		}
-		$insertPrestaQ = "insert into prestation(joueur_id, match_id, club_id, note_lequipe, note_ff, note_sp, note_d, but_marque, passe_dec, penalty_marque, penalty_obtenu, minutes, arrets, encaisses, double_bonus) select {$joueurId}, {$matchId}, club_id, {$noteEQ}, {$noteWS}, {$noteSP}, {$noteKI}, {$current->stats->goals_scored}, {$current->stats->goals_assists}, {$current->stats->penalties_scored}, {$current->stats->penalties_awarded}, {$current->stats->playtime}, {$current->stats->goals_saved}, {$current->stats->goals_conceded}, {$dbl_bonus} from joueur where id={$joueurId} on duplicate key update note_lequipe={$noteEQ}, note_ff={$noteWS}, note_sp={$noteSP}, note_d={$noteKI}, but_marque={$current->stats->goals_scored}, passe_dec={$current->stats->goals_assists}, penalty_marque={$current->stats->penalties_scored}, penalty_obtenu={$current->stats->penalties_awarded}, minutes={$current->stats->playtime}, arrets={$current->stats->goals_saved}, encaisses={$current->stats->goals_conceded}, double_bonus={$dbl_bonus}";
+		$insertPrestaQ = "insert into prestation(joueur_id, match_id, club_id, note_lequipe, note_ff, note_sp, note_d, but_marque, passe_dec, penalty_marque, penalty_obtenu, minutes, arrets, encaisses, double_bonus, penalty_arrete) select {$joueurId}, {$matchId}, club_id, {$noteEQ}, {$noteWS}, {$noteSP}, {$noteKI}, {$current->stats->goals_scored}, {$current->stats->goals_assists}, {$current->stats->penalties_scored}, {$current->stats->penalties_awarded}, {$current->stats->playtime}, {$current->stats->goals_saved}, {$current->stats->goals_conceded}, {$dbl_bonus} from joueur where id={$joueurId} on duplicate key update note_lequipe={$noteEQ}, note_ff={$noteWS}, note_sp={$noteSP}, note_d={$noteKI}, but_marque={$current->stats->goals_scored}, passe_dec={$current->stats->goals_assists}, penalty_marque={$current->stats->penalties_scored}, penalty_obtenu={$current->stats->penalties_awarded}, minutes={$current->stats->playtime}, arrets={$current->stats->goals_saved}, encaisses={$current->stats->goals_conceded}, double_bonus={$dbl_bonus}, penalty_arrete={$current->stats->penalties_saved}";
 		$db->query($insertPrestaQ);
 
 		// Bonus collectifs
