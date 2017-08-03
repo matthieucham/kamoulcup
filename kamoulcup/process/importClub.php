@@ -33,7 +33,7 @@ for($i=0; $i < count($clObj->members); $i++) {
 		$fn = mysql_escape_string($fn);
 		$ln = mysql_escape_string($ln);
 		$pos = $current->position;
-		$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id,poste) select '{$fn}', '{$ln}', '{$uuid}', id, '{$pos}' from club where uuid='{$current->played_for}'";
+		$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id,poste) select '{$fn}', '{$ln}', '{$uuid}', '{$clubId}', '{$pos}'";
 		$db->query($createJoueurQ);
 	} else {
 		// Update club_id si club différent
