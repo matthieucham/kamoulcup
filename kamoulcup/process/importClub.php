@@ -44,7 +44,7 @@ for($i=0; $i < count($clObj->members); $i++) {
 		}
 		$oldPos = $getJoueur[0][1];
 		$pos = $current->position;
-		if ($oldPos != $pos) {
+		if ($oldPos == NULL || $oldPos != $pos) {
 			$updateJoueurQ = "update joueur set poste={$pos} where uuid='{$uuid}'";
 			$db->query($updateJoueurQ);
 			$joueurPoste = $pos;
