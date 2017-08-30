@@ -1,7 +1,7 @@
 <?php
 checkEkyp();
 
-$allJoueurs = listAllJoueursSorted(false);
+$allJoueurs = listDraftableJoueursSorted();
 $allClubs = listClubs();
 $rank = draft_getRank($_SESSION['myEkypId']);
 $storedChoices = draft_listChoices($_SESSION['myEkypId']);
@@ -9,7 +9,7 @@ $storedChoices = draft_listChoices($_SESSION['myEkypId']);
 
 <div class="sectionPage">
 <div class='titre_page'>Choix pour la draft</div>
-<p>Bla bla blabla</p>
+<p>Tu les verras plus, les joueurs en PA, j'en ai fait des brosses</p>
 <form action="index.php" method="POST">
 <table class="tableau_liste_centre">
 	<tr>

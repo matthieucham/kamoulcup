@@ -1,15 +1,12 @@
 <?php
 
 /**
- * Retourner un tableau associatif club_id=>tableau de joueurs triés par poste
+ * Retourner un tableau associatif club_id=>tableau de joueurs triÃ©s par poste
  */
-function listAllJoueursSorted($withNoClub) {
+function listDraftableJoueursSorted() {
 	global $db;
-	if ($withNoClub) {
-		$listQuery = "select jo.id as joueurId,jo.prenom,jo.nom as nomJoueur,jo.poste,jo.club_id,cl.nom as nomClub from joueur as jo, club as cl order by cl.id asc, field(jo.poste,'G','D','M','A'), jo.nom asc";
-	} else {
-		$listQuery = "select jo.id as joueurId,jo.prenom,jo.nom as nomJoueur,jo.poste,jo.club_id,cl.nom as nomClub from joueur as jo, club as cl where jo.club_id IS NOT NULL and jo.club_id=cl.id order by cl.nom asc, field(jo.poste,'G','D','M','A'), jo.nom asc";
-	}
+	$listQuery = "select jo.id as joueurId,jo.prenom,jo.nom as nomJoueur,jo.poste,jo.club_id,cl.nom as nomClub FROM joueur as jo, club as cl WHERE jo.club_id IS NOT NULL and jo.club_id=cl.id and jo.id NOT IN (select joueur_id from vente) order by cl.nom asc, field(jo.poste,'G','D','M','A'), jo.nom asc";
+	
 	$allJoueurs = $db->getArray($listQuery);
 	//	$output = array();
 	//	$clubArray = array();
