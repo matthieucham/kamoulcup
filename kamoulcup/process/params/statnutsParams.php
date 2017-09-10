@@ -1,6 +1,6 @@
 <?php
 $SN_instance = 'ef51754d-1a4d-4116-8d64-1de77ca23fcb';
-$SN_host = 'statnuts-kcup.rhcloud.com';
+$SN_host = 'statnuts-app-statnuts.193b.starter-ca-central-1.openshiftapps.com';
 $SN_client_id = 'ddjfezzejfggelzlkehsgazehd';
 $SN_client_secret = 'hazhgygdcsksdjhqmFEFREzadkezaappppzeRz';
 
