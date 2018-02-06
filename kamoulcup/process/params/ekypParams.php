@@ -1,6 +1,6 @@
 <?php
 	// Nombre max de joueurs par �kyp, rempla�ants inclus.
-	$EKY_nbmaxjoueurs = 9;
+	$EKY_nbmaxjoueurs = 14;
 	// Nombre de PA autoris�es par session
 	$EKY_nbPA = 1;
 	// Nombre de MV autoris�es par session
