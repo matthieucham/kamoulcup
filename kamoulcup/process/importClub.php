@@ -30,15 +30,24 @@ for($i=0; $i < count($clObj->members); $i++) {
 			}
 			$ln =  htmlspecialchars($current->last_name, ENT_COMPAT, 'UTF-8');
 		}
-		$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id) select '{$fn}', '{$ln}', '{$uuid}', '{$clubId}'";
+		$fn = mysql_escape_string($fn);
+		$ln = mysql_escape_string($ln);
+		$pos = $current->position;
+		$createJoueurQ = "insert into joueur(prenom,nom,uuid,club_id,poste) select '{$fn}', '{$ln}', '{$uuid}', '{$clubId}', '{$pos}'";
 		$db->query($createJoueurQ);
-		$getJoueur = $db->getArray("select id,poste from joueur where uuid='{$uuid}'");
 	} else {
 		// Update club_id si club différent
 		$oldcl = $getJoueur[0][2];
 		if ($oldcl != $clubId) {
 			$updateJoueurQ = "update joueur set club_id={$clubId} where uuid='{$uuid}'";
 			$db->query($updateJoueurQ);
+		}
+		$oldPos = $getJoueur[0][1];
+		$pos = $current->position;
+		if ($oldPos == NULL || $oldPos != $pos) {
+			$updateJoueurQ = "update joueur set poste={$pos} where uuid='{$uuid}'";
+			$db->query($updateJoueurQ);
+			$joueurPoste = $pos;
 		}
 	}
 }
