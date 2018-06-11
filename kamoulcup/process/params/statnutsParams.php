@@ -1,6 +1,6 @@
 <?php
 $SN_instance = '801fa826-4f61-40f9-8655-75c790ceaf7e';
-$SN_host = 'statnuts-app-statnuts.193b.starter-ca-central-1.openshiftapps.com';
+$SN_host = 'statnuts.django.group';
 $SN_client_id = 'ddjfezzejfggelzlkehsgazehd';
 $SN_client_secret = 'hazhgygdcsksdjhqmFEFREzadkezaappppzeRz';
 
