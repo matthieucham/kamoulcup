@@ -46,7 +46,7 @@ function calculDateFinEnchere($dateDebut,$nbHeures){
 	} else if ($endDateH < 21) {
 		// avant 21h : on déplace la fin à 21h
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
-		$endTime += 21*3600;
+		$endTime += 19*3600;
 	} else {
 		// après 19h : on déplace la fin à 12h le lendemain
 		$endTime -= ($endDateH*3600 + $endDateM*60 + $endDateS);
