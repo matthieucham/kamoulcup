@@ -179,10 +179,9 @@ echo "</table>";
 echo "<b><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clDomId']}'>{$getMatchQuery[0]['clDomNom']}</a></b>";
 if ($listPerformancesDomQuery != NULL) {
 	echo "<table class='tableau_liste_centre'>";
-	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.francefootball.fr/'>FF</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.kicker.de'>KI</th>";
-	//<th title='http://www.datasport.it/europei_2012/'>DS</th>";
+	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.francefootball.fr/'>FF</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.kicker.de'>KI</th><th title='http://www.sport-express.ru/'>SE</th>";
 	/*<th title='Pas utilisé'>-</th>*/
-	echo "<th title='Arrêts ou parades (Gardien seulement)'>Arr.</th><th title='Buts encaissés (Gardien seulement)'>Enc.</th>";
+	/*echo "<th title='Arrêts ou parades (Gardien seulement)'>Arr.</th><th title='Buts encaissés (Gardien seulement)'>Enc.</th>";*/
 	echo"</tr>";
 	$cptLigne=0;
 	foreach ($listPerformancesDomQuery as $perf) {
@@ -206,14 +205,13 @@ if ($listPerformancesDomQuery != NULL) {
 		} else {
 			$showNoteKi = '';
 		}
-		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$showNoteKi}</td>";
-		//<td>{$perf['note_d']}</td>";
+		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$showNoteKi}</td><td>{$perf['note_sp']}</td>";
 		/*<td>{$perf['note_e']}</td>"*/;
-		if ($perf['poste'] == 'G') {
+		/*if ($perf['poste'] == 'G') {
 			echo "<td>{$perf['arrets']}</td><td>{$perf['encaisses']}</td>";
 		} else {
 			echo "<td colspan='2'></td>";
-		}
+		}*/
 		echo "</tr>";
 		$cptLigne++;
 	}
@@ -224,10 +222,9 @@ if ($listPerformancesDomQuery != NULL) {
 echo "<b><a href='index.php?page=detailClub&clubid={$getMatchQuery[0]['clExtId']}'>{$getMatchQuery[0]['clExtNom']}</a></b>";
 if ($listPerformancesExtQuery != NULL) {
 	echo "<table class='tableau_liste_centre'>";
-	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.francefootball.fr/'>FF</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.kicker.de'>KI</th>";
-	//<th title='http://www.datasport.it/europei_2012/'>DS</th>";
+	echo "<tr><th>Joueur</th><th>Tps</th><th title='http://www.francefootball.fr/'>FF</th><th title='http://www.whoscored.com/'>WS</th><th title='http://www.kicker.de'>KI</th><th title='http://www.sport-express.ru/'>SE</th>";
 	/*<th title='Pas utilisé'>-</th>*/
-	echo "<th title='Arrêts ou parades (Gardien seulement)'>Arr.</th><th title='Buts encaissés (Gardien seulement)'>Enc.</th>";
+	/*echo "<th title='Arrêts ou parades (Gardien seulement)'>Arr.</th><th title='Buts encaissés (Gardien seulement)'>Enc.</th>";*/
 	echo"</tr>";
 	$cptLigne=0;
 	foreach ($listPerformancesExtQuery as $perf) {
@@ -251,14 +248,13 @@ if ($listPerformancesExtQuery != NULL) {
 		} else {
 			$showNoteKi = '';
 		}
-		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$showNoteKi}</td>";
-		//<td>{$perf['note_d']}</td>";
+		echo "</td><td>{$perf['minutes']}'</td><td>{$perf['note_lequipe']}</td><td>{$showNoteWS}</td><td>{$showNoteKi}</td><td>{$perf['note_sp']}</td>";
 		/*<td>{$perf['note_e']}</td>"*/;
-		if ($perf['poste'] == 'G') {
+		/*if ($perf['poste'] == 'G') {
 			echo "<td>{$perf['arrets']}</td><td>{$perf['encaisses']}</td>";
 		} else {
 			echo "<td colspan='2'></td>";
-		}
+		}*/
 		echo "</tr>";
 		$cptLigne++;
 	}
